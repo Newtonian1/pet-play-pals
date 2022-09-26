@@ -2,7 +2,7 @@ package com.techelevator.model;
 
 public class Pet {
     private int petId;
-    private int userId; //??
+    private int userId; // can change to ownerid if neeeded
     private String petType; //assume this is for more than just dogs?
     private String petName;
     private String breed;
@@ -10,6 +10,7 @@ public class Pet {
     private String size;
     private String personalityType;
     private String description; //for the profile of the pet? might not be needed
+    private boolean IsUpToDateWithVaccinations;
 
     public int getPetId() {
         return petId;
@@ -81,5 +82,13 @@ public class Pet {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isUpToDateWithVaccinations() {
+        return IsUpToDateWithVaccinations;
+    }
+
+    public void setUpToDateWithVaccinations(boolean upToDateWithVaccinations) {
+        IsUpToDateWithVaccinations = upToDateWithVaccinations;
     }
 }

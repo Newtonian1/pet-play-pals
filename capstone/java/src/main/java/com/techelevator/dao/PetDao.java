@@ -16,11 +16,13 @@ public interface PetDao {
     List<Pet> getPetsByType(String petType);
 
     //find pets by user id - list
-    List<Pet>
+    List<Pet> getPetsByUserId(int userId);
 
     //find pets by personality - list
+    List<Pet> getPetsByPersonalityType(String personality);
 
     //pets by breed - list
+    List<Pet> getPetsByBreed(String breed);
 
     //register a pet
     public Pet registerPet(Pet newPet);
