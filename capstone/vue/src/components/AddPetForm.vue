@@ -103,8 +103,11 @@ data() {
 </script>
 
 <style scoped>
-    #pet-reg-form {
+    .reg-pet {
         max-width: 80%;
     }
+    /* .form-element {
+        text-align: center;
+    } */
 
 </style>
