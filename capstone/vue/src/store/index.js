@@ -19,7 +19,29 @@ if(currentToken != null) {
 export default new Vuex.Store({
   state: {
     token: currentToken || '',
-    user: currentUser || {}
+    user: currentUser || {},
+    playDateLocations: [
+      {
+        id: 1,
+        address1: '135 Garfield Place',
+        address2: '',
+        city: 'Cincinnati',
+        state: 'OH',
+        zip: '45202',
+        latitude: '39.103830',
+        longitude: '-84.516410',
+      },
+      {
+        id: 2,
+        address1: '1 W Corry St',
+        address2: '',
+        city: 'Cincinnati',
+        state: 'OH',
+        zip: '45219',
+        latitude: '39.128870',
+        longitude: '-84.509940',
+      },
+    ]
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
