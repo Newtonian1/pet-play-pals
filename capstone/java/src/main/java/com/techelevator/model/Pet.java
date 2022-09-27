@@ -3,19 +3,19 @@ package com.techelevator.model;
 public class Pet {
     private int petId;
     private int ownerId;
-    private String petType; //assume this is for more than just dogs?
+    private String petType;
     private String petName;
     private String breed;
     private String gender;
     private String size;
     private String[] personalityType;
-    private String description; //for the profile of the pet? might not be needed
+    private String description;
     private boolean IsUpToDateWithVaccinations;
     private boolean isFixed;
 
-   public boolean getIsFixed(){
-       return isFixed;
-   }
+    public boolean getIsFixed() {
+        return isFixed;
+    }
 
     public void setFixed(boolean fixed) {
         isFixed = fixed;
