@@ -92,7 +92,7 @@ public class JdbcPetDao implements PetDao {
     }
 
     @Override
-    public Pet registerPet(Pet newPet) {
+    public Pet registerPet(Pet newPet) { //TODO this needs checked
         String sql = "INSERT INTO pets (owner_id,pet_type,breed,gender,pet_name,personality_type,size,description,is_fixed,is_up_to_date_with_vaccinations) VALUES (?,?,?,?,?,?,?,?,?,?)";
         Integer newPetId = jdbcTemplate.query(sql, Integer.class, newPet.getOwnerId(), newPet.getPetType(), newPet.getBreed(), newPet.getGender(), newPet.getPetName(), newPet.getPersonalityType(), newPet.getSize(), newPet.getDescription(), newPet.getIsFixed(), newPet.getIsUpToDateWithVaccinations());
         return getPetByPetId(newPetId);
@@ -106,7 +106,7 @@ public class JdbcPetDao implements PetDao {
 
     @Override
     public void deletePet(int petId) {
-        String sql = "DELETE FROM pets WHERE pet_id = ?"; //not sure if user id will be needed
+        String sql = "DELETE FROM pets WHERE pet_id = ?";
         jdbcTemplate.update(sql, petId);
 
     }
