@@ -14,7 +14,13 @@ export default {
 </script>
 
 <style scoped>
+  .register-pet {
+    background-color: #E7F6F2;
+    font-family: 'Montserrat', sans-serif;
+  }
   h1 {
     text-align: center;
+    padding-top: 20px;
   }
+
 </style>
