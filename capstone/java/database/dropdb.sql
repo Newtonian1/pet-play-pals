@@ -9,5 +9,5 @@ WHERE datname = 'pet_play_pals_db';
 
 DROP DATABASE pet_play_pals_db;
 
-DROP USER final_capstone_owner;
-DROP USER final_capstone_appuser;
+DROP USER final_capstone_app_owner;
+DROP USER final_capstone_app_user;
