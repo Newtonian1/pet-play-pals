@@ -1,32 +1,53 @@
 <template>
   <div id="main-container">
     <h1>Map Test</h1>
-
-    <!-- documentation for Gmap: https://www.npmjs.com/package/vue2-google-maps -->
-    <GmapMap
-      id="map"
-      :center="{ lat: startingLat, lng: startingLong }"
-      :zoom="10"
-      map-type-id="roadmap"
-    >
-      <GmapMarker
-        v-for="location in filteredLocations"
-        :key="location.id"
-        :position="{
-          lat: parseFloat(location.latitude),
-          lng: parseFloat(location.longitude),
-        }"
-      />
-      <!-- <GmapMarker
-          :key="index"
-          v-for="(m, index) in markers"
-          :position="m.position"
+    <div id="map-container">
+      <!-- documentation for Gmap: https://www.npmjs.com/package/vue2-google-maps -->
+      <GmapMap
+        id="map"
+        :center="{ lat: startingLat, lng: startingLong }"
+        :zoom="10"
+        map-type-id="roadmap"
+        @click="setSelectedId(0)"
+      >
+        <GmapMarker
+          v-for="location in filteredLocations"
+          :key="location.id"
+          :position="{
+            lat: parseFloat(location.latitude),
+            lng: parseFloat(location.longitude),
+          }"
           :clickable="true"
-          :draggable="true"
-          @click="center = m.position"
-        /> -->
-    </GmapMap>
-    <div class="slide-container">
+          @click="setSelectedId(location.id)"
+          :title="location.address1"
+        />
+        <GmapMarker
+          :position="{
+            lat: this.startingLat,
+            lng: this.startingLong,
+          }"
+          :title="'Your Location'"
+        />
+        <!-- <GmapMarker
+            :key="index"
+            v-for="(m, index) in markers"
+            :position="m.position"
+            :clickable="true"
+            :draggable="true"
+            @click="center = m.position"
+          /> -->
+      </GmapMap>
+      <div id="playdate-list">
+        <div class="playdate-card" v-for="location in filteredLocations" :key="location.id" :class="{ 'selected-card': selectedId === location.id }">
+          <h3>{{location.address1}}<br>
+          {{location.city}}, {{location.state}}<br>
+          {{location.zip}}</h3>
+          <h4>Distance: {{location.distance}} mi.</h4>
+        </div>
+      </div>
+    </div>
+
+    <div id="slide-container">
       <label for="radius">Search Radius: {{ searchRadius }} miles</label><br />
       <input
         type="range"
@@ -48,30 +69,36 @@ export default {
       startingLat: 40.73061,
       startingLong: -73.935242,
       searchRadius: 25,
+      selectedId: 0,
     };
   },
   computed: {
     filteredLocations() {
       const locations = this.$store.state.playDateLocations;
+      locations.forEach(location => {location.distance = this.getLocationDistance(location).toFixed(2)});
       const filteredList = locations.filter((location) => {
-        return this.isLocationWithinRadius(location);
+        return this.isLocationWithinRadius(location)
       });
-      console.log(filteredList);
+      filteredList.sort(this.compareDistances);
       return filteredList;
     },
   },
   methods: {
-    isLocationWithinRadius(location) {
+    compareDistances(location1, location2) {
+      return location1.distance - location2.distance;
+    },
+    getLocationDistance(location) {
       const lat = parseFloat(location.latitude);
       const lng = parseFloat(location.longitude);
-      const distance = this.getDistanceFromLatLonInMi(
+      return this.getDistanceFromLatLonInMi(
         lat,
         lng,
         this.startingLat,
         this.startingLong
       );
-      console.log(distance);
-      return distance <= this.searchRadius;
+    },
+    isLocationWithinRadius(location) {
+      return this.getLocationDistance(location) <= this.searchRadius;
     },
     getDistanceFromLatLonInMi(lat1, lon1, lat2, lon2) {
       //Haversine formula
@@ -93,6 +120,9 @@ export default {
     deg2rad(deg) {
       return deg * (Math.PI / 180);
     },
+    setSelectedId(id) {
+      this.selectedId = id;
+    }
   },
   created() {
     //Set center of map to user's current location
@@ -109,15 +139,45 @@ export default {
 </script>
 
 <style scoped>
-#map {
-  width: 70%;
-  height: 600px;
-}
-
 #main-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#map-container {
+  border: 1px solid black;
+  display: flex;
+  width: 100%;
+}
+
+#map {
+  width: 70%;
+  height: 600px;
+}
+
+#playdate-list {
+  width: 30%;
+  height: 600px;
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.playdate-card {
+  width: 99%;
+  height: 140px;
+  border: 1px solid black;
+  background-color: rgb(250, 251, 253);
+  padding-left: 16px;
+}
+
+.selected-card.playdate-card {
+  background-color: rgb(248, 248, 188);
+}
+
+#slide-container {
+  padding: 20px;
 }
 </style>
