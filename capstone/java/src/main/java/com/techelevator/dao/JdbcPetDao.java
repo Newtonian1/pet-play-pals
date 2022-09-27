@@ -80,7 +80,15 @@ public class JdbcPetDao implements PetDao {
 
     @Override
     public List<Pet> getPetsByBreed(String breed) {
-        return null;
+        List<Pet> petsByBreed = new ArrayList<>();
+        String sql = "SELECT * FROM pets WHERE breed =?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql,breed);
+        while (results.next()){
+            Pet pet = mapRowToPet(results);
+            petsByBreed.add(pet);
+        }
+
+        return petsByBreed;
     }
 
     @Override
