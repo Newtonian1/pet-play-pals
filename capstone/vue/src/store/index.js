@@ -41,6 +41,16 @@ export default new Vuex.Store({
         latitude: '39.128870',
         longitude: '-84.509940',
       },
+      {
+        id: 3,
+        address1: '456 Belmonte Park N',
+        address2: '',
+        city: 'Dayton',
+        state: 'OH',
+        zip: '45405',
+        latitude: '39.765570',
+        longitude: '-84.201800',
+      },
     ]
   },
   mutations: {
