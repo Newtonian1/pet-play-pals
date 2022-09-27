@@ -2,15 +2,24 @@ package com.techelevator.model;
 
 public class Pet {
     private int petId;
-    private int userId; // can change to ownerid if neeeded
+    private int ownerId;
     private String petType; //assume this is for more than just dogs?
     private String petName;
     private String breed;
     private String gender;
     private String size;
-    private String personalityType;
+    private String[] personalityType;
     private String description; //for the profile of the pet? might not be needed
     private boolean IsUpToDateWithVaccinations;
+    private boolean isFixed;
+
+   public boolean getIsFixed(){
+       return isFixed;
+   }
+
+    public void setFixed(boolean fixed) {
+        isFixed = fixed;
+    }
 
     public int getPetId() {
         return petId;
@@ -20,12 +29,12 @@ public class Pet {
         this.petId = petId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getOwnerId() {
+        return ownerId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getPetType() {
@@ -68,11 +77,11 @@ public class Pet {
         this.size = size;
     }
 
-    public String getPersonalityType() {
+    public String[] getPersonalityType() {
         return personalityType;
     }
 
-    public void setPersonalityType(String personalityType) {
+    public void setPersonalityType(String[] personalityType) {
         this.personalityType = personalityType;
     }
 
@@ -84,7 +93,7 @@ public class Pet {
         this.description = description;
     }
 
-    public boolean isUpToDateWithVaccinations() {
+    public boolean getIsUpToDateWithVaccinations() {
         return IsUpToDateWithVaccinations;
     }
 

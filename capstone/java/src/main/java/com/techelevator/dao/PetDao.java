@@ -15,8 +15,8 @@ public interface PetDao {
     //find pet by type - find all cats / dogs / etc
     List<Pet> getPetsByType(String petType);
 
-    //find pets by user id - list
-    List<Pet> getPetsByUserId(int userId);
+    //find pets by owner id - list
+    List<Pet> getPetsByOwnerId(int ownerId);
 
     //find pets by personality - list
     List<Pet> getPetsByPersonalityType(String personality);
@@ -31,7 +31,7 @@ public interface PetDao {
     public void updatePet(Pet petToUpdate);
 
     //delete pet
-    public void deletePet(Pet petToDelete);
+    public void deletePet(int petId);
 
 
 }
