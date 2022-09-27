@@ -30,6 +30,8 @@
                 <option value="extra-large">Extra Large 70+ lbs</option> 
             </select> 
 
+            <label for="vax">Up to date on all vaccines?</label>
+            <input type="checkbox" id="vax" name="true" value="true" />
 
 
         </form>
