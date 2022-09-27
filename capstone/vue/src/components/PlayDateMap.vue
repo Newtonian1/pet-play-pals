@@ -6,7 +6,7 @@
     <GmapMap
       id="map"
       :center="{ lat: startingLat, lng: startingLong }"
-      :zoom="11"
+      :zoom="10"
       map-type-id="roadmap"
     >
       <GmapMarker
