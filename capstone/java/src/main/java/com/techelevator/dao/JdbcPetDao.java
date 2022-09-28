@@ -106,7 +106,7 @@ public class JdbcPetDao implements PetDao {
     }
 
     @Override
-    public Pet registerPet(Pet newPet) { //TODO this needs checked
+    public Pet registerPet(Pet newPet) {
         String sql = "INSERT INTO pets \n" +
                 "\t(pet_name,\n" +
                 "\t owner_id,\n" +
