@@ -1,15 +1,15 @@
 <template>
     <div class="reg-pet">
-        <form id="pet-reg-form">
+        <form id="pet-reg-form" @submit.prevent="savePet">
             <div class="form-element name-field">
                 <label for="pet-name">Name </label>
-                <input type="text" id="pet-name" placeholder="Pet Name" required autofocus v-model="newPet.name"/>
+                <input type="text" id="pet-name" placeholder="Pet Name" required autofocus v-model="newPet.petName"/>
             </div>
             <div class="form-element type-field">
                 <label for="dog" class="inline">Dog</label>
-                <input type="radio" name="cat-or-dog" id="dog" value="dog" v-model="newPet.type">
+                <input type="radio" name="cat-or-dog" id="dog" value="dog" v-model="newPet.petType">
                 <label for="cat" class="inline">Cat</label>
-                <input type="radio" name="cat-or-dog" id="cat" value="cat" v-model="newPet.type">
+                <input type="radio" name="cat-or-dog" id="cat" value="cat" v-model="newPet.petType">
             </div>
             <div class="form-element breed-field">
                 <label for="breed">Breed </label>
@@ -36,50 +36,50 @@
             </div> 
             <div class="form-element vaccine-field">
                 <label for="vax" class="inline">Up to date on vaccines?</label>
-                <input type="checkbox" id="vax" value="" v-model="newPet.vaccine" />
+                <input type="checkbox" id="vax" value="" v-model="newPet.isUpToDateWithVaccinations" />
             </div>
             <div class="form-element fixed-field">
                 <label for="fixed" class="inline">Spayed or Neutered?</label>
-                <input type="checkbox" id="fixed" value="" v-model="newPet.fixed"/>
+                <input type="checkbox" id="fixed" value="" v-model="newPet.isFixed"/>
             </div>
             <div class="form-element personality-field">
                 <p>What is your pet's personality?</p>
                 <div class="trait-container">
                     <div class="group-1">
-                        <input type="checkbox" id="friendly" name="personality-list" value="friendly" v-model="newPet.personality"/>
+                        <input type="checkbox" id="friendly" name="personality-list" value="friendly" v-model="newPet.personalityType"/>
                         <label for="friendly" class="inline">Friendly</label>
                         <br>
-                        <input type="checkbox" id="hyper" name="personality-list" value="hyper" v-model="newPet.personality"/>
+                        <input type="checkbox" id="hyper" name="personality-list" value="hyper" v-model="newPet.personalityType"/>
                         <label for="hyper" class="inline">Hyper</label>
                         <br>
-                        <input type="checkbox" id="serious" name="personality-list" value="serious" v-model="newPet.personality"/>
+                        <input type="checkbox" id="serious" name="personality-list" value="serious" v-model="newPet.personalityType"/>
                         <label for="serious" class="inline">Serious</label>
                         <br>
-                        <input type="checkbox" id="shy" name="personality-list" value="shy" v-model="newPet.personality"/>
+                        <input type="checkbox" id="shy" name="personality-list" value="shy" v-model="newPet.personalityType"/>
                         <label for="shy" class="inline">Shy</label>
                         <br>
                     </div>
                     <div class="group-2">
-                        <input type="checkbox" id="calm" name="personality-list" value="calm" v-model="newPet.personality"/>
+                        <input type="checkbox" id="calm" name="personality-list" value="calm" v-model="newPet.personalityType"/>
                         <label for="calm" class="inline">Calm</label>
                         <br>
-                        <input type="checkbox" id="loner" name="personality-list" value="loner" v-model="newPet.personality"/>
+                        <input type="checkbox" id="loner" name="personality-list" value="loner" v-model="newPet.personalityType"/>
                         <label for="loner" class="inline">Loner</label>
                         <br>
-                        <input type="checkbox" id="ball" name="personality-list" value="ball" v-model="newPet.personality"/>
+                        <input type="checkbox" id="ball" name="personality-list" value="ball" v-model="newPet.personalityType"/>
                         <label for="ball" class="inline">BALL</label>
                         <br>
-                        <input type="checkbox" id="playful" name="personality-list" value="playful" v-model="newPet.personality"/>
+                        <input type="checkbox" id="playful" name="personality-list" value="playful" v-model="newPet.personalityType"/>
                         <label for="playful" class="inline">Playful</label>
                     </div>
                 </div>
             </div>
             <div class="form-element about-field">
                 <p><label for="abt-me">A little bit more about me!</label></p>
-                <textarea id="abt-me" cols="35" rows="10" maxlength="1500" v-model="newPet.about"></textarea>
+                <textarea id="abt-me" cols="35" rows="10" maxlength="1500" v-model="newPet.description"></textarea>
             </div>
 
-            <button id="create-pet-btn">Create Pet</button>
+            <button type="submit" id="create-pet-btn" >Add Pet</button>
 
 
         </form>
@@ -87,23 +87,43 @@
 </template>
 
 <script>
-
+import petService from '../services/petService';
 export default {
-name: "add-pet",
-data() {
-    return {
-      newPet: {
-          name: "",
-          type: "",
-          breed: "",
-          size: "",
-          vaccine: false,
-          fixed: false,
-          personality: [],
-          about: ""
-      }  
+    name: "add-pet",
+    data() {
+        return {
+            newPet: {
+                ownerId: 0,
+                petName: "",
+                petType: "",
+                breed: "",
+                gender: "",
+                size: "",
+                isUpToDateWithVaccinations: false,
+                isFixed: false,
+                personalityType: [],
+                description: ""
+            }  
+        }
+    },
+    methods: {
+        savePet() {
+            this.newPet.ownerId = this.$store.state.user.id;
+            petService.registerPet(this.newPet)
+            .then((response) => {
+                if (response.status == 201) {
+                    this.sendToHome();
+                }
+            })
+        },
+        resetForm() {
+            this.newPet = {};
+        },
+        sendToHome () {
+            this.resetForm();
+            this.$router.push("/");
+        }
     }
-}
 }
 </script>
 
