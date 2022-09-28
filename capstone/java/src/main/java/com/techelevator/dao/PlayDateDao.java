@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.model.PlayDate;
 
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -13,11 +14,8 @@ public interface PlayDateDao {
     //show pd by pd id
     public PlayDate getPlayDateById(int playDateId);
 
-    //list of pd by date
-    public List<PlayDate> getPlayDatesByDate(Date dateOfPlayDate);
-
-    //list of pd by time
-    public List<PlayDate> getPlayDatesByTime(Time timeOfPlayDate);
+    //local date
+    public LocalDateTime getPlayDateByLocalDateAndTime(LocalDateTime playDateLocalDateAndTime);
 
     //create pd
     public PlayDate createPlayDate(PlayDate playDate);
