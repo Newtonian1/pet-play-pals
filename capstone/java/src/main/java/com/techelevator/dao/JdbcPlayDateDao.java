@@ -24,7 +24,7 @@ public class JdbcPlayDateDao implements PlayDateDao{
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()){
-            PlayDate playDate
+            PlayDate playDate;
         }
         return null;
     }
@@ -73,7 +73,7 @@ public class JdbcPlayDateDao implements PlayDateDao{
         PlayDate playDate = new PlayDate();
         playDate.setPlayDateId(sql.getInt("play_date_id"));
 
-        return playDate
+        return playDate;
     }
 
 }
