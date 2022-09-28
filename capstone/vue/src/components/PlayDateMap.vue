@@ -12,13 +12,13 @@
       <div id="slide-container">
         <label for="radius">Search Radius: 
 
-          <input type="number" min="1" max="99" value="25" v-model="searchRadius" id="radius-box" @input="truncateRadius">
+          <input type="number" min="1" :max="maxRadius" value="25" v-model="searchRadius" id="radius-box" @input="truncateRadius">
 
            mile<span v-if="searchRadius != 1">s</span></label><br />
         <input
           type="range"
           min="1"
-          max="99"
+          :max="maxRadius"
           value="25"
           id="radius"
           name="radius"
@@ -88,6 +88,7 @@ export default {
       startingLat: 40.73061,
       startingLong: -73.935242,
       searchRadius: 25,
+      maxRadius: 100,
       selectedId: 0,
     };
   },
@@ -104,8 +105,8 @@ export default {
   },
   methods: {
     truncateRadius() {
-      if (this.searchRadius.length > 2) {
-        this.searchRadius = this.searchRadius.slice(0,2);
+      if (this.searchRadius > this.maxRadius) {
+        this.searchRadius = this.maxRadius;
       }
     },
     compareDistances(location1, location2) {
@@ -185,7 +186,7 @@ export default {
 }
 
 #radius-box {
-  width: 32px;
+  width: 38px;
 }
 
 #slide-container {
