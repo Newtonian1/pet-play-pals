@@ -1,16 +1,22 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class PlayDate {
     private int playDateId;
-    private Time playDateTime;
-    private Date DateOfPlayDate;
-    private Pet petOne;  //pet host?
-    private Pet petTwo;  //pet guest?
-    private int statusId;
-    //location
+    @JsonProperty("first_pet_id")
+    private int petOneId;
+    @JsonProperty("second_pet_id")
+    private int petTwoId;
+    private String status;
+    private int locationId;
+    private LocalDateTime playDateTimeStamp;
 
     public int getPlayDateId() {
         return playDateId;
@@ -20,43 +26,43 @@ public class PlayDate {
         this.playDateId = playDateId;
     }
 
-    public Time getPlayDateTime() {
-        return playDateTime;
+    public int getPetOneId() {
+        return petOneId;
     }
 
-    public void setPlayDateTime(Time playDateTime) {
-        this.playDateTime = playDateTime;
+    public void setPetOneId(int petOneId) {
+        this.petOneId = petOneId;
     }
 
-    public Date getDateOfPlayDate() {
-        return DateOfPlayDate;
+    public int getPetTwoId() {
+        return petTwoId;
     }
 
-    public void setDateOfPlayDate(Date dateOfPlayDate) {
-        DateOfPlayDate = dateOfPlayDate;
+    public void setPetTwoId(int petTwoId) {
+        this.petTwoId = petTwoId;
     }
 
-    public Pet getPetOne() {
-        return petOne;
+    public String getStatus() {
+        return status;
     }
 
-    public void setPetOne(Pet petOne) {
-        this.petOne = petOne;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public Pet getPetTwo() {
-        return petTwo;
+    public int getLocationId() {
+        return locationId;
     }
 
-    public void setPetTwo(Pet petTwo) {
-        this.petTwo = petTwo;
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
     }
 
-    public int getStatusId() {
-        return statusId;
+    public LocalDateTime getPlayDateTimeStamp() {
+        return playDateTimeStamp;
     }
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
+    public void setPlayDateTimeStamp(LocalDateTime playDateTimeStamp) {
+        this.playDateTimeStamp = playDateTimeStamp;
     }
 }
