@@ -79,7 +79,7 @@
                 <textarea id="abt-me" cols="35" rows="10" maxlength="1500" v-model="newPet.description"></textarea>
             </div>
 
-            <button type="submit" id="create-pet-btn">Add Pet</button>
+            <button type="submit" id="create-pet-btn" >Add Pet</button>
 
 
         </form>
@@ -89,29 +89,41 @@
 <script>
 import petService from '../services/petService';
 export default {
-name: "add-pet",
-data() {
-    return {
-      newPet: {
-          ownerId: 0,
-          petName: "",
-          petType: "",
-          breed: "",
-          gender: "",
-          size: "",
-          isUpToDateWithVaccinations: false,
-          isFixed: false,
-          personalityType: [],
-          description: ""
-      }  
+    name: "add-pet",
+    data() {
+        return {
+            newPet: {
+                ownerId: 0,
+                petName: "",
+                petType: "",
+                breed: "",
+                gender: "",
+                size: "",
+                isUpToDateWithVaccinations: false,
+                isFixed: false,
+                personalityType: [],
+                description: ""
+            }  
+        }
+    },
+    methods: {
+        savePet() {
+            this.newPet.ownerId = this.$store.state.user.id;
+            petService.registerPet(this.newPet)
+            .then((response) => {
+                if (response.status == 201) {
+                    this.sendToHome();
+                }
+            })
+        },
+        resetForm() {
+            this.newPet = {};
+        },
+        sendToHome () {
+            this.resetForm();
+            this.$router.push("/");
+        }
     }
-},
-methods: {
-    savePet() {
-        this.newPet.ownerId = this.$store.state.user.id;
-        petService.registerPet(this.newPet);
-    }
-}
 }
 </script>
 

@@ -60,7 +60,7 @@ const router = new Router({
       name: "registerPet",
       component: RegisterPet,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       },
       
     }
