@@ -25,9 +25,10 @@ public class JdbcPlayDateDao implements PlayDateDao{
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()){
-            PlayDate playDate;
+            PlayDate playDate = mapRowToPlayDate(results);
+            allPlayDates.add(playDate);
         }
-        return null;
+        return allPlayDates;
     }
 
     @Override
@@ -40,9 +41,11 @@ public class JdbcPlayDateDao implements PlayDateDao{
                 "WHERE pd.play_date_id = ?;";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql,playDateId);
-        
+        if (results.next()){
+            return mapRowToPlayDate(results);
+        }else return null;
 
-        return null;
+
     }
 
     @Override
@@ -63,15 +66,31 @@ public class JdbcPlayDateDao implements PlayDateDao{
 
     @Override
     public PlayDate createPlayDate(PlayDate playDate) {
-        String sql = "INSERT INTO play_dates \n"+
+        String sql = "INSERT INTO play_date \n"+
                 "\t(play_date_time, \n"+
                 "\t location_id, \n"+
                 "\t first_pet_id \n"+
                 "\t second_pet_id \n"+
                 "\t status_id) \n"+
                 "\t VALUES \n"+
-                "\t(?"
-
+                "\t(?, \n"+
+                "\t ?, \n"+ //TODO check location to see if this will be the best way to go.
+                "\t (SELECT pet_id FROM pets WHERE pet_name =?), \n"+
+                "\t (SELECT pet_id FROM pets WHERE pet_name =?), \n"+
+                "\t (SELECT status_id FROM statuses WHERE status=?) \n"+
+                "\t RETURNING plat_date_id;";
+Integer newPlayDateId = jdbcTemplate.queryForObject(
+        sql,
+        Integer.class,
+        playDate.getPlayDateTimeStamp(),
+        playDate.getLocationId(),
+        playDate.getPetOneId(),
+        playDate.getPetTwoId(),
+        playDate.getStatus()
+);
+if (newPlayDateId!=null){
+    return getPlayDateById(newPlayDateId);
+} else
         return null;
     }
 
