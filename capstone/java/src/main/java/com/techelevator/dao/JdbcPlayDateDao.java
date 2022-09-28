@@ -70,7 +70,7 @@ public class JdbcPlayDateDao implements PlayDateDao{
                 "\t second_pet_id \n"+
                 "\t status_id) \n"+
                 "\t VALUES \n"+
-                "\t(?"
+                "\t(?";
 
         return null;
     }

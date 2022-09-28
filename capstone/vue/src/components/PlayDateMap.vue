@@ -1,16 +1,16 @@
 <template>
   <div id="main-container">
-    <h1>Map Test</h1>
+    <h1>Play Dates Near You</h1>
 
     <div id="map-controls">
 
       <div id="set-location">
         <label for="search-location">Search Location: </label>
-        <input type="text" name="search-location" id="search-location">
+        <input type="text" name="search-location" id="search-location" value="I do not work yet">
       </div>
 
       <div id="slide-container">
-        <label for="radius">Search Radius: 
+        <label for="radius">Search Radius:<br>
 
           <input type="number" min="1" :max="maxRadius" value="25" v-model="searchRadius" id="radius-box" @input="truncateRadius">
 
@@ -69,10 +69,14 @@
       <div id="playdate-list">
 
         <div class="playdate-card" v-for="location in filteredLocations" :key="location.id" :class="{ 'selected-card': selectedId === location.id }">
-          <h3>{{location.address1}}<br>
-          {{location.city}}, {{location.state}}<br>
-          {{location.zip}}</h3>
-          <h4>Distance: {{location.distance}} mi.</h4>
+          <div class="address">
+            <h3>{{location.address1}}<br>
+            {{location.city}}, {{location.state}}<br>
+            {{location.zip}}</h3>
+          </div>
+          <div class="distance">
+            <h4>Distance: {{location.distance}} mi.</h4>
+          </div>
         </div>
 
       </div>
@@ -88,7 +92,7 @@ export default {
       startingLat: 40.73061,
       startingLong: -73.935242,
       searchRadius: 25,
-      maxRadius: 100,
+      maxRadius: 150,
       selectedId: 0,
     };
   },
@@ -166,9 +170,11 @@ export default {
 <style scoped>
 * {
   font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
 }
 
 #main-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -177,54 +183,116 @@ export default {
 
 #map-controls {
   background-color: rgb(250, 251, 253);
-  padding: 12px;
+  padding: 12px 0;
   border: 1px solid black;
   width: 100%;
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#set-location {
+  margin-left: 10px;
 }
 
 #radius-box {
-  width: 38px;
+  width: 48px;
 }
 
 #slide-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 350px;
-  padding: 10px;
 }
 
 #map-container {
   border: 1px solid black;
   display: flex;
+  flex-direction: column;
   width: 100%;
   margin-bottom: 16px;
 }
 
 #map {
-  width: 70%;
-  height: 600px;
+  width: 100%;
+  height: 400px;
+  border: 1px solid black;
 }
 
 #playdate-list {
-  width: 30%;
-  height: 600px;
+  width: 100%;
+  height: 130px;
   max-height: 600px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  border: 1px solid black;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .playdate-card {
-  width: 99%;
-  height: 140px;
+  height: 100%;
+  padding: 0 10px;
   border: 1px solid black;
   background-color: rgb(250, 251, 253);
-  padding-left: 16px;
+  font-size: 12px;
+  flex: 0 0 36%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.address {
+  height: 52px;
 }
 
 .selected-card.playdate-card {
   background-color: rgb(248, 248, 188);
+}
+
+@media only screen and (min-width: 768px) {
+  #map {
+    height: 500px;
+  }
+
+  .playdate-card {
+    flex: 0 0 22%;
+  }
+
+  #slide-container {
+    flex-direction: row;
+    width: 360px;
+  }
+
+  #radius {
+    margin-left: 8px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  #map-controls {
+    height: 80px;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  #map-container {
+    flex-direction: row;
+  }
+
+  #map {
+    flex: 2 1 80%;
+    height: 600px;
+  }
+
+  #playdate-list {
+    flex-direction: column;
+    height: 100%;
+    max-height: 600px;
+    flex: 1 1 20%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 </style>
