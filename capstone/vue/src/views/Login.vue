@@ -82,22 +82,30 @@ export default {
 <style scoped>
 div#login {
   margin: auto;
-  max-width: 90%;
+  max-width: 80%;
   font-family: Roboto, sans-serif;
+
+  text-align: center;
 }
 form.form-signin {
   display: flex;
   flex-direction: column;
   max-width: 750px;
   margin: 0 auto;
+
+  display: inline-block;
+  text-align: left;
 }
 form > div.form-input {
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  padding-bottom: 15px;
-  margin-left: 20px;
+  padding-bottom: 8px;
+  /* margin-left: 100px; */
+  flex-direction: column;
 }
+
+
 form > div > label,
 form > div > input {
   display: inline;
@@ -114,7 +122,8 @@ form > button {
 form > #register-link {
   max-width: 350px;
   /* margin: auto; */
-  margin-left: 12em;
+  /* margin-left: 12em; */
+  display: block;
 }
 
 #username, #password {
@@ -123,25 +132,50 @@ form > #register-link {
   border-radius: 5px;
   border: 1px solid black;
   line-height: 25px;
+  margin: 10px 0;
+  width: 100%
 }
 
 button[type="submit"] {
   max-width: 325px;
-  margin-left: 100px;
+  /* margin-left: 100px; */
   background-color: #395B64;
   font-family: monospace;
   font-size: 18px;
   color: white;
   border: none;
   border-radius: 5px;
-  height: 35px;
+  height: 30px;
   letter-spacing: 2px;
   transition: all .3s ease;
+  max-width: 540px;
+  margin: 0 auto 15px auto;
 }
 
 button[type="submit"]:hover {
   background-color: #A5C9CA;
   color: #2C3333;
+}
+
+label.sr-only {
+  font-size: 1.3em;
+}
+
+@media(max-width:670px) {
+  
+  button[type="submit"] {
+    width: 65%;
+    margin-left: 20px;
+  }
+
+  label.sr-only {
+    padding: 8px 0;
+  }
+
+  form > div.form-input {
+    margin-left: 20px;
+  }
+
 }
 
 @media(max-width:400px) {

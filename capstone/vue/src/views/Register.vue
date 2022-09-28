@@ -32,10 +32,10 @@
         v-model="user.confirmPassword"
         required
       />
-      <router-link :to="{ name: 'login' }">Have an account?</router-link>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
       </button>
+      <router-link :to="{ name: 'login' }">Have an account?</router-link>
     </form>
   </div>
 </template>
@@ -106,4 +106,69 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+  #register {
+    max-width: 80%;
+    margin: auto;
+    font-family: 'Montserrat', sans-serif;
+    color: #2C3333;
+  }
+
+  .form-register {
+    margin: 15px 0;
+    font-size: 1em;
+  }
+
+  label.sr-only {
+    font-size: 1.3em;
+  }
+
+  #username, #password, #confirmPassword {
+    max-width: 325px;
+    font-size: 18px;
+    border-radius: 5px;
+    border: 1px solid black;
+    line-height: 25px;
+    display: block;
+    margin: 15px 0;
+  }
+
+  button[type="submit"] {
+    background-color: #395B64;
+    font-family: monospace;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    letter-spacing: 2px;
+    transition: all .3s ease;
+    max-width: 540px;
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #A5C9CA;
+    color: #2C3333;
+  }
+
+  @media(min-width:670px) {
+    #register {
+      text-align: center;
+    }
+
+    #username, #password, #confirmPassword {
+      margin: 15px 0;
+    }
+
+    .form-register {
+      display: inline-block;
+      text-align: left;
+    }
+
+    button[type="submit"] {
+      /* margin: 0 auto 15px auto; */
+      max-width: 540px;
+    }
+  }
+</style>
