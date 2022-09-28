@@ -28,7 +28,7 @@ public interface PetDao {
     public Pet registerPet(Pet newPet);
 
     //update pet
-    public void updatePet(Pet petToUpdate);
+    public void updatePet(Pet petToUpdate, int id);
 
     //delete pet
     public void deletePet(int petId);

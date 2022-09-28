@@ -10,7 +10,7 @@ public class Pet {
     private String size;
     private String[] personalityType;
     private String description;
-    private boolean IsUpToDateWithVaccinations;
+    private boolean isUpToDateWithVaccinations;
     private boolean isFixed;
 
     public boolean getIsFixed() {
@@ -94,10 +94,10 @@ public class Pet {
     }
 
     public boolean getIsUpToDateWithVaccinations() {
-        return IsUpToDateWithVaccinations;
+        return isUpToDateWithVaccinations;
     }
 
-    public void setUpToDateWithVaccinations(boolean upToDateWithVaccinations) {
-        IsUpToDateWithVaccinations = upToDateWithVaccinations;
+    public void setUpToDateWithVaccinations(boolean isUpToDateWithVaccinations) {
+        this.isUpToDateWithVaccinations = isUpToDateWithVaccinations;
     }
 }
