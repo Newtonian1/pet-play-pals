@@ -1,6 +1,33 @@
 <template>
   <div id="main-container">
     <h1>Map Test</h1>
+
+    <div id="map-controls">
+
+      <div id="set-location">
+        <label for="search-location">Search Location: </label>
+        <input type="text" name="search-location" id="search-location">
+      </div>
+
+      <div id="slide-container">
+        <label for="radius">Search Radius: 
+
+          <input type="number" min="1" max="99" value="25" v-model="searchRadius" id="radius-box" @input="truncateRadius">
+
+           mile<span v-if="searchRadius != 1">s</span></label><br />
+        <input
+          type="range"
+          min="1"
+          max="99"
+          value="25"
+          id="radius"
+          name="radius"
+          v-model="searchRadius"
+        />
+      </div>
+
+    </div>
+
     <div id="map-container">
       <!-- documentation for Gmap: https://www.npmjs.com/package/vue2-google-maps -->
       <GmapMap
@@ -27,6 +54,8 @@
             lng: this.startingLong,
           }"
           :title="'Your Location'"
+          :icon="'http://maps.google.com/mapfiles/kml/pal4/icon47.png'"
+          @click="setSelectedId(0)"
         />
         <!-- <GmapMarker
             :key="index"
@@ -38,27 +67,17 @@
           /> -->
       </GmapMap>
       <div id="playdate-list">
+
         <div class="playdate-card" v-for="location in filteredLocations" :key="location.id" :class="{ 'selected-card': selectedId === location.id }">
           <h3>{{location.address1}}<br>
           {{location.city}}, {{location.state}}<br>
           {{location.zip}}</h3>
           <h4>Distance: {{location.distance}} mi.</h4>
         </div>
+
       </div>
     </div>
 
-    <div id="slide-container">
-      <label for="radius">Search Radius: {{ searchRadius }} miles</label><br />
-      <input
-        type="range"
-        min="1"
-        max="100"
-        value="25"
-        id="radius"
-        name="radius"
-        v-model="searchRadius"
-      />
-    </div>
   </div>
 </template>
 
@@ -84,6 +103,11 @@ export default {
     },
   },
   methods: {
+    truncateRadius() {
+      if (this.searchRadius.length > 2) {
+        this.searchRadius = this.searchRadius.slice(0,2);
+      }
+    },
     compareDistances(location1, location2) {
       return location1.distance - location2.distance;
     },
@@ -101,7 +125,7 @@ export default {
       return this.getLocationDistance(location) <= this.searchRadius;
     },
     getDistanceFromLatLonInMi(lat1, lon1, lat2, lon2) {
-      //Haversine formula
+      //Haversine formula for calculating the distance between 2 points on a sphere
       const R = 3958.8; // Radius of the earth in mi
       const dLat = this.deg2rad(lat2 - lat1); // deg2rad below
       const dLon = this.deg2rad(lon2 - lon1);
@@ -139,6 +163,10 @@ export default {
 </script>
 
 <style scoped>
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
 #main-container {
   display: flex;
   flex-direction: column;
@@ -146,10 +174,32 @@ export default {
   align-items: center;
 }
 
+#map-controls {
+  background-color: rgb(250, 251, 253);
+  padding: 12px;
+  border: 1px solid black;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#radius-box {
+  width: 32px;
+}
+
+#slide-container {
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+  padding: 10px;
+}
+
 #map-container {
   border: 1px solid black;
   display: flex;
   width: 100%;
+  margin-bottom: 16px;
 }
 
 #map {
@@ -175,9 +225,5 @@ export default {
 
 .selected-card.playdate-card {
   background-color: rgb(248, 248, 188);
-}
-
-#slide-container {
-  padding: 20px;
 }
 </style>
