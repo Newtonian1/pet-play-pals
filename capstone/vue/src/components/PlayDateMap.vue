@@ -14,7 +14,7 @@
 
           <input type="number" min="1" max="99" value="25" v-model="searchRadius" id="radius-box" @input="truncateRadius">
 
-           mile(s)</label><br />
+           mile<span v-if="searchRadius != 1">s</span></label><br />
         <input
           type="range"
           min="1"
@@ -125,7 +125,7 @@ export default {
       return this.getLocationDistance(location) <= this.searchRadius;
     },
     getDistanceFromLatLonInMi(lat1, lon1, lat2, lon2) {
-      //Haversine formula
+      //Haversine formula for calculating the distance between 2 points on a sphere
       const R = 3958.8; // Radius of the earth in mi
       const dLat = this.deg2rad(lat2 - lat1); // deg2rad below
       const dLon = this.deg2rad(lon2 - lon1);
@@ -163,6 +163,10 @@ export default {
 </script>
 
 <style scoped>
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
 #main-container {
   display: flex;
   flex-direction: column;
@@ -187,7 +191,7 @@ export default {
 #slide-container {
   display: flex;
   justify-content: space-between;
-  width: 20%;
+  width: 350px;
   padding: 10px;
 }
 
