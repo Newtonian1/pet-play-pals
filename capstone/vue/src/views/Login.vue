@@ -88,12 +88,15 @@ div#login {
 form.form-signin {
   display: flex;
   flex-direction: column;
+  max-width: 750px;
+  margin: 0 auto;
 }
 form > div.form-input {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding-bottom: 15px;
+  margin-left: 20px;
 }
 form > div > label,
 form > div > input {
@@ -109,6 +112,41 @@ form > button {
   margin-bottom: 15px;
 }
 form > #register-link {
-  margin: auto;
+  max-width: 350px;
+  /* margin: auto; */
+  margin-left: 12em;
+}
+
+#username, #password {
+  max-width: 325px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: 1px solid black;
+  line-height: 25px;
+}
+
+button[type="submit"] {
+  max-width: 325px;
+  margin-left: 100px;
+  background-color: #395B64;
+  font-family: monospace;
+  font-size: 18px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  height: 35px;
+  letter-spacing: 2px;
+  transition: all .3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #A5C9CA;
+  color: #2C3333;
+}
+
+@media(max-width:400px) {
+  form > #register-link {
+    margin-left: 9em;
+  }
 }
 </style>

@@ -79,7 +79,7 @@
                 <textarea id="abt-me" cols="35" rows="10" maxlength="1500" v-model="newPet.description"></textarea>
             </div>
 
-            <button type="submit" id="create-pet-btn">Create Pet</button>
+            <button type="submit" id="create-pet-btn">Add Pet</button>
 
 
         </form>
