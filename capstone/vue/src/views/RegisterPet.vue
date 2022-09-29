@@ -2,13 +2,15 @@
     <div class="register-pet">
        <h1>Register A Pet</h1>
        <add-pet-form />
+       <pet-list />
     </div> 
 </template>
 
 <script>
 import AddPetForm from '../components/AddPetForm.vue'
+import PetList from '../components/PetList.vue'
 export default {
-  components: { AddPetForm },
+  components: { AddPetForm, PetList },
 
 }
 </script>
