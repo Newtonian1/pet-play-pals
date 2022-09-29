@@ -138,7 +138,7 @@ CREATE TABLE play_date (
 	location_id int NOT NULL,
 	first_pet_id int NOT NULL,
 	second_pet_id int NOT NULL,
-	status_id int NOT NULL,
+	status_id int NOT NULL DEFAULT 5003,
 	CONSTRAINT PK_play_date PRIMARY KEY (play_date_id),
 	CONSTRAINT FK_play_date_location FOREIGN KEY (location_id) REFERENCES locations (location_id),
 	CONSTRAINT FK_play_date_status FOREIGN KEY (status_id) REFERENCES statuses (status_id),
