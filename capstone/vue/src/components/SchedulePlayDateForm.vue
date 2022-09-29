@@ -3,44 +3,73 @@
     <h2>Schedule a Play Date:</h2>
     <div class="fields">
       <label for="address-1">Address line 1:</label>
-      <input type="text" required v-model="addressOne"/>
+      <input type="text" required v-model="addressOne" />
       <label for="address-2">Address line 2:</label>
-      <input type="text" v-model="addressTwo"/>
+      <input type="text" v-model="addressTwo" />
       <label for="city">City:</label>
-      <input type="text" required v-model="city"/>
+      <input type="text" required v-model="city" />
       <label for="state">State:</label>
-      <input type="text" required v-model="state"/>
+      <input type="text" required v-model="state" />
       <label for="zip">Zip:</label>
-      <input type="text" required v-model="zip"/>
+      <input type="text" required v-model="zip" />
       <select v-model="hostPet">
-          <option disabled value="">Hosting Pet</option>
-          <option>Doggo</option>
-          <option>Doggy</option>
-          <option>Sir Patrick Stewart</option>
+        <option disabled value="">Hosting Pet</option>
+        <option>Doggo</option>
+        <option>Doggy</option>
+        <option>Sir Patrick Stewart</option>
       </select>
       <label for="time">Time: </label>
-      <input type="time" class="timepicker" name="timepicker" min="00:00" max="23:59" v-model="time" required>
+      <input
+        type="time"
+        class="timepicker"
+        name="timepicker"
+        min="00:00"
+        max="23:59"
+        v-model="time"
+        required
+      />
       <button type="submit">Submit Form</button>
     </div>
   </form>
 </template>
 
 <script>
+import geocodeService from "../services/GeocodeService";
 export default {
-data(){
+  data() {
     return {
-        addressOne: '',
-        addressTwo: '',
-        city: '',
-        state: '',
-        zip: '',
-        hostPet: ''
-
-    }
-}
-
-
-
+      addressOne: "",
+      addressTwo: "",
+      city: "",
+      state: "",
+      zip: "",
+      hostPet: "",
+      latitude: '',
+      longitude: '',
+      couldNotFindAddress: false
+    };
+  },
+  methods: {
+    getAddressCoords() {
+      let searchAddress =
+        this.addressOne.trim() +
+        ", " +
+        this.city.trim() +
+        ", " +
+        this.state.trim();
+      searchAddress = searchAddress.replaceAll(" ", "+");
+      geocodeService
+        .getCoords(searchAddress)
+        .then((response) => {
+          this.latitude = response.data.results[0].geometry.location.lat;
+          this.longitude = response.data.results[0].geometry.location.lng;
+          this.couldNotFindAddress = false;
+        })
+        .catch(() => {
+          this.couldNotFindAddress = true;
+        });
+    },
+  },
 };
 </script>
 
