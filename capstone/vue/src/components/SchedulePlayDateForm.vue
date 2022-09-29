@@ -18,6 +18,9 @@
           <option>Doggy</option>
           <option>Sir Patrick Stewart</option>
       </select>
+      <label for="time">Time: </label>
+      <input type="time" class="timepicker" name="timepicker" min="00:00" max="23:59" v-model="time" required>
+      <button type="submit">Submit Form</button>
     </div>
   </form>
 </template>
