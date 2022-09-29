@@ -7,13 +7,13 @@
             </div>
             <div class="form-element type-field">
                 <label for="dog" class="inline">Dog</label>
-                <input type="radio" name="cat-or-dog" id="dog" value="dog" v-model="newPet.petType">
+                <input type="radio" name="cat-or-dog" id="dog" value="dog" required v-model="newPet.petType">
                 <label for="cat" class="inline">Cat</label>
                 <input type="radio" name="cat-or-dog" id="cat" value="cat" v-model="newPet.petType">
             </div>
             <div class="form-element breed-field">
                 <label for="breed">Breed </label>
-                <input type="text" id="breed" placeholder="Yorkie" required autofocus v-model="newPet.breed"/>
+                <input type="text" id="breed" placeholder="Yorkie" autofocus v-model="newPet.breed"/>
             </div>
             <div class="form-element gender-field">
                 <label for="gender">Gender </label>
@@ -44,6 +44,9 @@
             </div>
             <div class="form-element personality-field">
                 <p>What is your pet's personality?</p>
+                <div style="visibility:hidden; color:red; " id="chk_option_error">
+                    <p id="errMsg" class="displayNone">Please select at least one option.</p>
+                </div>
                 <div class="trait-container">
                     <div class="group-1">
                         <input type="checkbox" id="friendly" name="personality-list" value="friendly" v-model="newPet.personalityType"/>
@@ -109,6 +112,9 @@ export default {
     methods: {
         savePet() {
             this.newPet.ownerId = this.$store.state.user.id;
+            if(!this.handleCheckbox()) {
+                return
+            }
             petService.registerPet(this.newPet)
             .then((response) => {
                 if (response.status == 201) {
@@ -122,6 +128,20 @@ export default {
         sendToHome () {
             this.resetForm();
             this.$router.push("/");
+        },
+        handleCheckbox() {
+            //const myForm = this.$el.querySelector("#pet-reg-form");
+            if(this.newPet.personalityType.length < 1) {
+                this.$el.querySelector("#chk_option_error").style.visibility = "visible";
+                this.$el.querySelector("#errMsg").classList.remove("displayNone");
+                
+                return false;
+                
+            } else {
+                this.$el.querySelector("#chk_option_error").style.visibility = "hidden";
+                this.$el.querySelector("#errMsg").classList.add("displayNone");
+                return true;
+            }
         }
     }
 }
@@ -161,6 +181,14 @@ export default {
 
     #dog {
         margin-right: 1.5em;
+    }
+
+    #errMsg {
+        margin: 0;
+    }
+
+    .displayNone {
+        display: none;
     }
 
     select {
