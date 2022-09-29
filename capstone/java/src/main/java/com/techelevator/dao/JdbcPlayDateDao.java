@@ -74,17 +74,27 @@ public class JdbcPlayDateDao implements PlayDateDao {
 
     @Override
     public PlayDate createPlayDate(PlayDate playDate) {
-        String sql = "INSERT INTO play_date (play_date_time,location_id,first_pet_id,second_pet_id,status_id) VALUES (?, ?, ?,?,(SELECT status_id FROM statuses WHERE status=?)) RETURNING play_date_id;";
+        String sql = "INSERT INTO play_date (play_date_time, location_id, first_pet_id, second_pet_id, status_id) \n" +
+                "VALUES (?, ?, ?, ?, (SELECT status_id FROM statuses WHERE status = ?)) \n" +
+                "RETURNING play_date_id;";
         Integer newPlayDateId = jdbcTemplate.queryForObject(
                 sql,
                 Integer.class,
                 playDate.getPlayDateTimeStamp(),
                 playDate.getLocationId(),
-                playDate.getPetOneId(),
-                playDate.getPetTwoId(),
+                playDate.getFirstPetId(),
+                playDate.getAttendingPetIds(),
                 playDate.getStatus()
         );
         if (newPlayDateId != null) {
+            // TODO Implement pet party additional pets
+            if (playDate.getAttendingPetIds() != null) {
+                for (Integer petId : playDate.getAttendingPetIds()) {
+//                    sql = "";
+//                    jdbcTemplate.queryForObject(sql, Integer.class);
+                    System.out.println(petId);
+                }
+            }
             return getPlayDateById(newPlayDateId);
         } else
             return null;
@@ -104,8 +114,8 @@ public class JdbcPlayDateDao implements PlayDateDao {
                 sql,
                 playDateToUpdate.getPlayDateTimeStamp(),
                 playDateToUpdate.getLocationId(),
-                playDateToUpdate.getPetTwoId(),
-                playDateToUpdate.getPetTwoId(),
+                playDateToUpdate.getAttendingPetIds(),
+                playDateToUpdate.getAttendingPetIds(),
                 playDateToUpdate.getStatus(),
                 id);
 
@@ -119,17 +129,18 @@ public class JdbcPlayDateDao implements PlayDateDao {
         return success == 1;
     }
 
-
     private PlayDate mapRowToPlayDate(SqlRowSet sql) {
 
         PlayDate playDate = new PlayDate();
         playDate.setPlayDateId(sql.getInt("play_date_id"));
         playDate.setLocationId(sql.getInt("location_id"));
-        playDate.setPetOneId(sql.getInt("first_pet_id"));
-        playDate.setPetTwoId(sql.getInt("second_pet_id"));
+        playDate.setFirstPetId(sql.getInt("first_pet_id"));
+//        playDate.setAttendingPetIds(sql.getInt("second_pet_id"));
         playDate.setStatus(sql.getString("status"));
-        playDate.setPlayDateTimeStamp(sql.getTimestamp("play_date_time").toLocalDateTime());
-        
+        if (sql.getTimestamp("play_date_time") != null) {
+            playDate.setPlayDateTimeStamp(sql.getTimestamp("play_date_time").toLocalDateTime());
+        }
+
         return playDate;
     }
 

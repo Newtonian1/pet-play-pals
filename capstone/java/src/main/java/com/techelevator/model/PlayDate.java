@@ -4,13 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class PlayDate {
     private int playDateId;
-    @JsonProperty("first_pet_id")
-    private int petOneId;
-    @JsonProperty("second_pet_id")
-    private int petTwoId;
+    private int firstPetId;
+    private List<Integer> attendingPetIds;
     private String status;
     private int locationId;
     private LocalDateTime playDateTimeStamp;
@@ -23,20 +22,20 @@ public class PlayDate {
         this.playDateId = playDateId;
     }
 
-    public int getPetOneId() {
-        return petOneId;
+    public int getFirstPetId() {
+        return firstPetId;
     }
 
-    public void setPetOneId(int petOneId) {
-        this.petOneId = petOneId;
+    public void setFirstPetId(int firstPetId) {
+        this.firstPetId = firstPetId;
     }
 
-    public int getPetTwoId() {
-        return petTwoId;
+    public List<Integer> getAttendingPetIds() {
+        return attendingPetIds;
     }
 
-    public void setPetTwoId(int petTwoId) {
-        this.petTwoId = petTwoId;
+    public void setAttendingPetIds(List<Integer> attendingPetIds) {
+        this.attendingPetIds = attendingPetIds;
     }
 
     public String getStatus() {
