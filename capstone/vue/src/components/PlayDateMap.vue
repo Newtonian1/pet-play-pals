@@ -9,7 +9,7 @@
         <p id="address-error" v-if="couldNotFindAddress"><strong>ADDRESS NOT FOUND</strong></p>
         <form id="search-form">
           <label for="search-address">Address: </label>
-          <input type="text" name="search-address" id="search-address" placeholder="123 Main St">
+          <input type="text" name="search-address" id="search-address" placeholder="Optional">
           <label for="search-city">City: </label>
           <input type="text" name="search-city" id="search-city" placeholder="Los Angeles">
           <label for="search-state">State: </label>
