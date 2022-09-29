@@ -5,16 +5,23 @@
     <div id="map-controls">
 
       <div id="set-location">
-        <label for="search-location">Search Location: </label>
-        <input type="text" name="search-location" id="search-location" value="I do not work yet">
+        <p id="search-form-label" v-if="!couldNotFindAddress"><strong>Search Location:</strong></p>
+        <p id="address-error" v-if="couldNotFindAddress"><strong>ADDRESS NOT FOUND</strong></p>
+        <form id="search-form">
+          <label for="search-address">Address: </label>
+          <input type="text" name="search-address" id="search-address" placeholder="123 Main St">
+          <label for="search-city">City: </label>
+          <input type="text" name="search-city" id="search-city" placeholder="Los Angeles">
+          <label for="search-state">State: </label>
+          <input type="text" name="search-state" id="search-state" placeholder="CA" @input="truncateState">
+          <button @click.prevent="setSearchAddress">Search</button>
+        </form>
       </div>
 
       <div id="slide-container">
-        <label for="radius">Search Radius:<br>
-
-          <input type="number" min="1" :max="maxRadius" value="25" v-model="searchRadius" id="radius-box" @input="truncateRadius">
-
-           mile<span v-if="searchRadius != 1">s</span></label><br />
+        <label for="radius" id="radius-label"><strong>Search Radius:</strong></label>
+        <p><input type="number" min="1" :max="maxRadius" value="25" v-model="searchRadius" id="radius-box" @input="truncateRadius">
+        mile<span v-if="searchRadius != 1">s</span></p>
         <input
           type="range"
           min="1"
@@ -86,6 +93,8 @@
 </template>
 
 <script>
+import mapService from '../services/MapService';
+
 export default {
   data() {
     return {
@@ -94,6 +103,7 @@ export default {
       searchRadius: 25,
       maxRadius: 150,
       selectedId: 0,
+      couldNotFindAddress: false,
     };
   },
   computed: {
@@ -108,6 +118,26 @@ export default {
     },
   },
   methods: {
+    setSearchAddress() {
+      let searchAddress = document.getElementById("search-address").value.trim() + ", " +
+                          document.getElementById("search-city").value.trim() + ", " +
+                          document.getElementById("search-state").value.trim();
+      searchAddress = searchAddress.replaceAll(" ", "+");
+      mapService.getCoords(searchAddress)
+      .then(response => {
+        this.startingLat = response.data.results[0].geometry.location.lat;
+        this.startingLong = response.data.results[0].geometry.location.lng;
+        this.couldNotFindAddress = false;
+      })
+      .catch(() => {
+        this.couldNotFindAddress = true;
+      });
+    },
+    truncateState() {
+      if (document.getElementById("search-state").value.length > 2) {
+        document.getElementById("search-state").value = document.getElementById("search-state").value.slice(0,2);
+      }
+    },
     truncateRadius() {
       if (this.searchRadius > this.maxRadius) {
         this.searchRadius = this.maxRadius;
@@ -192,7 +222,42 @@ export default {
 }
 
 #set-location {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-left: 10px;
+  flex-basis: 50%;
+}
+
+#search-form-label {
+  margin: 8px 0;
+}
+
+#address-error {
+  color: rgb(184, 5, 5);
+  margin-bottom: 8px;
+}
+
+#search-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#search-form input {
+  margin: 4px 8px 4px 0;
+}
+
+#search-address {
+  width: 150px;
+}
+
+#search-city {
+  width: 100px;
+}
+
+#search-state {
+  width: 30px;
 }
 
 #radius-box {
@@ -204,7 +269,11 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 350px;
+  flex-basis: 50%;
+}
+
+#radius-label {
+  margin: 8px 0 6px 0;
 }
 
 #map-container {
@@ -261,7 +330,6 @@ export default {
   }
 
   #slide-container {
-    flex-direction: row;
     width: 360px;
   }
 
@@ -272,9 +340,7 @@ export default {
 
 @media only screen and (min-width: 992px) {
   #map-controls {
-    height: 80px;
     justify-content: space-evenly;
-    align-items: center;
   }
 
   #map-container {
@@ -294,5 +360,21 @@ export default {
     overflow-y: auto;
     overflow-x: hidden;
   }
+
+  #search-form {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  #search-form input {
+    margin: 4px 8px 4px 8px;
+  }
+
+  #slide-container p,
+  #slide-container input {
+    margin-top: 0px;
+    margin-bottom: 4px;
+  }
+
 }
 </style>
