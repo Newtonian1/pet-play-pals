@@ -3,25 +3,56 @@
     <h1>Play Dates Near You</h1>
 
     <div id="map-controls">
-
       <div id="set-location">
-        <p id="search-form-label" v-if="!couldNotFindAddress"><strong>Search Location:</strong></p>
-        <p id="address-error" v-if="couldNotFindAddress"><strong>ADDRESS NOT FOUND</strong></p>
+        <p id="search-form-label" v-if="!couldNotFindAddress">
+          <strong>Search Location:</strong>
+        </p>
+        <p id="address-error" v-if="couldNotFindAddress">
+          <strong>ADDRESS NOT FOUND</strong>
+        </p>
         <form id="search-form">
           <label for="search-address">Address: </label>
-          <input type="text" name="search-address" id="search-address" placeholder="123 Main St">
+          <input
+            type="text"
+            name="search-address"
+            id="search-address"
+            placeholder="Optional"
+          />
           <label for="search-city">City: </label>
-          <input type="text" name="search-city" id="search-city" placeholder="Los Angeles">
+          <input
+            type="text"
+            name="search-city"
+            id="search-city"
+            placeholder="Los Angeles"
+          />
           <label for="search-state">State: </label>
-          <input type="text" name="search-state" id="search-state" placeholder="CA" @input="truncateState">
+          <input
+            type="text"
+            name="search-state"
+            id="search-state"
+            placeholder="CA"
+            @input="truncateState"
+          />
           <button @click.prevent="setSearchAddress">Search</button>
         </form>
       </div>
 
       <div id="slide-container">
-        <label for="radius" id="radius-label"><strong>Search Radius:</strong></label>
-        <p><input type="number" min="1" :max="maxRadius" value="25" v-model="searchRadius" id="radius-box" @input="truncateRadius">
-        mile<span v-if="searchRadius != 1">s</span></p>
+        <label for="radius" id="radius-label"
+          ><strong>Search Radius:</strong></label
+        >
+        <p>
+          <input
+            type="number"
+            min="1"
+            :max="maxRadius"
+            value="25"
+            v-model="searchRadius"
+            id="radius-box"
+            @input="truncateRadius"
+          />
+          mile<span v-if="searchRadius != 1">s</span>
+        </p>
         <input
           type="range"
           min="1"
@@ -32,7 +63,6 @@
           v-model="searchRadius"
         />
       </div>
-
     </div>
 
     <div id="map-container">
@@ -46,13 +76,13 @@
       >
         <GmapMarker
           v-for="location in filteredLocations"
-          :key="location.id"
+          :key="location.locationId"
           :position="{
             lat: parseFloat(location.latitude),
             lng: parseFloat(location.longitude),
           }"
           :clickable="true"
-          @click="setSelectedId(location.id)"
+          @click="setSelectedId(location.locationId)"
           :title="location.address1"
         />
         <GmapMarker
@@ -74,26 +104,31 @@
           /> -->
       </GmapMap>
       <div id="playdate-list">
-
-        <div class="playdate-card" v-for="location in filteredLocations" :key="location.id" :class="{ 'selected-card': selectedId === location.id }">
+        <div
+          class="playdate-card"
+          v-for="location in filteredLocations"
+          :key="location.id"
+          :class="{ 'selected-card': selectedId === location.locationId }"
+        >
           <div class="address">
-            <h3>{{location.address1}}<br>
-            {{location.city}}, {{location.state}}<br>
-            {{location.zip}}</h3>
+            <h3>
+              {{ location.address1 }}<br />
+              {{ location.city }}, {{ location.stateAbbreviation }}<br />
+            </h3>
           </div>
           <div class="distance">
-            <h4>Distance: {{location.distance}} mi.</h4>
+            <h4>Distance: {{ location.distance }} mi.</h4>
           </div>
         </div>
-
       </div>
     </div>
-
   </div>
 </template>
 
+
 <script>
-import mapService from '../services/MapService';
+import mapService from "../services/MapService";
+import geocodeService from "../services/GeocodeService";
 
 export default {
   data() {
@@ -104,14 +139,23 @@ export default {
       maxRadius: 150,
       selectedId: 0,
       couldNotFindAddress: false,
+      playDates: [],
+      locations: [],
     };
   },
   computed: {
     filteredLocations() {
-      const locations = this.$store.state.playDateLocations;
-      locations.forEach(location => {location.distance = this.getLocationDistance(location).toFixed(2)});
+      const playDateLocationIds = this.playDates.map(playDate => {
+        return playDate.locationId;
+      });
+      const locations = this.locations.filter(location => {
+        return playDateLocationIds.includes(location.locationId);
+      });
+      locations.forEach((location) => {
+        location.distance = this.getLocationDistance(location).toFixed(2);
+      });
       const filteredList = locations.filter((location) => {
-        return this.isLocationWithinRadius(location)
+        return this.isLocationWithinRadius(location);
       });
       filteredList.sort(this.compareDistances);
       return filteredList;
@@ -119,23 +163,29 @@ export default {
   },
   methods: {
     setSearchAddress() {
-      let searchAddress = document.getElementById("search-address").value.trim() + ", " +
-                          document.getElementById("search-city").value.trim() + ", " +
-                          document.getElementById("search-state").value.trim();
+      let searchAddress =
+        document.getElementById("search-address").value.trim() +
+        ", " +
+        document.getElementById("search-city").value.trim() +
+        ", " +
+        document.getElementById("search-state").value.trim();
       searchAddress = searchAddress.replaceAll(" ", "+");
-      mapService.getCoords(searchAddress)
-      .then(response => {
-        this.startingLat = response.data.results[0].geometry.location.lat;
-        this.startingLong = response.data.results[0].geometry.location.lng;
-        this.couldNotFindAddress = false;
-      })
-      .catch(() => {
-        this.couldNotFindAddress = true;
-      });
+      geocodeService
+        .getCoords(searchAddress)
+        .then((response) => {
+          this.startingLat = response.data.results[0].geometry.location.lat;
+          this.startingLong = response.data.results[0].geometry.location.lng;
+          this.couldNotFindAddress = false;
+        })
+        .catch(() => {
+          this.couldNotFindAddress = true;
+        });
     },
     truncateState() {
       if (document.getElementById("search-state").value.length > 2) {
-        document.getElementById("search-state").value = document.getElementById("search-state").value.slice(0,2);
+        document.getElementById("search-state").value = document
+          .getElementById("search-state")
+          .value.slice(0, 2);
       }
     },
     truncateRadius() {
@@ -181,7 +231,7 @@ export default {
     },
     setSelectedId(id) {
       this.selectedId = id;
-    }
+    },
   },
   created() {
     //Set center of map to user's current location
@@ -193,13 +243,37 @@ export default {
     } else {
       console.log("Could not get user coordinates");
     }
+
+    //Get play dates from API
+    mapService
+      .getPlayDates()
+      .then(response => {
+        this.playDates = response.data;
+        this.$store.commit('SET_PLAY_DATES', this.playDates);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    
+    //Get locations from API
+    mapService
+      .getLocations()
+      .then(response => {
+        this.locations = response.data;
+        this.$store.commit('SET_LOCATIONS', this.locations);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
   },
 };
 </script>
 
+
 <style scoped>
 * {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   box-sizing: border-box;
 }
 
@@ -375,6 +449,5 @@ export default {
     margin-top: 0px;
     margin-bottom: 4px;
   }
-
 }
 </style>
