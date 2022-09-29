@@ -3,25 +3,56 @@
     <h1>Play Dates Near You</h1>
 
     <div id="map-controls">
-
       <div id="set-location">
-        <p id="search-form-label" v-if="!couldNotFindAddress"><strong>Search Location:</strong></p>
-        <p id="address-error" v-if="couldNotFindAddress"><strong>ADDRESS NOT FOUND</strong></p>
+        <p id="search-form-label" v-if="!couldNotFindAddress">
+          <strong>Search Location:</strong>
+        </p>
+        <p id="address-error" v-if="couldNotFindAddress">
+          <strong>ADDRESS NOT FOUND</strong>
+        </p>
         <form id="search-form">
           <label for="search-address">Address: </label>
-          <input type="text" name="search-address" id="search-address" placeholder="Optional">
+          <input
+            type="text"
+            name="search-address"
+            id="search-address"
+            placeholder="Optional"
+          />
           <label for="search-city">City: </label>
-          <input type="text" name="search-city" id="search-city" placeholder="Los Angeles">
+          <input
+            type="text"
+            name="search-city"
+            id="search-city"
+            placeholder="Los Angeles"
+          />
           <label for="search-state">State: </label>
-          <input type="text" name="search-state" id="search-state" placeholder="CA" @input="truncateState">
+          <input
+            type="text"
+            name="search-state"
+            id="search-state"
+            placeholder="CA"
+            @input="truncateState"
+          />
           <button @click.prevent="setSearchAddress">Search</button>
         </form>
       </div>
 
       <div id="slide-container">
-        <label for="radius" id="radius-label"><strong>Search Radius:</strong></label>
-        <p><input type="number" min="1" :max="maxRadius" value="25" v-model="searchRadius" id="radius-box" @input="truncateRadius">
-        mile<span v-if="searchRadius != 1">s</span></p>
+        <label for="radius" id="radius-label"
+          ><strong>Search Radius:</strong></label
+        >
+        <p>
+          <input
+            type="number"
+            min="1"
+            :max="maxRadius"
+            value="25"
+            v-model="searchRadius"
+            id="radius-box"
+            @input="truncateRadius"
+          />
+          mile<span v-if="searchRadius != 1">s</span>
+        </p>
         <input
           type="range"
           min="1"
@@ -32,7 +63,6 @@
           v-model="searchRadius"
         />
       </div>
-
     </div>
 
     <div id="map-container">
@@ -74,26 +104,30 @@
           /> -->
       </GmapMap>
       <div id="playdate-list">
-
-        <div class="playdate-card" v-for="location in filteredLocations" :key="location.id" :class="{ 'selected-card': selectedId === location.id }">
+        <div
+          class="playdate-card"
+          v-for="location in filteredLocations"
+          :key="location.id"
+          :class="{ 'selected-card': selectedId === location.id }"
+        >
           <div class="address">
-            <h3>{{location.address1}}<br>
-            {{location.city}}, {{location.state}}<br>
-            {{location.zip}}</h3>
+            <h3>
+              {{ location.address1 }}<br />
+              {{ location.city }}, {{ location.state }}<br />
+              {{ location.zip }}
+            </h3>
           </div>
           <div class="distance">
-            <h4>Distance: {{location.distance}} mi.</h4>
+            <h4>Distance: {{ location.distance }} mi.</h4>
           </div>
         </div>
-
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-import mapService from '../services/MapService';
+import mapService from "../services/MapService";
 
 export default {
   data() {
@@ -109,9 +143,11 @@ export default {
   computed: {
     filteredLocations() {
       const locations = this.$store.state.playDateLocations;
-      locations.forEach(location => {location.distance = this.getLocationDistance(location).toFixed(2)});
+      locations.forEach((location) => {
+        location.distance = this.getLocationDistance(location).toFixed(2);
+      });
       const filteredList = locations.filter((location) => {
-        return this.isLocationWithinRadius(location)
+        return this.isLocationWithinRadius(location);
       });
       filteredList.sort(this.compareDistances);
       return filteredList;
@@ -119,23 +155,29 @@ export default {
   },
   methods: {
     setSearchAddress() {
-      let searchAddress = document.getElementById("search-address").value.trim() + ", " +
-                          document.getElementById("search-city").value.trim() + ", " +
-                          document.getElementById("search-state").value.trim();
+      let searchAddress =
+        document.getElementById("search-address").value.trim() +
+        ", " +
+        document.getElementById("search-city").value.trim() +
+        ", " +
+        document.getElementById("search-state").value.trim();
       searchAddress = searchAddress.replaceAll(" ", "+");
-      mapService.getCoords(searchAddress)
-      .then(response => {
-        this.startingLat = response.data.results[0].geometry.location.lat;
-        this.startingLong = response.data.results[0].geometry.location.lng;
-        this.couldNotFindAddress = false;
-      })
-      .catch(() => {
-        this.couldNotFindAddress = true;
-      });
+      mapService
+        .getCoords(searchAddress)
+        .then((response) => {
+          this.startingLat = response.data.results[0].geometry.location.lat;
+          this.startingLong = response.data.results[0].geometry.location.lng;
+          this.couldNotFindAddress = false;
+        })
+        .catch(() => {
+          this.couldNotFindAddress = true;
+        });
     },
     truncateState() {
       if (document.getElementById("search-state").value.length > 2) {
-        document.getElementById("search-state").value = document.getElementById("search-state").value.slice(0,2);
+        document.getElementById("search-state").value = document
+          .getElementById("search-state")
+          .value.slice(0, 2);
       }
     },
     truncateRadius() {
@@ -181,7 +223,7 @@ export default {
     },
     setSelectedId(id) {
       this.selectedId = id;
-    }
+    },
   },
   created() {
     //Set center of map to user's current location
@@ -199,7 +241,7 @@ export default {
 
 <style scoped>
 * {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   box-sizing: border-box;
 }
 
@@ -375,6 +417,5 @@ export default {
     margin-top: 0px;
     margin-bottom: 4px;
   }
-
 }
 </style>
