@@ -5,13 +5,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JdbcPlayDateDao implements PlayDateDao{
+public class JdbcPlayDateDao implements PlayDateDao {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -29,7 +28,7 @@ public class JdbcPlayDateDao implements PlayDateDao{
                 "JOIN statuses s ON pd.status_id = s.status_id\n;";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-        while(results.next()){
+        while (results.next()) {
             PlayDate playDate = mapRowToPlayDate(results);
             allPlayDates.add(playDate);
         }
@@ -45,10 +44,10 @@ public class JdbcPlayDateDao implements PlayDateDao{
                 "JOIN statuses s ON pd.status_id = s.status_id\n" +
                 "WHERE pd.play_date_id = ?;";
 
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql,playDateId);
-        if (results.next()){
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, playDateId);
+        if (results.next()) {
             return mapRowToPlayDate(results);
-        }else return null;
+        } else return null;
 //working in pm
 
     }
@@ -65,64 +64,63 @@ public class JdbcPlayDateDao implements PlayDateDao{
                 "WHERE pd.play_date_time = ?;";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, playDateLocalDateAndTime);
-while(results.next()){
-    PlayDate playDate = mapRowToPlayDate(results);
-    playDatesByLocalDateAndTime.add(playDate);
-}
+        while (results.next()) {
+            PlayDate playDate = mapRowToPlayDate(results);
+            playDatesByLocalDateAndTime.add(playDate);
+        }
         return playDatesByLocalDateAndTime;
     }
-
 
 
     @Override
     public PlayDate createPlayDate(PlayDate playDate) {
         String sql = "INSERT INTO play_date (play_date_time,location_id,first_pet_id,second_pet_id,status_id) VALUES (?, ?, ?,?,(SELECT status_id FROM statuses WHERE status=?)) RETURNING play_date_id;";
-Integer newPlayDateId = jdbcTemplate.queryForObject(
-        sql,
-        Integer.class,
-        playDate.getPlayDateTimeStamp(),
-        playDate.getLocationId(),
-        playDate.getPetOneId(),
-        playDate.getPetTwoId(),
-        playDate.getStatus()
-);
-if (newPlayDateId!=null){
-    return getPlayDateById(newPlayDateId);
-} else
-        return null;
+        Integer newPlayDateId = jdbcTemplate.queryForObject(
+                sql,
+                Integer.class,
+                playDate.getPlayDateTimeStamp(),
+                playDate.getLocationId(),
+                playDate.getPetOneId(),
+                playDate.getPetTwoId(),
+                playDate.getStatus()
+        );
+        if (newPlayDateId != null) {
+            return getPlayDateById(newPlayDateId);
+        } else
+            return null;
     }
 
     @Override
-    public boolean updatePlayDate(PlayDate playDateToUpdate,int id) {
-String sql = "UPDATE play_date\n" +
-        "SET play_date_time = ?,\n" +
-        "location_id =?,\n" +
-        "first_pet_id=?,\n" +
-        "second_pet_id=?,\n" +
-        "status=(SELECT status_id FROM statuses WHERE status =?)\n" +
-        "WHERE play_date_id=?;";
+    public boolean updatePlayDate(PlayDate playDateToUpdate, int id) {
+        String sql = "UPDATE play_date\n" +
+                "SET play_date_time = ?,\n" +
+                "location_id = ?,\n" +
+                "first_pet_id = ?,\n" +
+                "second_pet_id = ?,\n" +
+                "status_id = (SELECT status_id FROM statuses WHERE status = ?)\n" +
+                "WHERE play_date_id = ?;";
 
-int success = jdbcTemplate.update(
-        sql,
-        playDateToUpdate.getLocationId(),
-        Timestamp.valueOf(playDateToUpdate.getPlayDateTimeStamp()),
-        playDateToUpdate.getPetTwoId(),
-        playDateToUpdate.getPetTwoId(),
-        playDateToUpdate.getStatus(),
-        id);
+        int success = jdbcTemplate.update(
+                sql,
+                playDateToUpdate.getPlayDateTimeStamp(),
+                playDateToUpdate.getLocationId(),
+                playDateToUpdate.getPetTwoId(),
+                playDateToUpdate.getPetTwoId(),
+                playDateToUpdate.getStatus(),
+                id);
 
-return success ==1;
+        return success == 1;
     }
 
     @Override
     public boolean deletePlayDate(int playDateId) {
         String sql = "DELETE FROM play_date WHERE play_date_id =?";
-       int success =  jdbcTemplate.update(sql,playDateId);
+        int success = jdbcTemplate.update(sql, playDateId);
         return success == 1;
     }
 
 
-    private PlayDate mapRowToPlayDate(SqlRowSet sql){
+    private PlayDate mapRowToPlayDate(SqlRowSet sql) {
 
         PlayDate playDate = new PlayDate();
         playDate.setPlayDateId(sql.getInt("play_date_id"));
@@ -131,8 +129,7 @@ return success ==1;
         playDate.setPetTwoId(sql.getInt("second_pet_id"));
         playDate.setStatus(sql.getString("status"));
         playDate.setPlayDateTimeStamp(sql.getTimestamp("play_date_time").toLocalDateTime());
-
-
+        
         return playDate;
     }
 
