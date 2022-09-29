@@ -45,7 +45,7 @@ CREATE TABLE pets (
 	pet_name varchar(50) NOT NULL,
 	owner_id int NOT NULL,
 	pet_type_id int NOT NULL,
-	breed varchar(50) NOT NULL,
+	breed varchar(50),
 	gender_id int NOT NULL,
 	size_id int NOT NULL,
 	is_fixed boolean NOT NULL DEFAULT FALSE,

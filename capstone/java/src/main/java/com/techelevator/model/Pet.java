@@ -1,5 +1,7 @@
 package com.techelevator.model;
 
+import java.util.List;
+
 public class Pet {
     private int petId;
     private int ownerId;
@@ -8,7 +10,7 @@ public class Pet {
     private String breed;
     private String gender;
     private String size;
-    private String[] personalityType;
+    private List<String> personalityTypes;
     private String description;
     private boolean isUpToDateWithVaccinations;
     private boolean isFixed;
@@ -77,12 +79,12 @@ public class Pet {
         this.size = size;
     }
 
-    public String[] getPersonalityType() {
-        return personalityType;
+    public List<String> getPersonalityTypes() {
+        return personalityTypes;
     }
 
-    public void setPersonalityType(String[] personalityType) {
-        this.personalityType = personalityType;
+    public void setPersonalityTypes(List<String> personalityTypes) {
+        this.personalityTypes = personalityTypes;
     }
 
     public String getDescription() {

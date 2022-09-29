@@ -50,62 +50,6 @@ public class JdbcPetDao implements PetDao {
     }
 
     @Override
-    public List<Pet> getPetsByType(String petType) {
-        List<Pet> petsByType = new ArrayList<>();
-        String sql = "SELECT p.pet_id, p.pet_name, p.owner_id, pt.pet_type, p.breed, pg.gender, ps.pet_size, p.is_fixed, p.is_up_to_date_with_vaccinations, p.pet_description\n" +
-                "FROM pets p\n" +
-                "JOIN pet_types pt ON pt.pet_type_id = p.pet_type_id\n" +
-                "JOIN pet_genders pg ON pg.gender_id = p.gender_id\n" +
-                "JOIN pet_sizes ps ON ps.pet_size_id = p.size_id\n" +
-                "WHERE pt.pet_type = ?;";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, petType);
-        while (results.next()) {
-            Pet pet = mapRowToPet(results);
-            petsByType.add(pet);
-        }
-        return petsByType;
-    }
-
-
-    @Override
-    public List<Pet> getPetsByOwnerId(int ownerId) {
-        List<Pet> petsByUserId = new ArrayList<>();
-        String sql = "SELECT * FROM pets WHERE owner_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, ownerId);
-        while (results.next()) {
-            Pet pet = mapRowToPet(results);
-            petsByUserId.add(pet);
-        }
-
-        return petsByUserId;
-    }
-
-    @Override
-    public List<Pet> getPetsByPersonalityType(String personality) { //double check this later
-        List<Pet> petsByPersonality = new ArrayList<>();
-        String sql = "SELECT * FROM pets WHERE personality_type =?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, personality);
-        while (results.next()) {
-            Pet pet = mapRowToPet(results);
-            petsByPersonality.add(pet);
-        }
-        return petsByPersonality;
-    }
-
-    @Override
-    public List<Pet> getPetsByBreed(String breed) {
-        List<Pet> petsByBreed = new ArrayList<>();
-        String sql = "SELECT * FROM pets WHERE breed =?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, breed);
-        while (results.next()) {
-            Pet pet = mapRowToPet(results);
-            petsByBreed.add(pet);
-        }
-
-        return petsByBreed;
-    }
-
-    @Override
     public Pet registerPet(Pet newPet) {
         String sql = "INSERT INTO pets \n" +
                 "\t(pet_name,\n" +
@@ -142,6 +86,7 @@ public class JdbcPetDao implements PetDao {
                 newPet.getDescription()
         );
         if (newPetId != null) {
+            addPersonalitiesByPetId(newPet, newPetId);
             return getPetByPetId(newPetId);
         } else {
             return null; // throw exception?
@@ -180,13 +125,48 @@ public class JdbcPetDao implements PetDao {
                 petToUpdate.getDescription(),
                 id
         );
+        deletePersonalitiesByPetId(id);
+        addPersonalitiesByPetId(petToUpdate, id);
     }
 
     @Override
     public void deletePet(int petId) {
+        deletePersonalitiesByPetId(petId);
         String sql = "DELETE FROM pets WHERE pet_id = ?";
         jdbcTemplate.update(sql, petId);
+    }
 
+    private List<String> getPersonalitiesByPetId(int id) {
+        List<String> personalities = new ArrayList<>();
+        String sql = "SELECT p.personality_type\n" +
+                "FROM personalities p\n" +
+                "JOIN pet_personality pp ON p.personality_id = pp.personality_id\n" +
+                "WHERE pp.pet_id = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
+        while (results.next()) {
+            personalities.add(results.getString("personality_type"));
+        }
+        return personalities;
+    }
+
+    private void deletePersonalitiesByPetId(int petId) {
+        String sql = "DELETE FROM pet_personality\n" +
+                "WHERE pet_id = ?;";
+        jdbcTemplate.update(sql, petId);
+    }
+
+    private void addPersonalitiesByPetId(Pet pet, Integer petId) {
+        if (pet.getPersonalityTypes() != null) {
+            for (String personalityType : pet.getPersonalityTypes()) {
+                String sql = "INSERT INTO pet_personality (pet_id, personality_id)\n" +
+                        "VALUES (?, \n" +
+                        "\t\t(SELECT personality_id \n" +
+                        "\t\t FROM personalities \n" +
+                        "\t\t WHERE personality_type = ?)\n" +
+                        ") ON CONFLICT DO NOTHING RETURNING pet_id;";
+                jdbcTemplate.queryForObject(sql, Integer.class, petId, personalityType);
+            }
+        }
     }
 
     private Pet mapRowToPet(SqlRowSet sql) {
@@ -196,12 +176,12 @@ public class JdbcPetDao implements PetDao {
         pet.setPetType(sql.getString("pet_type"));
         pet.setBreed(sql.getString("breed"));
         pet.setGender(sql.getString("gender"));
-        //pet.setPersonalityType(sql.getString("personality_type"));
         pet.setPetName(sql.getString("pet_name"));
         pet.setSize(sql.getString("pet_size"));
         pet.setDescription(sql.getString("pet_description"));
         pet.setUpToDateWithVaccinations(sql.getBoolean("is_up_to_date_with_vaccinations"));
         pet.setFixed(sql.getBoolean("is_fixed"));
+        pet.setPersonalityTypes(getPersonalitiesByPetId(pet.getPetId()));
         return pet;
     }
 
