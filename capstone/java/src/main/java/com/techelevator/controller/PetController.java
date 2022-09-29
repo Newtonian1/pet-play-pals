@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,61 +24,63 @@ public class PetController {
      * Returns a list of all pets or a filtered list based on the provided parameters.
      * e.g. /pets -> returns all pets
      * e.g. /pets?type=dog returns all dogs
+     * e.g. /pets?ownerId=1003&type=cat returns all cats owned by used with the ID 1003
      *
-     * @param type the pet type to return as a String
+     * @param type the pet type as a String
+     * @param ownerId the ID of the pet's owner as an Integer
      * @return a list of pets that match the given parameters
      */
     @RequestMapping(path = "/pets", method = RequestMethod.GET)
-    public List<Pet> allPets(@RequestParam(required = false) String type) {
+    public List<Pet> allPets(@RequestParam(required = false) String type, @RequestParam(required = false) Integer ownerId) {
+        List<Pet> pets = petDao.getAllPets();
         if (type != null) {
-            return petDao.getAllPets().stream().filter(pet -> pet.getPetType().equalsIgnoreCase(type)).collect(Collectors.toList());
-        } else {
-            return petDao.getAllPets();
+            pets = pets.stream().filter(pet -> pet.getPetType().equalsIgnoreCase(type)).collect(Collectors.toList());
         }
+        if (ownerId != null) {
+            pets = pets.stream().filter(pet -> pet.getOwnerId() == ownerId).collect(Collectors.toList());
+        }
+        return pets;
     }
 
-    //return pets by the pet id
+    /**
+     * Returns a single pet with the corresponding petId
+     *
+     * @param id the petId for the pet as an int
+     * @return a single pet with the matching id
+     */
     @RequestMapping(path = "/pets/{id}", method = RequestMethod.GET)
     public Pet petsByPetId(@PathVariable int id) {
         return petDao.getPetByPetId(id);
     }
 
-    // return list of pets from ownerid
-    @RequestMapping(path = "/pets/owners/{id}", method = RequestMethod.GET) // path?
-    public List<Pet> petsByOwnerId(@PathVariable int id) {
-        return petDao.getPetsByOwnerId(id);
-    }
-
-    //return list of pets by type
-    @RequestMapping(path = "/pets/type/{id}", method = RequestMethod.GET) //might not be accurate
-    public List<Pet> petsByType(@PathVariable String id) {
-        return petDao.getPetsByPersonalityType(id);
-    }
-
-    //list of pets by breed
-    @RequestMapping(path = "/pets/breed/{id}", method = RequestMethod.GET) //path?
-    public List<Pet> petsByBreed(@PathVariable String id) {
-        return petDao.getPetsByBreed(id);
-    }
-
-//TODO personality type
-
-    //register a pet
+    /**
+     * Registers a new pet to the database
+     * @param newPet the pet object to add
+     * @return the added pet object
+     */
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path = "/pets", method = RequestMethod.POST) //path?
+    @RequestMapping(path = "/pets", method = RequestMethod.POST)
     public Pet registerPet(@Valid @RequestBody Pet newPet) //throw exception?
     {
         return petDao.registerPet(newPet);
     }
 
-
-    //update a pet
+    /**
+     * Updates a pet in the database
+     *
+     * @param updatedPet the updated pet object to store
+     * @param id the id of the pet to update
+     */
     @RequestMapping(path = "/pets/{id}", method = RequestMethod.PUT)
     public void updatePet(@RequestBody Pet updatedPet, @PathVariable int id) {
         petDao.updatePet(updatedPet, id);
     }
 
-    //delete a pet
+    /**
+     * Deletes a pet with the given id
+     *
+     * @param id the id of the pet to delete
+     */
     @RequestMapping(path = "/pets/{id}", method = RequestMethod.DELETE)
     public void deletePet(@PathVariable int id) {
         petDao.deletePet(id);
