@@ -76,13 +76,13 @@
       >
         <GmapMarker
           v-for="location in filteredLocations"
-          :key="location.id"
+          :key="location.locationId"
           :position="{
             lat: parseFloat(location.latitude),
             lng: parseFloat(location.longitude),
           }"
           :clickable="true"
-          @click="setSelectedId(location.id)"
+          @click="setSelectedId(location.locationId)"
           :title="location.address1"
         />
         <GmapMarker
@@ -108,13 +108,12 @@
           class="playdate-card"
           v-for="location in filteredLocations"
           :key="location.id"
-          :class="{ 'selected-card': selectedId === location.id }"
+          :class="{ 'selected-card': selectedId === location.locationId }"
         >
           <div class="address">
             <h3>
               {{ location.address1 }}<br />
-              {{ location.city }}, {{ location.state }}<br />
-              {{ location.zip }}
+              {{ location.city }}, {{ location.stateAbbreviation }}<br />
             </h3>
           </div>
           <div class="distance">
@@ -126,8 +125,10 @@
   </div>
 </template>
 
+
 <script>
 import mapService from "../services/MapService";
+import geocodeService from "../services/GeocodeService";
 
 export default {
   data() {
@@ -138,11 +139,18 @@ export default {
       maxRadius: 150,
       selectedId: 0,
       couldNotFindAddress: false,
+      playDates: [],
+      locations: [],
     };
   },
   computed: {
     filteredLocations() {
-      const locations = this.$store.state.playDateLocations;
+      const playDateLocationIds = this.playDates.map(playDate => {
+        return playDate.locationId;
+      });
+      const locations = this.locations.filter(location => {
+        return playDateLocationIds.includes(location.locationId);
+      });
       locations.forEach((location) => {
         location.distance = this.getLocationDistance(location).toFixed(2);
       });
@@ -162,7 +170,7 @@ export default {
         ", " +
         document.getElementById("search-state").value.trim();
       searchAddress = searchAddress.replaceAll(" ", "+");
-      mapService
+      geocodeService
         .getCoords(searchAddress)
         .then((response) => {
           this.startingLat = response.data.results[0].geometry.location.lat;
@@ -235,9 +243,33 @@ export default {
     } else {
       console.log("Could not get user coordinates");
     }
+
+    //Get play dates from API
+    mapService
+      .getPlayDates()
+      .then(response => {
+        this.playDates = response.data;
+        this.$store.commit('SET_PLAY_DATES', this.playDates);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    
+    //Get locations from API
+    mapService
+      .getLocations()
+      .then(response => {
+        this.locations = response.data;
+        this.$store.commit('SET_LOCATIONS', this.locations);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
   },
 };
 </script>
+
 
 <style scoped>
 * {
