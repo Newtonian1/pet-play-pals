@@ -2,6 +2,7 @@ package com.techelevator.model;
 
 public class Location {
     private int locationId;
+    private String locationName;
     private String address1;
     private String address2;
     private String city;
@@ -13,8 +14,9 @@ public class Location {
     public Location() {
     }
 
-    public Location(int locationId, String address1, String address2, String city, String stateAbbreviation, String zipCode, double latitude, double longitude) {
+    public Location(String locationName, int locationId, String address1, String address2, String city, String stateAbbreviation, String zipCode, double latitude, double longitude) {
         this.locationId = locationId;
+        this.locationName = locationName;
         this.address1 = address1;
         this.address2 = address2;
         this.city = city;
@@ -30,6 +32,14 @@ public class Location {
 
     public void setLocationId(int locationId) {
         this.locationId = locationId;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 
     public String getAddress1() {
