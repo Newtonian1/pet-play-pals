@@ -1,8 +1,8 @@
 <template>
     <div id="pet-container">
-        <div class="flip-card" v-for="pet in pets" :key="pet.name">
+        <div class="flip-card" v-for="pet in filterPets" :key="pet.name">
             <div class="flip-card-inner">
-                <div class="flip-card-front" v-for="pic in pics" :key="pic">
+                <div class="flip-card-front">
                     <img class="front-img" src="../assets/doggo3.jpg" alt="doggo" >
                     <!-- <img class="front-img" :src="getImgUrl(pic)" v-bind:alt="pic"> -->
                 </div>
@@ -27,11 +27,12 @@
 </template>
 
 <script>
+    import petService from '../services/petService';
     export default {
         name: 'pet-list',
         data() {
             return {
-                pics: ['doggo1', 'doggo2', 'kitty1'],
+                currentOwnerId: 0,
                 pets: [
                     {
                         petName: 'Fido',
@@ -55,6 +56,19 @@
                         description: "angery pupper I have ever seen, such treat borking doggo fat boi you are doing me a frighten. Woofer you are doing me the shock snoot waggy wags what a nice floof blop doing me a frighten, pats heckin good boys"
                     }
                 ]
+            }
+        },
+        created () {
+            petService.getAllPets().then(res => {
+                if(res.status === 200) {
+                    this.pets = res.data;
+                }
+            });
+            this.currentOwnerId = this.$store.state.user.id;
+        },
+        computed: {
+            filterPets() {
+                return this.pets.filter(pet => pet.ownerId == this.currentOwnerId);
             }
         },
         methods: {
@@ -164,6 +178,7 @@
     /* Style the front side (fallback if image is missing) */
     .flip-card-front {
     background-color: #bbb;
+    background-image: ;
     color: black;
     
     }
