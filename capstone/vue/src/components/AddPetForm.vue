@@ -49,30 +49,30 @@
                 </div>
                 <div class="trait-container">
                     <div class="group-1">
-                        <input type="checkbox" id="friendly" name="personality-list" value="friendly" v-model="newPet.personalityType"/>
+                        <input type="checkbox" id="friendly" name="personality-list" value="friendly" v-model="newPet.personalityTypes"/>
                         <label for="friendly" class="inline">Friendly</label>
                         <br>
-                        <input type="checkbox" id="hyper" name="personality-list" value="hyper" v-model="newPet.personalityType"/>
+                        <input type="checkbox" id="hyper" name="personality-list" value="hyper" v-model="newPet.personalityTypes"/>
                         <label for="hyper" class="inline">Hyper</label>
                         <br>
-                        <input type="checkbox" id="serious" name="personality-list" value="serious" v-model="newPet.personalityType"/>
+                        <input type="checkbox" id="serious" name="personality-list" value="serious" v-model="newPet.personalityTypes"/>
                         <label for="serious" class="inline">Serious</label>
                         <br>
-                        <input type="checkbox" id="shy" name="personality-list" value="shy" v-model="newPet.personalityType"/>
+                        <input type="checkbox" id="shy" name="personality-list" value="shy" v-model="newPet.personalityTypes"/>
                         <label for="shy" class="inline">Shy</label>
                         <br>
                     </div>
                     <div class="group-2">
-                        <input type="checkbox" id="calm" name="personality-list" value="calm" v-model="newPet.personalityType"/>
+                        <input type="checkbox" id="calm" name="personality-list" value="calm" v-model="newPet.personalityTypes"/>
                         <label for="calm" class="inline">Calm</label>
                         <br>
-                        <input type="checkbox" id="loner" name="personality-list" value="loner" v-model="newPet.personalityType"/>
+                        <input type="checkbox" id="loner" name="personality-list" value="loner" v-model="newPet.personalityTypes"/>
                         <label for="loner" class="inline">Loner</label>
                         <br>
-                        <input type="checkbox" id="ball" name="personality-list" value="ball" v-model="newPet.personalityType"/>
+                        <input type="checkbox" id="ball" name="personality-list" value="ball" v-model="newPet.personalityTypes"/>
                         <label for="ball" class="inline">BALL</label>
                         <br>
-                        <input type="checkbox" id="playful" name="personality-list" value="playful" v-model="newPet.personalityType"/>
+                        <input type="checkbox" id="playful" name="personality-list" value="playful" v-model="newPet.personalityTypes"/>
                         <label for="playful" class="inline">Playful</label>
                     </div>
                 </div>
@@ -104,7 +104,7 @@ export default {
                 size: "",
                 isUpToDateWithVaccinations: false,
                 isFixed: false,
-                personalityType: [],
+                personalityTypes: [],
                 description: ""
             }  
         }
@@ -131,7 +131,7 @@ export default {
         },
         handleCheckbox() {
             //const myForm = this.$el.querySelector("#pet-reg-form");
-            if(this.newPet.personalityType.length < 1) {
+            if(this.newPet.personalityTypes.length < 1) {
                 this.$el.querySelector("#chk_option_error").style.visibility = "visible";
                 this.$el.querySelector("#errMsg").classList.remove("displayNone");
                 

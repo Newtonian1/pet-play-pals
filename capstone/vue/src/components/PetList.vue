@@ -13,7 +13,7 @@
                     <p>My personality</p>
                     <div id="pers-types">
                         <ul id="pers-list">
-                            <li id="pers-item" v-for="n in pet.personalityType" :key="n">{{ n }}</li>
+                            <li id="pers-item" v-for="n in pet.personalityTypes" :key="n">{{ n }}</li>
                         </ul>
                     </div>
                     <div id="about-me">
@@ -38,21 +38,21 @@
                         petName: 'Fido',
                         petType: 'dog',
                         breed: 'Yorkie',
-                        personalityType: ['Friendly', 'Hyper', 'BALL'],
+                        personalityTypes: ['Friendly', 'Hyper', 'BALL'],
                         description: "Doggo ipsum you are doing me a frighten the neighborhood pupper heckin good boys doing me a frighten boofers most angery pupper I have ever seen, such treat borking doggo fat boi you are doing me a frighten. Woofer you are doing me the shock snoot waggy wags what a nice floof blop doing me a frighten, pats heckin good boys"
                     },
                     {
                         petName: 'Stella',
                         petType: 'dog',
                         breed: 'Lab mix',
-                        personalityType: ['Serious', 'Shy'],
+                        personalityTypes: ['Serious', 'Shy'],
                         description: "Doggo ipsum you are doing me a frighten"
                     },
                     {
                         petName: 'Kitty',
                         petType: 'cat',
                         breed: 'Maine Coon',
-                        personalityType: ['Friendly', 'Calm', 'Shy', 'Playful'],
+                        personalityTypes: ['Friendly', 'Calm', 'Shy', 'Playful'],
                         description: "angery pupper I have ever seen, such treat borking doggo fat boi you are doing me a frighten. Woofer you are doing me the shock snoot waggy wags what a nice floof blop doing me a frighten, pats heckin good boys"
                     }
                 ]
