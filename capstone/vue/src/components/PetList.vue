@@ -1,6 +1,6 @@
 <template>
     <div id="pet-container">
-        <div class="flip-card" v-for="pet in filterPets" :key="pet.name">
+        <div class="flip-card" id="myCard" v-for="pet in filterPets" :key="pet.name">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
                     <img class="front-img" src="../assets/doggo3.jpg" alt="doggo" >
@@ -9,14 +9,14 @@
                 <div class="flip-card-back" >
                     <h4 id="pet-name">{{ pet.petName }}</h4>
                     <p id="pet-type">I am a {{ pet.petType }}</p>
-                    <p id="pet-breed">My breed is {{pet.breed}}</p>
+                    <p id="pet-breed" v-show="pet.breed !== ''">My breed is {{pet.breed}}</p>
                     <p>My personality</p>
                     <div id="pers-types">
                         <ul id="pers-list">
                             <li id="pers-item" v-for="n in pet.personalityTypes" :key="n">{{ n }}</li>
                         </ul>
                     </div>
-                    <div id="about-me">
+                    <div id="about-me" v-show="pet.description !== ''">
                         <p>About Me</p>
                         <p>{{ pet.description }}</p>  
                     </div>
@@ -69,6 +69,9 @@
         computed: {
             filterPets() {
                 return this.pets.filter(pet => pet.ownerId == this.currentOwnerId);
+            },
+            flipCard() {
+               return document.querySelector("#myCard").classList.toggle("flip");
             }
         },
         methods: {
@@ -85,6 +88,7 @@
     #pet-container {
         display: flex;
         justify-content: flex-end;
+        flex-wrap: wrap;
     }
 
     #pet-name {
@@ -139,12 +143,16 @@
     .front-img {
         width: 300px;
         height: auto;
+        max-height: 400px;
+        object-fit: cover;
         border-radius: 5px;
     }
+
     .flip-card {
         background-color: transparent;
         width: 300px;
-        height: 400px;  
+        height: 400px; 
+        margin: 1em; 
         /* original height 450px - changing height to auto effects background */
         border: 1px solid #f1f1f1;
         perspective: 1000px; /* Remove this if you don't want the 3D effect */
@@ -152,43 +160,69 @@
 
 /* This container is needed to position the front and back side */
     .flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
     }
 
     /* Do an horizontal flip when you move the mouse over the flip box container */
     .flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
+        transform: rotateY(180deg);
+    }
+
+    .flip .flip-card-inner {
+        transform: rotateY(180deg);
     }
 
     /* Position the front and back side */
     .flip-card-front, .flip-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden; /* Safari */
-    backface-visibility: hidden;
-    border-radius: 5px;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden; /* Safari */
+        backface-visibility: hidden;
+        border-radius: 5px;
     }
 
     /* Style the front side (fallback if image is missing) */
     .flip-card-front {
-    background-color: #bbb;
-    background-image: ;
-    color: black;
-    
+        background-color: #bbb;
+        color: black;
     }
 
     /* Style the back side */
     .flip-card-back {
-    background-color: #A5C9CA;
-    background-color: #D3EBCD;
-    height: auto;
-    color: #2C3333;
-    transform: rotateY(180deg);
+        background-color: #A5C9CA;
+        background-color: #D3EBCD;
+        height: auto;
+        color: #2C3333;
+        transform: rotateY(180deg);
+    }
+
+    @media(max-width: 683px) {
+        .flip-card {
+            margin: 1em 0;
+        }
+
+        #pet-container {
+            flex-direction: column;
+            align-content: center;
+        }
+
+        /* .flip-card:hover .flip-card-inner {
+            transform: none;
+        }
+            
+        .flip-card:active .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-back:active {
+            transform: rotateY(180deg);
+        } */
+
     }
 </style>
