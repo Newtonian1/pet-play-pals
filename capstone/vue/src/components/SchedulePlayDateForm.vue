@@ -2,16 +2,22 @@
   <form class="form">
     <h2>Schedule a Play Date:</h2>
     <div class="fields">
-      <label for="address-1">Address line 1:</label>
-      <input type="text" required v-model="addressOne" />
-      <label for="address-2">Address line 2:</label>
-      <input type="text" v-model="addressTwo" />
-      <label for="city">City:</label>
-      <input type="text" required v-model="city" />
-      <label for="state">State:</label>
-      <input type="text" required v-model="state" />
-      <label for="zip">Zip:</label>
-      <input type="text" required v-model="zip" />
+      <input
+        type="text"
+        required
+        v-model="addressOne"
+        placeholder="Address 1"
+      />
+      <input type="text" v-model="addressTwo" placeholder="Address 2" />
+      <input type="text" required v-model="city" placeholder="City" />
+      <input
+        type="text"
+        id="search-state"
+        required
+        v-model="state"
+        placeholder="State"
+      />
+      <input type="text" required v-model="zip" placeholder="Zip" />
       <select v-model="hostPet">
         <option disabled value="">Hosting Pet</option>
         <option>Doggo</option>
@@ -35,6 +41,8 @@
 
 <script>
 import geocodeService from "../services/GeocodeService";
+import mapService from "../services/MapService"
+import playDateService from "..services/PlayDateService"
 export default {
   data() {
     return {
@@ -44,12 +52,26 @@ export default {
       state: "",
       zip: "",
       hostPet: "",
-      latitude: '',
-      longitude: '',
-      couldNotFindAddress: false
+      latitude: "",
+      longitude: "",
+      couldNotFindAddress: false,
     };
   },
   methods: {
+    submitForm() {
+      this.getAddressCoords();
+      if (this.couldNotFindAddress) {
+        return "Error";
+      }
+      let locationId = this.checkForLocation();
+      if (locationId == -1) {
+        //create new location in database
+        //get new locationId
+      }
+      //add locationId to new playdate
+      //create new playdate with found locationId
+    },
+
     getAddressCoords() {
       let searchAddress =
         this.addressOne.trim() +
@@ -69,6 +91,47 @@ export default {
           this.couldNotFindAddress = true;
         });
     },
+    checkForLocation() {
+      const locations = this.$store.state.locations;
+      const locationResults = locations.filter((location) => {
+        const isAddressOneSame =
+          location.address1.toLowerCase().trim() ==
+          this.addressOne.toLowerCase().trim();
+        const isAddressTwoSame =
+          location.address2.toLowerCase().trim() ==
+          this.addressTwo.toLowerCase().trim();
+        const isCitySame =
+          location.city.toLowerCase().trim() == this.city.toLowerCase().trim();
+        const isStateSame =
+          location.stateAbbreviation.toLowerCase().trim() ==
+          this.state.toLowerCase().trim();
+        const isZipSame =
+          location.zipCode.toLowerCase().trim() ==
+          this.zip.toLowerCase().trim();
+
+        return (
+          isAddressOneSame &&
+          isAddressTwoSame &&
+          isCitySame &&
+          isStateSame &&
+          isZipSame
+        );
+      });
+      if (locationResults.length > 0) {
+        return locationResults[0].locationId;
+      } else {
+        return -1;
+      }
+    },
+    truncateState() {
+      if (document.getElementById("search-state").value.length > 2) {
+        document.getElementById("search-state").value = document
+          .getElementById("search-state")
+          .value.slice(0, 2);
+      }
+    },
+
+    
   },
 };
 </script>
