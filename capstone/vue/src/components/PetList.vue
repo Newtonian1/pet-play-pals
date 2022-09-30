@@ -2,20 +2,21 @@
     <div id="pet-container">
         <div class="flip-card" v-for="pet in pets" :key="pet.name">
             <div class="flip-card-inner">
-                <div class="flip-card-front">
+                <div class="flip-card-front" v-for="pic in pics" :key="pic">
                     <img class="front-img" src="../assets/doggo3.jpg" alt="doggo" >
+                    <!-- <img class="front-img" :src="getImgUrl(pic)" v-bind:alt="pic"> -->
                 </div>
                 <div class="flip-card-back" >
-                    <h4>{{ pet.petName }}</h4>
-                    <p>I am a {{ pet.petType }}</p>
-                    <p>My breed is {{pet.breed}}</p>
+                    <h4 id="pet-name">{{ pet.petName }}</h4>
+                    <p id="pet-type">I am a {{ pet.petType }}</p>
+                    <p id="pet-breed">My breed is {{pet.breed}}</p>
                     <p>My personality</p>
-                    <div>
-                        <ul>
-                            <li v-for="n in pet.personalityType" :key="n">{{ n }}</li>
+                    <div id="pers-types">
+                        <ul id="pers-types">
+                            <li id="pers-item" v-for="n in pet.personalityType" :key="n">{{ n }}</li>
                         </ul>
                     </div>
-                    <div>
+                    <div id="about-me">
                         <p>About Me</p>
                         <p>{{ pet.description }}</p>  
                     </div>
@@ -30,12 +31,12 @@
         name: 'pet-list',
         data() {
             return {
+                pics: ['doggo1', 'doggo2', 'kitty1'],
                 pets: [
                     {
                         petName: 'Fido',
                         petType: 'dog',
                         breed: 'Yorkie',
-                        img: 'doggo1',
                         personalityType: ['Friendly', 'Hyper', 'BALL'],
                         description: "Doggo ipsum you are doing me a frighten the neighborhood pupper heckin good boys doing me a frighten boofers most angery pupper I have ever seen, such treat borking doggo fat boi you are doing me a frighten. Woofer you are doing me the shock snoot waggy wags what a nice floof blop doing me a frighten, pats heckin good boys"
                     },
@@ -43,7 +44,6 @@
                         petName: 'Stella',
                         petType: 'dog',
                         breed: 'Lab mix',
-                        img: 'doggo2',
                         personalityType: ['Serious', 'Shy'],
                         description: "Doggo ipsum you are doing me a frighten"
                     },
@@ -51,7 +51,6 @@
                         petName: 'Kitty',
                         petType: 'cat',
                         breed: 'Maine Coon',
-                        img: 'kitty1.jpg',
                         personalityType: ['Friendly', 'Calm', 'Shy', 'Playful'],
                         description: "angery pupper I have ever seen, such treat borking doggo fat boi you are doing me a frighten. Woofer you are doing me the shock snoot waggy wags what a nice floof blop doing me a frighten, pats heckin good boys"
                     }
