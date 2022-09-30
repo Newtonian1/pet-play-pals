@@ -18,11 +18,9 @@
         placeholder="State"
       />
       <input type="text" required v-model="zip" placeholder="Zip" />
-      <select v-model="hostPet">
-        <option disabled value="">Hosting Pet</option>
-        <option>Doggo</option>
-        <option>Doggy</option>
-        <option>Sir Patrick Stewart</option>
+      <select>
+        <option disabled value="" v-for="n in pet.pets" :key="n">{{ n }}>Hosting Pet</option>
+        
       </select>
       <label for="time">Time: </label>
       <input
@@ -41,8 +39,8 @@
 
 <script>
 import geocodeService from "../services/GeocodeService";
-import mapService from "../services/MapService"
-import playDateService from "..services/PlayDateService"
+import mapService from "../services/MapService";
+import playDateService from "../services/PlayDateService";
 export default {
   data() {
     return {
@@ -51,10 +49,10 @@ export default {
       city: "",
       state: "",
       zip: "",
-      hostPet: "",
       latitude: "",
       longitude: "",
       couldNotFindAddress: false,
+      pets: [],
     };
   },
   methods: {
@@ -66,10 +64,13 @@ export default {
       let locationId = this.checkForLocation();
       if (locationId == -1) {
         //create new location in database
+        mapService.createLocation();
         //get new locationId
+        mapService.getLocationById(locationId);
       }
       //add locationId to new playdate
       //create new playdate with found locationId
+      playDateService.createPlayDate();
     },
 
     getAddressCoords() {
@@ -130,8 +131,6 @@ export default {
           .value.slice(0, 2);
       }
     },
-
-    
   },
 };
 </script>

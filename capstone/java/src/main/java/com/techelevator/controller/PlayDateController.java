@@ -25,18 +25,18 @@ public class PlayDateController {
     @RequestMapping(path = "playdates/{id}", method = RequestMethod.GET)
     public PlayDate getPlayDateById(@PathVariable int id) {
         return playDateDao.getPlayDateById(id);
-    }
+    } 
 
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/playdates", method = RequestMethod.POST)
-    public PlayDate createPlayDate(@RequestBody PlayDate newPlayDate) {
+    public PlayDate createPlayDate(@RequestBody PlayDate newPlayDate) {       
         return playDateDao.createPlayDate(newPlayDate);
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/playdates/{id}", method = RequestMethod.PUT)
-    public void updatePlayDateById(@RequestBody PlayDate updatedPlayDate, @PathVariable int id) {
+    public void updatePlayDateById(@RequestBody PlayDate updatedPlayDate, @PathVariable int id) { 
         playDateDao.updatePlayDate(updatedPlayDate, id);
     }
 
