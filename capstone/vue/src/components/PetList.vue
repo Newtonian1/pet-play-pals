@@ -1,21 +1,22 @@
 <template>
     <div id="pet-container">
-        <div class="flip-card" v-for="pet in pets" :key="pet.name">
+        <div class="flip-card" v-for="pet in filterPets" :key="pet.name">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
                     <img class="front-img" src="../assets/doggo3.jpg" alt="doggo" >
+                    <!-- <img class="front-img" :src="getImgUrl(pic)" v-bind:alt="pic"> -->
                 </div>
                 <div class="flip-card-back" >
-                    <h4>{{ pet.petName }}</h4>
-                    <p>I am a {{ pet.petType }}</p>
-                    <p>My breed is {{pet.breed}}</p>
+                    <h4 id="pet-name">{{ pet.petName }}</h4>
+                    <p id="pet-type">I am a {{ pet.petType }}</p>
+                    <p id="pet-breed">My breed is {{pet.breed}}</p>
                     <p>My personality</p>
-                    <div>
-                        <ul>
-                            <li v-for="n in pet.personalityType" :key="n">{{ n }}</li>
+                    <div id="pers-types">
+                        <ul id="pers-list">
+                            <li id="pers-item" v-for="n in pet.personalityTypes" :key="n">{{ n }}</li>
                         </ul>
                     </div>
-                    <div>
+                    <div id="about-me">
                         <p>About Me</p>
                         <p>{{ pet.description }}</p>  
                     </div>
@@ -26,36 +27,48 @@
 </template>
 
 <script>
+    import petService from '../services/petService';
     export default {
         name: 'pet-list',
         data() {
             return {
+                currentOwnerId: 0,
                 pets: [
                     {
                         petName: 'Fido',
                         petType: 'dog',
                         breed: 'Yorkie',
-                        img: 'doggo1',
-                        personalityType: ['Friendly', 'Hyper', 'BALL'],
+                        personalityTypes: ['Friendly', 'Hyper', 'BALL'],
                         description: "Doggo ipsum you are doing me a frighten the neighborhood pupper heckin good boys doing me a frighten boofers most angery pupper I have ever seen, such treat borking doggo fat boi you are doing me a frighten. Woofer you are doing me the shock snoot waggy wags what a nice floof blop doing me a frighten, pats heckin good boys"
                     },
                     {
                         petName: 'Stella',
                         petType: 'dog',
                         breed: 'Lab mix',
-                        img: 'doggo2',
-                        personalityType: ['Serious', 'Shy'],
+                        personalityTypes: ['Serious', 'Shy'],
                         description: "Doggo ipsum you are doing me a frighten"
                     },
                     {
                         petName: 'Kitty',
                         petType: 'cat',
                         breed: 'Maine Coon',
-                        img: 'kitty1.jpg',
-                        personalityType: ['Friendly', 'Calm', 'Shy', 'Playful'],
+                        personalityTypes: ['Friendly', 'Calm', 'Shy', 'Playful'],
                         description: "angery pupper I have ever seen, such treat borking doggo fat boi you are doing me a frighten. Woofer you are doing me the shock snoot waggy wags what a nice floof blop doing me a frighten, pats heckin good boys"
                     }
                 ]
+            }
+        },
+        created () {
+            petService.getAllPets().then(res => {
+                if(res.status === 200) {
+                    this.pets = res.data;
+                }
+            });
+            this.currentOwnerId = this.$store.state.user.id;
+        },
+        computed: {
+            filterPets() {
+                return this.pets.filter(pet => pet.ownerId == this.currentOwnerId);
             }
         },
         methods: {
@@ -69,14 +82,70 @@
 </script>
 
 <style scoped>
+    #pet-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    #pet-name {
+        border-bottom: 1px solid #2C3333;
+        margin: 0.4em;
+        padding: 5px;
+    }
+
+    #pet-type, #pet-breed {
+        margin: 0;
+        padding: 0.3em;
+        background-color: rgba(177, 215, 180, 0.8);
+        /* color: #3F4E4F; */
+    }
+    
+    #pet-type {
+        border-radius: 5px 5px 0 0;
+    }
+
+    #pet-breed {
+        border-radius: 0 0 5px 5px;
+    }
+
+    #about-me {
+        background-color: rgba(177, 215, 180, 0.8);
+        text-align: left;
+        border-radius: 5px;
+        padding: 0.3em;
+    }
+    
+    #about-me p {
+        margin: 0.4em;
+    }
+
+    #pet-breed + p {
+        margin: 0.3em
+    }
+
+    #pers-list {
+        margin: 0.3em;
+        padding: 0;
+        display: flex;
+        list-style: none;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+
+    #pers-item {
+        margin: 4px 7px;
+    }
+    
     .front-img {
         width: 300px;
         height: auto;
+        border-radius: 5px;
     }
     .flip-card {
         background-color: transparent;
         width: 300px;
-        height: 450px;
+        height: 400px;  
+        /* original height 450px - changing height to auto effects background */
         border: 1px solid #f1f1f1;
         perspective: 1000px; /* Remove this if you don't want the 3D effect */
     }
@@ -103,28 +172,23 @@
     height: 100%;
     -webkit-backface-visibility: hidden; /* Safari */
     backface-visibility: hidden;
+    border-radius: 5px;
     }
 
     /* Style the front side (fallback if image is missing) */
     .flip-card-front {
     background-color: #bbb;
+    background-image: ;
     color: black;
+    
     }
 
     /* Style the back side */
     .flip-card-back {
     background-color: #A5C9CA;
+    background-color: #D3EBCD;
+    height: auto;
     color: #2C3333;
     transform: rotateY(180deg);
-    }
-
-    .sub-cont {
-        border: 2px solid black;
-        width: 30%;
-        margin: 10px;
-    }
-    #pet-container {
-        display: flex;
-        justify-content: flex-end;
     }
 </style>

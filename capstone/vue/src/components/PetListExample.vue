@@ -12,7 +12,7 @@
                     <p>My personality</p>
                     <div>
                         <ul>
-                            <li v-for="n in pet.personalityType" :key="n">{{ n }}</li>
+                            <li v-for="n in pet.personalityTypes" :key="n">{{ n }}</li>
                         </ul>
                     </div>
                     <div>
@@ -38,7 +38,7 @@ import petService from '../services/petService'
                         petType: 'dog',
                         breed: 'Yorkie',
                         img: 'doggo1',
-                        personalityType: ['Friendly', 'Hyper', 'BALL'],
+                        personalityTypes: ['Friendly', 'Hyper', 'BALL'],
                         description: "Doggo ipsum you are doing me a frighten the neighborhood pupper heckin good boys doing me a frighten boofers most angery pupper I have ever seen, such treat borking doggo fat boi you are doing me a frighten. Woofer you are doing me the shock snoot waggy wags what a nice floof blop doing me a frighten, pats heckin good boys"
                     },
                     {
@@ -46,7 +46,7 @@ import petService from '../services/petService'
                         petType: 'dog',
                         breed: 'Lab mix',
                         img: 'doggo2',
-                        personalityType: ['Serious', 'Shy'],
+                        personalityTypes: ['Serious', 'Shy'],
                         description: "Doggo ipsum you are doing me a frighten"
                     },
                     {
@@ -54,7 +54,7 @@ import petService from '../services/petService'
                         petType: 'cat',
                         breed: 'Maine Coon',
                         img: 'kitty1.jpg',
-                        personalityType: ['Friendly', 'Calm', 'Shy', 'Playful'],
+                        personalityTypes: ['Friendly', 'Calm', 'Shy', 'Playful'],
                         description: "angery pupper I have ever seen, such treat borking doggo fat boi you are doing me a frighten. Woofer you are doing me the shock snoot waggy wags what a nice floof blop doing me a frighten, pats heckin good boys"
                     }
                 ]
