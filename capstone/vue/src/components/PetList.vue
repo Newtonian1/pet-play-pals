@@ -12,7 +12,7 @@
                     <p id="pet-breed">My breed is {{pet.breed}}</p>
                     <p>My personality</p>
                     <div id="pers-types">
-                        <ul id="pers-types">
+                        <ul id="pers-list">
                             <li id="pers-item" v-for="n in pet.personalityType" :key="n">{{ n }}</li>
                         </ul>
                     </div>
@@ -68,14 +68,70 @@
 </script>
 
 <style scoped>
+    #pet-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    #pet-name {
+        border-bottom: 1px solid #2C3333;
+        margin: 0.4em;
+        padding: 5px;
+    }
+
+    #pet-type, #pet-breed {
+        margin: 0;
+        padding: 0.3em;
+        background-color: rgba(177, 215, 180, 0.8);
+        /* color: #3F4E4F; */
+    }
+    
+    #pet-type {
+        border-radius: 5px 5px 0 0;
+    }
+
+    #pet-breed {
+        border-radius: 0 0 5px 5px;
+    }
+
+    #about-me {
+        background-color: rgba(177, 215, 180, 0.8);
+        text-align: left;
+        border-radius: 5px;
+        padding: 0.3em;
+    }
+    
+    #about-me p {
+        margin: 0.4em;
+    }
+
+    #pet-breed + p {
+        margin: 0.3em
+    }
+
+    #pers-list {
+        margin: 0.3em;
+        padding: 0;
+        display: flex;
+        list-style: none;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+    }
+
+    #pers-item {
+        margin: 4px 7px;
+    }
+    
     .front-img {
         width: 300px;
         height: auto;
+        border-radius: 5px;
     }
     .flip-card {
         background-color: transparent;
         width: 300px;
-        height: 450px;
+        height: 400px;  
+        /* original height 450px - changing height to auto effects background */
         border: 1px solid #f1f1f1;
         perspective: 1000px; /* Remove this if you don't want the 3D effect */
     }
@@ -102,28 +158,22 @@
     height: 100%;
     -webkit-backface-visibility: hidden; /* Safari */
     backface-visibility: hidden;
+    border-radius: 5px;
     }
 
     /* Style the front side (fallback if image is missing) */
     .flip-card-front {
     background-color: #bbb;
     color: black;
+    
     }
 
     /* Style the back side */
     .flip-card-back {
     background-color: #A5C9CA;
+    background-color: #D3EBCD;
+    height: auto;
     color: #2C3333;
     transform: rotateY(180deg);
-    }
-
-    .sub-cont {
-        border: 2px solid black;
-        width: 30%;
-        margin: 10px;
-    }
-    #pet-container {
-        display: flex;
-        justify-content: flex-end;
     }
 </style>

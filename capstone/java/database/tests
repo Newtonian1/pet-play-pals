@@ -1,0 +1,11 @@
+select * from pets
+
+select * from users
+
+begin transaction
+
+delete from users where username = 'andie';
+
+commit
+
+rollback
