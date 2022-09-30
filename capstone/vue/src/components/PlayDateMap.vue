@@ -83,7 +83,7 @@
           }"
           :clickable="true"
           @click="setSelectedId(location.locationId)"
-          :title="location.address1"
+          :title="location.locationName"
         />
         <GmapMarker
           :position="{
@@ -104,9 +104,11 @@
         >
           <div class="address">
             <h3>
-              {{ location.address1 }}<br />
-              {{ location.city }}, {{ location.stateAbbreviation }}<br />
+              {{ location.locationName }}
             </h3>
+            <h4>
+              {{ location.address1 }}
+            </h4>
           </div>
           <div class="distance">
             <h4>Distance: {{ location.distance }} mi.</h4>
@@ -389,7 +391,13 @@ export default {
 }
 
 .address {
+  display: flex;
+  flex-direction: column;
   height: 52px;
+}
+
+.address h4 {
+  margin-top: -10px;
 }
 
 .selected-card.playdate-card {
