@@ -1,5 +1,5 @@
 <template>
-  <form class="form">
+  <form class="form" @submit.prevent="submitForm">
     <h2>Schedule a Play Date:</h2>
     <div class="fields">
       <input
@@ -18,9 +18,11 @@
         placeholder="State"
       />
       <input type="text" required v-model="zip" placeholder="Zip" />
-      <select>
-        <option disabled value="" v-for="n in pet.pets" :key="n">{{ n }}>Hosting Pet</option>
-        
+      <label>Hosting Pet</label>
+      <select placeholder="Hosting Pet" required v-model="hostPetDropDown">
+        <option :value="n.petId" v-for="n in filterPets" :key="n">
+          {{ n.petName }}
+        </option>
       </select>
       <label for="time">Time: </label>
       <input
@@ -41,21 +43,36 @@
 import geocodeService from "../services/GeocodeService";
 import mapService from "../services/MapService";
 import playDateService from "../services/PlayDateService";
+import petService from "../services/petService"
 export default {
   data() {
     return {
+      formInfo: {
       addressOne: "",
       addressTwo: "",
       city: "",
       state: "",
       zip: "",
-      latitude: "",
+       latitude: "",
       longitude: "",
+      time: ''
+},
+     
       couldNotFindAddress: false,
+      currentOwnerId: 0,
       pets: [],
     };
   },
   methods: {
+    resetForm(){
+      this.formInfo = {};
+    },
+    sendToHome(){
+      this.resetForm();
+      this.$router.push("/");
+    },
+
+
     submitForm() {
       this.getAddressCoords();
       if (this.couldNotFindAddress) {
@@ -63,15 +80,24 @@ export default {
       }
       let locationId = this.checkForLocation();
       if (locationId == -1) {
+        
         //create new location in database
         mapService.createLocation();
+
+
         //get new locationId
-        mapService.getLocationById(locationId);
-      }
+        mapService.getLocationById(this.locationId)
+      
       //add locationId to new playdate
+
+
+
       //create new playdate with found locationId
       playDateService.createPlayDate();
-    },
+
+
+
+    }},
 
     getAddressCoords() {
       let searchAddress =
@@ -132,6 +158,19 @@ export default {
       }
     },
   },
+   computed: {
+          filterPets() {
+            return this.pets.filter(pet => pet.ownerId == this.currentOwnerId);
+          }
+        },
+        created() {
+          petService.getAllPets().then(res => {
+            if (res.status === 200) {
+              this.pets = res.data;
+            }
+          });
+          this.currentOwnerId = this.$store.state.user.id;
+        }
 };
 </script>
 
