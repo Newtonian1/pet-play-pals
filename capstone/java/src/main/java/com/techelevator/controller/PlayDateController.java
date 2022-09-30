@@ -13,33 +13,36 @@ import java.util.List;
 public class PlayDateController {
     private PlayDateDao playDateDao;
 
+    public PlayDateController(PlayDateDao playDateDao) {
+        this.playDateDao = playDateDao;
+    }
 
-    public PlayDateController(PlayDateDao playDateDao){this.playDateDao = playDateDao;}
+    @RequestMapping(path = "/playdates", method = RequestMethod.GET)
+    public List<PlayDate> listPlayDates() {
+        return playDateDao.getAllPlayDates();
+    }
 
-    @RequestMapping(path="/playdates", method = RequestMethod.GET)
-    public List<PlayDate> listPlayDates(){return playDateDao.getAllPlayDates();}
-
-    @RequestMapping(path="playdates/{id}", method = RequestMethod.GET)
-    public PlayDate getPlayDateById(@PathVariable int id){return playDateDao.getPlayDateById(id);}
-
-
-    //search by time
-
+    @RequestMapping(path = "playdates/{id}", method = RequestMethod.GET)
+    public PlayDate getPlayDateById(@PathVariable int id) {
+        return playDateDao.getPlayDateById(id);
+    }
 
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path="/playdates",method = RequestMethod.POST)
-    public PlayDate createPlayDate(@RequestBody PlayDate newPlayDate){
+    @RequestMapping(path = "/playdates", method = RequestMethod.POST)
+    public PlayDate createPlayDate(@RequestBody PlayDate newPlayDate) {
         return playDateDao.createPlayDate(newPlayDate);
     }
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(path = "/playdates/{id}",method = RequestMethod.PUT)
-    public boolean updatePlayDateById(@RequestBody PlayDate updatedPlayDate, @PathVariable int id){
-        return playDateDao.updatePlayDate(updatedPlayDate, id);
+    @RequestMapping(path = "/playdates/{id}", method = RequestMethod.PUT)
+    public void updatePlayDateById(@RequestBody PlayDate updatedPlayDate, @PathVariable int id) {
+        playDateDao.updatePlayDate(updatedPlayDate, id);
     }
-    @PreAuthorize("isAuthenticated()")
-    @RequestMapping(path = "/playdates/{id}",method = RequestMethod.DELETE)
-    public boolean deletePlayDate(@PathVariable int id){return playDateDao.deletePlayDate(id);}
 
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(path = "/playdates/{id}", method = RequestMethod.DELETE)
+    public void deletePlayDate(@PathVariable int id) {
+        playDateDao.deletePlayDate(id);
+    }
 }

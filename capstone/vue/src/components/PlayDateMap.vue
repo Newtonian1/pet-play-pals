@@ -94,14 +94,6 @@
           :icon="'http://maps.google.com/mapfiles/kml/pal4/icon47.png'"
           @click="setSelectedId(0)"
         />
-        <!-- <GmapMarker
-            :key="index"
-            v-for="(m, index) in markers"
-            :position="m.position"
-            :clickable="true"
-            :draggable="true"
-            @click="center = m.position"
-          /> -->
       </GmapMap>
       <div id="playdate-list">
         <div
@@ -145,18 +137,27 @@ export default {
   },
   computed: {
     filteredLocations() {
-      const playDateLocationIds = this.playDates.map(playDate => {
+      //filter out past playdates
+      const filteredPlayDates = this.playDates.filter(playDate => {
+        return Date.now() < Date.parse(playDate.playDateTimeStamp);
+      });
+      //create list of location ids for future playdates
+      const playDateLocationIds = filteredPlayDates.map(playDate => {
         return playDate.locationId;
       });
+      //create list of locations that correspond with a future playdate
       const locations = this.locations.filter(location => {
         return playDateLocationIds.includes(location.locationId);
       });
+      //add distance property to each location
       locations.forEach((location) => {
         location.distance = this.getLocationDistance(location).toFixed(2);
       });
+      //filter out locations based on search radius
       const filteredList = locations.filter((location) => {
         return this.isLocationWithinRadius(location);
       });
+      //sort locations by distance
       filteredList.sort(this.compareDistances);
       return filteredList;
     },
@@ -181,6 +182,7 @@ export default {
           this.couldNotFindAddress = true;
         });
     },
+    //prevent user from entering more than 2 characters in the state input
     truncateState() {
       if (document.getElementById("search-state").value.length > 2) {
         document.getElementById("search-state").value = document

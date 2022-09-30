@@ -1,6 +1,9 @@
 BEGIN TRANSACTION;
 
 DROP TABLE IF EXISTS 
+	location_picture,
+	pet_picture,
+	play_date_pet,
 	pet_personality, 
 	play_date, 
 	pet_sizes, 
@@ -73,6 +76,7 @@ CREATE SEQUENCE seq_location_id
 	
 CREATE TABLE locations (
 	location_id int NOT NULL DEFAULT nextval('seq_location_id'),
+	location_name varchar(100),
 	address_1 varchar(100),
 	address_2 varchar(100),
 	city varchar(50) NOT NULL,
@@ -136,20 +140,38 @@ CREATE TABLE play_date (
 	play_date_id int NOT NULL DEFAULT nextval('seq_play_date_id'),
 	play_date_time timestamp NOT NULL DEFAULT now(),
 	location_id int NOT NULL,
-	first_pet_id int NOT NULL,
-	second_pet_id int NOT NULL,
+	host_pet_id int NOT NULL,
 	status_id int NOT NULL DEFAULT 5003,
 	CONSTRAINT PK_play_date PRIMARY KEY (play_date_id),
 	CONSTRAINT FK_play_date_location FOREIGN KEY (location_id) REFERENCES locations (location_id),
 	CONSTRAINT FK_play_date_status FOREIGN KEY (status_id) REFERENCES statuses (status_id),
-	CONSTRAINT FK_play_date_first_pet FOREIGN KEY (first_pet_id) REFERENCES pets (pet_id),
-	CONSTRAINT FK_play_date_second_pet FOREIGN KEY (second_pet_id) REFERENCES pets (pet_id)
+	CONSTRAINT FK_play_date_host_pet FOREIGN KEY (host_pet_id) REFERENCES pets (pet_id)
 );
 
 CREATE TABLE pet_personality (
 	pet_id int NOT NULL,
 	personality_id int NOT NULL,
 	CONSTRAINT PK_pet_personality PRIMARY KEY (pet_id, personality_id)
+);
+
+CREATE TABLE play_date_pet (
+	play_date_id int NOT NULL,
+	pet_id int NOT NULL,
+	CONSTRAINT PK_play_date_pet PRIMARY KEY (play_date_id, pet_id)
+);
+
+CREATE TABLE pet_picture (
+	pet_id int NOT NULL,
+	pet_picture bytea,
+	CONSTRAINT PK_pet_picture PRIMARY KEY (pet_id),
+	CONSTRAINT FK_pet_picture_pet FOREIGN KEY (pet_id) REFERENCES pets (pet_id)
+);
+
+CREATE TABLE location_picture (
+	location_id int NOT NULL,
+	location_picture bytea,
+	CONSTRAINT PK_location_picture PRIMARY KEY (location_id),
+	CONSTRAINT FK_location_picture_location FOREIGN KEY (location_id) REFERENCES locations (location_id)
 );
 	
 COMMIT TRANSACTION;
