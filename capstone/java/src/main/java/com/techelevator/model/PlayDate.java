@@ -1,14 +1,12 @@
 package com.techelevator.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class PlayDate {
     private int playDateId;
-    private int firstPetId;
+    private int hostPetId;
     private List<Integer> attendingPetIds;
     private String status;
     private int locationId;
@@ -22,12 +20,12 @@ public class PlayDate {
         this.playDateId = playDateId;
     }
 
-    public int getFirstPetId() {
-        return firstPetId;
+    public int getHostPetId() {
+        return hostPetId;
     }
 
-    public void setFirstPetId(int firstPetId) {
-        this.firstPetId = firstPetId;
+    public void setHostPetId(int hostPetId) {
+        this.hostPetId = hostPetId;
     }
 
     public List<Integer> getAttendingPetIds() {
