@@ -10,6 +10,9 @@ export default {
   getPetById(petId) {
     return axios.get(`/pets/${petId}`);
   },
+  getAllPetsByOwnerId(ownerId) {
+    return axios.get(`/pets?ownerId=${ownerId}`);
+  },
   updatePet(updatedPet, petId) {
     return axios.put(`/pets/${petId}`, updatedPet);
   },

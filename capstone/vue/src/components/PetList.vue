@@ -84,7 +84,8 @@
 <style scoped>
     #pet-container {
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     #pet-name {
@@ -137,14 +138,19 @@
     }
     
     .front-img {
+        /* Note from Kat: I found this object-fit property and used it to crop
+        the image to a square and get rid of the overlap on the pics. I had to 
+        change the height property here and in .flip-card to get it to work.
+        Let me know what you think! */
+        object-fit: cover; 
         width: 300px;
-        height: auto;
+        height: 300px;
         border-radius: 5px;
     }
     .flip-card {
         background-color: transparent;
         width: 300px;
-        height: 400px;  
+        height: 300px;  
         /* original height 450px - changing height to auto effects background */
         border: 1px solid #f1f1f1;
         perspective: 1000px; /* Remove this if you don't want the 3D effect */
