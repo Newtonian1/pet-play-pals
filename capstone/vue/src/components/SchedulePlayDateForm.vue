@@ -1,42 +1,58 @@
 <template>
-  <form class="form" @submit.prevent="submitForm">
-    <h2>Schedule a Play Date:</h2>
-    <div class="fields">
-      <input
-        type="text"
-        required
-        v-model="addressOne"
-        placeholder="Address 1"
-      />
-      <input type="text" v-model="addressTwo" placeholder="Address 2" />
-      <input type="text" required v-model="city" placeholder="City" />
-      <input
-        type="text"
-        id="search-state"
-        required
-        v-model="state"
-        placeholder="State"
-      />
-      <input type="text" required v-model="zip" placeholder="Zip" />
-      <label>Hosting Pet</label>
-      <select placeholder="Hosting Pet" required v-model="hostPetDropDown">
-        <option :value="n.petId" v-for="n in filterPets" :key="n">
-          {{ n.petName }}
-        </option>
-      </select>
-      <label for="time">Time: </label>
-      <input
-        type="time"
-        class="timepicker"
-        name="timepicker"
-        min="00:00"
-        max="23:59"
-        v-model="time"
-        required
-      />
-      <button type="submit">Submit Form</button>
-    </div>
-  </form>
+  <div class="playdate">
+    <form class="form" @submit.prevent="submitForm">
+      <h2>Schedule a Play Date:</h2>
+      <div class="form-element">
+        <label for="add-1">Address</label>
+        <input
+          id="add-1"
+          type="text"
+          required
+          v-model="addressOne"
+          placeholder="Address 1"
+        />
+      </div>
+      <div class="form-element">
+        <label for="add-2">Address</label>
+        <input id="add-2" type="text" v-model="addressTwo" placeholder="Address 2" />
+      </div>
+      <div class="form-element">
+        <label for="city">City</label>
+        <input id="city" type="text" required v-model="city" placeholder="City" />
+      </div>  
+      <div class="form-element">
+        <label for="search-state">State</label>
+        <input
+          type="text"
+          id="search-state"
+          required
+          v-model="state"
+          placeholder="State"
+        />
+      </div>  
+        
+        <input type="text" required v-model="zip" placeholder="Zip" />
+        <label>Hosting Pet</label>
+        <select placeholder="Hosting Pet" required v-model="hostPetDropDown">
+          <option :value="n.petId" v-for="n in filterPets" :key="n">
+            {{ n.petName }}
+          </option>
+        </select>
+        <label for="time">Time: </label>
+        <input
+          type="time"
+          class="timepicker"
+          name="timepicker"
+          min="00:00"
+          max="23:59"
+          v-model="time"
+          required
+        />
+        <button type="submit">Submit Form</button>
+      
+    </form>
+  </div>
+  
 </template>
 
 <script>

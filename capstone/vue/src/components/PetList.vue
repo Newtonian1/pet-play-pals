@@ -155,7 +155,7 @@
         background-color: transparent;
         width: 300px;
         height: 300px; 
-        margin: 1em; 
+        margin: 0.4em; 
         /* original height 450px - changing height to auto effects background */
         /* border: 1px solid #f1f1f1; */
         perspective: 1000px; /* Remove this if you don't want the 3D effect */
@@ -205,7 +205,7 @@
         transform: rotateY(180deg);
     }
 
-    @media(max-width: 683px) {
+    @media(max-width: 700px) {
         .flip-card {
             margin: 1em 0;
         }
