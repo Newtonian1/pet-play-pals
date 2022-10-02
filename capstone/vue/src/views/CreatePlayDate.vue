@@ -1,6 +1,7 @@
 <template>
 <div class="register-play-date">
-    <schedule-play-date-form/>
+  <h1>Schedule a Play Date</h1>
+  <schedule-play-date-form/>
 </div>
   
 </template>
@@ -13,6 +14,16 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  .register-play-date {
+    background-color: #EEF2FF;
+    border-radius: 5px;
+    /* possibly use for home page */
+    /* background-color: #F7F7F7; */
+    font-family: 'Montserrat', sans-serif;
+  }
+  h1 {
+    text-align: center;
+    padding-top: 20px;
+  }
 </style>

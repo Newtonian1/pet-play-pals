@@ -23,3 +23,13 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+  h1 {
+    padding: 0.3em;
+  }
+
+  .home {
+    background-color: #F7F7F7;
+  }
+</style>

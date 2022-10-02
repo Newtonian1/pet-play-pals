@@ -17,6 +17,7 @@ export default {
 <style scoped>
   .register-pet {
     background-color: #E7F6F2;
+    border-radius: 5px;
     font-family: 'Montserrat', sans-serif;
   }
   h1 {

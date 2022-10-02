@@ -100,8 +100,11 @@
     #pet-type, #pet-breed {
         margin: 0;
         padding: 0.3em;
-        background-color: rgba(177, 215, 180, 0.8);
         /* color: #3F4E4F; */
+    }
+
+    #pet-type, #pet-breed, #about-me {
+        background-color: rgba(245, 255, 233, 0.7);
     }
     
     #pet-type {
@@ -113,7 +116,6 @@
     }
 
     #about-me {
-        background-color: rgba(177, 215, 180, 0.8);
         text-align: left;
         border-radius: 5px;
         padding: 0.3em;
@@ -198,10 +200,10 @@
 
     /* Style the back side */
     .flip-card-back {
-        background-color: #A5C9CA;
-        background-color: #D3EBCD;
+        background-color: #44b4a1;
         height: auto;
         color: #2C3333;
+        padding-bottom: 5px;
         transform: rotateY(180deg);
     }
 

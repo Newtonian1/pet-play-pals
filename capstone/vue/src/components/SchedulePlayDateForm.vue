@@ -1,9 +1,8 @@
 <template>
-  <div class="playdate">
-    <form class="form" @submit.prevent="submitForm">
-      <h2>Schedule a Play Date:</h2>
+  <div class="play-date">
+    <form id="play-date-form" class="form" @submit.prevent="submitForm">
       <div class="form-element">
-        <label for="add-1">Address</label>
+        <label for="add-1">Address </label>
         <input
           id="add-1"
           type="text"
@@ -13,15 +12,15 @@
         />
       </div>
       <div class="form-element">
-        <label for="add-2">Address</label>
+        <label for="add-2">Address </label>
         <input id="add-2" type="text" v-model="addressTwo" placeholder="Address 2" />
       </div>
       <div class="form-element">
-        <label for="city">City</label>
+        <label for="city">City </label>
         <input id="city" type="text" required v-model="city" placeholder="City" />
       </div>  
       <div class="form-element">
-        <label for="search-state">State</label>
+        <label for="search-state">State </label>
         <input
           type="text"
           id="search-state"
@@ -30,15 +29,21 @@
           placeholder="State"
         />
       </div>  
-        
-        <input type="text" required v-model="zip" placeholder="Zip" />
-        <label>Hosting Pet</label>
-        <select placeholder="Hosting Pet" required v-model="hostPetDropDown">
+      <div class="form-element">
+        <label for="zip-code">Zip Code </label>
+        <input id="zip-code" type="text" required v-model="zip" placeholder="Zip" />
+      </div> 
+      <div class="form-element">
+        <label for="pets">Hosting Pet </label>
+        <select id="pets" placeholder="Hosting Pet" required v-model="hostPetDropDown">
+          <option value="" disabled> --- </option>
           <option :value="n.petId" v-for="n in filterPets" :key="n">
             {{ n.petName }}
           </option>
         </select>
-        <label for="time">Time: </label>
+      </div> 
+      <div class="form-element">
+        <label for="time">Time </label>
         <input
           type="time"
           class="timepicker"
@@ -48,8 +53,9 @@
           v-model="time"
           required
         />
-        <button type="submit">Submit Form</button>
-      
+      </div>  
+
+      <button id="submit-btn" type="submit">Add Play Date</button>
     </form>
   </div>
   
@@ -190,5 +196,73 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+  .play-date {
+    max-width: 80%;
+    margin: auto;
+    font-family: 'Montserrat', sans-serif;
+    color: #2C3333;
+  }
+
+  #play-date-form{
+    font-size: 15px;
+  }
+
+  .form-element {
+    margin: 15px 0;
+    font-size: 1.3em;
+  }
+
+  label {
+    display: block;
+  }
+
+  input[type="text"] {
+    line-height: 25px;
+    font-size: 18px;
+    border-radius: 5px;
+    border: 1px solid black;
+  }
+
+  select {
+    font-size: 20px;
+  }
+
+  #submit-btn {
+    background-color: #676FA3;
+    font-family: monospace;
+    font-size: 18px;
+    color: white;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    height: 35px;
+    letter-spacing: 2px;
+    transition: all .3s ease;
+    max-width: 540px;
+    margin-bottom: 30px;
+  }
+
+  #submit-btn:hover {
+    background-color: #CDDEFF;
+    color: #2C3333;
+  }
+
+   @media(min-width:670px) {
+      label {
+        display: inline;
+      }
+    }
+
+  @media(min-width:920px) {
+    .play-date {
+      text-align: center;
+    }
+    
+    #play-date-form {
+      display: inline-block;
+      text-align: left;
+        
+    }
+  }
 </style>
