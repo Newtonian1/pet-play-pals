@@ -293,6 +293,8 @@ export default {
   background-color: rgb(250, 251, 253);
   padding: 12px 0;
   border: 1px solid black;
+  border-radius: 5px;
+  margin: 10px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -355,7 +357,6 @@ export default {
 }
 
 #map-container {
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -366,13 +367,13 @@ export default {
   width: 100%;
   height: 400px;
   border: 1px solid black;
+  border-radius: 5px;
 }
 
 #playdate-list {
   width: 100%;
   height: 130px;
   max-height: 600px;
-  border: 1px solid black;
   display: flex;
   overflow-x: auto;
   overflow-y: hidden;
@@ -388,6 +389,10 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin: 10px;
+  margin-right: 0;
+  margin-top: 0;
+  border-radius: 5px;
 }
 
 .address {
@@ -411,6 +416,7 @@ export default {
 
   .playdate-card {
     flex: 0 0 22%;
+    margin-left: 0;
   }
 
   #slide-container {
@@ -458,6 +464,10 @@ export default {
   #slide-container input {
     margin-top: 0px;
     margin-bottom: 4px;
+  }
+
+  .playdate-card {
+    margin-left: 10px;
   }
 }
 </style>
