@@ -104,7 +104,9 @@
     }
 
     #pet-type, #pet-breed, #about-me {
-        background-color: rgba(245, 255, 233, 0.7);
+        background-color: rgb(245, 255, 233);
+        background-color: #f3e8a9;
+
     }
     
     #pet-type {
@@ -200,7 +202,7 @@
 
     /* Style the back side */
     .flip-card-back {
-        background-color: #44b4a1;
+        background-color: #A5C9CA;
         height: auto;
         color: #2C3333;
         padding-bottom: 5px;

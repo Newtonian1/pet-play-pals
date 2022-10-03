@@ -30,6 +30,7 @@ export default {
   }
 
   .home {
-    background-color: #eceaea;
+    /* background-color: #eeebeb; */
+    border-radius: 3px;
   }
 </style>
