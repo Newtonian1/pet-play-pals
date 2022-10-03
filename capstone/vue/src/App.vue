@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <app-header/>
     <div id="nav">
       <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
       <router-link
@@ -19,7 +20,9 @@
 </template>
 
 <script>
-export default {};
+import AppHeader from './components/AppHeader.vue';
+export default {
+  components: { AppHeader },};
 </script>
 <style>
 #app {
