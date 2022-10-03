@@ -9,7 +9,6 @@ import java.util.List;
 
 public class JdbcPetDaoTest extends BaseDaoTests {
     static List<String> personalities = new ArrayList<>();
-    protected static final Pet PET_1 = new Pet(2001, "Minnie", 1003, "dog", "Who knows", "female", "medium", personalities, true, true, "Chaos incarnate");
 
     private JdbcPetDao sut;
 
