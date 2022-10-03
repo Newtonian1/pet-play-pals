@@ -13,8 +13,8 @@ export default {
   getLocationById(locationId){
     return axios.get(`/locations/${locationId}`)
   },
-  createLocation(){
-    return axios.post(`/locations`);
+  createLocation(location){
+    return axios.post(`/locations`, location);
   },
   deleteLocation(locationId){
     return axios.delete(`/locations/${locationId}`)
