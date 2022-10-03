@@ -43,6 +43,11 @@ export default {
   components: { AppHeader },};
 </script>
 <style>
+  #links-in-nav > .router-link-exact-active {
+    border: 1px solid #2C3333;
+    border-radius: 3px; 
+  }
+
   #app {
     width: 95vmax;
     display: block;

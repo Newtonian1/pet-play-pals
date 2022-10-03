@@ -16,7 +16,7 @@ export default {
 
 <style scoped>
   .register-play-date {
-    background-color: #9ca4f74f;
+    background-color: #E7F6F2;
     border-radius: 5px;
     /* possibly use for home page */
     /* background-color: #F7F7F7; */

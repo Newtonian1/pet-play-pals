@@ -2,7 +2,7 @@
   <div class="play-date">
     <form id="play-date-form" class="form" @submit.prevent="getAddressCoords">
       <div class="form-element">
-        <label for="location-name">Location Name</label>
+        <label for="location-name">Location Name </label>
         <input
           id="location-name"
           type="text"
@@ -10,6 +10,8 @@
           v-model="locationName"
           placeholder="Location Name"
         />
+      </div>
+      <div class="form-element">
         <label for="add-1">Address </label>
         <input
           id="add-1"
@@ -83,14 +85,17 @@
           v-model="time"
           required
         />
-        <div class="form-element">
-          <label for="date">Date</label>
-          <input type="date" required v-model="date" />
-        </div>
+      </div>
+      <div class="form-element">
+        <label for="date">Date </label>
+        <input type="date" required v-model="date" />
       </div>
 
       <button id="submit-btn" type="submit" v-if="!playDateCreated">Add Play Date</button>
-      <h1 v-if="playDateCreated">Playdate Successfully Created!</h1>
+      <div v-if="playDateCreated">
+        <h3 class="return-home">Playdate Successfully Created!</h3>
+        <button class="return-home" id="return-btn">Return to home</button>
+      </div>
     </form>
   </div>
 </template>
@@ -129,8 +134,8 @@ export default {
       this.formInfo = {};
     },
     sendToHome() {
-      this.resetForm();
-      this.$router.push("/");
+      
+      this.$router.push("/home");
     },
 
     submitForm() {
@@ -281,6 +286,30 @@ export default {
 </script>
 
 <style scoped>
+.return-home {
+  display: inline;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#return-btn {
+  margin-left: 10px;
+  background-color: #395B64;
+  font-family: monospace;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  height: 25px;
+  letter-spacing: 2px;
+  transition: all .3s ease;
+}
+
+#return-btn:hover {
+  border: 2px solid #395B64;
+  background-color: #FFF;
+  color: #2C3333;
+}
+
 .play-date {
   max-width: 80%;
   margin: auto;
@@ -313,7 +342,7 @@ select {
 }
 
 #submit-btn {
-  background-color: #676fa3de;
+  background-color: #395B64;
   font-family: monospace;
   font-size: 18px;
   color: white;
@@ -328,7 +357,7 @@ select {
 }
 
 #submit-btn:hover {
-  background-color: #c1d5fc;
+  background-color: #A5C9CA;
   color: #2c3333;
 }
 
