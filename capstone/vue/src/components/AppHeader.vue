@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="logo-img-div">
     <img src="../assets/images/logos/PetPlayPalsBanner.png" alt="Pet Play Pals Logo Banner">
   </div>
 </template>

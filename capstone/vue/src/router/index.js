@@ -7,6 +7,7 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import RegisterPet from '../views/RegisterPet.vue'
 import CreatePlayDate from '../views/CreatePlayDate.vue'
+import Landing from '../views/Landing.vue'
 
 Vue.use(Router)
 
@@ -25,6 +26,14 @@ const router = new Router({
   routes: [
     {
       path: '/',
+      name: 'landing',
+      component: Landing,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: '/home',
       name: 'home',
       component: Home,
       meta: {

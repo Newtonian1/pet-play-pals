@@ -130,7 +130,7 @@ export default {
         },
         sendToHome () {
             this.resetForm();
-            this.$router.push("/");
+            this.$router.push("/home");
         },
         handleCheckbox() {
             //const myForm = this.$el.querySelector("#pet-reg-form");
