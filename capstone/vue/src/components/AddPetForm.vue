@@ -86,12 +86,15 @@
 
 
         </form>
+        <image-upload />
     </div>
 </template>
 
 <script>
 import petService from '../services/petService';
+import ImageUpload from './ImageUpload.vue';
 export default {
+  components: { ImageUpload },
     name: "add-pet",
     data() {
         return {

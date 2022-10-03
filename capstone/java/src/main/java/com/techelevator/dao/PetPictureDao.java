@@ -12,7 +12,7 @@ public interface PetPictureDao {
 
     boolean updatePetPictureByPetId(PetPicture petPicture, int id);
 
-    PetPicture addPetPicture(PetPicture petPicture);
+    Integer addPetPicture(PetPicture petPicture);
 
     boolean deletePetPictureByPetId(int id);
 

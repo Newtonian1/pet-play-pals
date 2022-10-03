@@ -1,5 +1,7 @@
 package com.techelevator.model;
 
+import java.util.Objects;
+
 public class Location {
     private int locationId;
     private String locationName;
@@ -14,7 +16,7 @@ public class Location {
     public Location() {
     }
 
-    public Location(String locationName, int locationId, String address1, String address2, String city, String stateAbbreviation, String zipCode, double latitude, double longitude) {
+    public Location(int locationId, String locationName, String address1, String address2, String city, String stateAbbreviation, String zipCode, double latitude, double longitude) {
         this.locationId = locationId;
         this.locationName = locationName;
         this.address1 = address1;
@@ -96,5 +98,26 @@ public class Location {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Location location = (Location) o;
+        return locationId == location.locationId &&
+                Double.compare(location.latitude, latitude) == 0 &&
+                Double.compare(location.longitude, longitude) == 0 &&
+                Objects.equals(locationName, location.locationName) &&
+                Objects.equals(address1, location.address1) &&
+                Objects.equals(address2, location.address2) &&
+                Objects.equals(city, location.city) &&
+                Objects.equals(stateAbbreviation, location.stateAbbreviation) &&
+                Objects.equals(zipCode, location.zipCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(locationId, locationName, address1, address2, city, stateAbbreviation, zipCode, latitude, longitude);
     }
 }

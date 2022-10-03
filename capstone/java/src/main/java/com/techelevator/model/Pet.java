@@ -15,6 +15,23 @@ public class Pet {
     private boolean isUpToDateWithVaccinations;
     private boolean isFixed;
 
+    public Pet(int petId, String petName, int ownerId, String petType, String breed, String gender, String size, List<String> personalityTypes, String description, boolean isUpToDateWithVaccinations, boolean isFixed) {
+        this.petId = petId;
+        this.ownerId = ownerId;
+        this.petType = petType;
+        this.petName = petName;
+        this.breed = breed;
+        this.gender = gender;
+        this.size = size;
+        this.personalityTypes = personalityTypes;
+        this.description = description;
+        this.isUpToDateWithVaccinations = isUpToDateWithVaccinations;
+        this.isFixed = isFixed;
+    }
+
+    public Pet() {
+    }
+
     public boolean getIsFixed() {
         return isFixed;
     }
