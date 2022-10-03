@@ -1,6 +1,6 @@
 <template>
   <div class="play-date">
-    <form id="play-date-form" class="form" @submit.prevent="submitForm">
+    <form id="play-date-form" class="form" @submit.prevent="getAddressCoords">
       <div class="form-element">
         <label for="location-name">Location Name</label>
         <input
@@ -89,11 +89,8 @@
         </div>
       </div>
 
-      <button id="submit-btn" type="submit">Add Play Date</button>
-      <h1>{{ playDateCreated }}</h1>
-      <h1>{{ time }}</h1>
-      <h1>{{ date }}</h1>
-      <h1>{{ dateTime }}</h1>
+      <button id="submit-btn" type="submit" v-if="!playDateCreated">Add Play Date</button>
+      <h1 v-if="playDateCreated">Playdate Successfully Created!</h1>
     </form>
   </div>
 </template>
@@ -137,10 +134,6 @@ export default {
     },
 
     submitForm() {
-      this.getAddressCoords();
-      if (this.couldNotFindAddress) {
-        return "Error";
-      }
       let locationId = this.checkForLocation();
       if (locationId == -1) {
         //create new location in database
@@ -169,7 +162,7 @@ export default {
       }
     },
 
-    storePlayDate(locationId) {
+    storePlayDate(id) {
       //add locationId to new playdate
       this.dateTime = moment(this.date + " " + this.time);
       const newPlayDate = {
@@ -177,7 +170,7 @@ export default {
         hostPetId: this.chosenPetId,
         attendingPetIds: [],
         status: "pending",
-        locationId: locationId,
+        locationId: id,
         playDateTimeStamp: this.dateTime,
       };
       //create new playdate with found locationId
@@ -200,9 +193,12 @@ export default {
           this.latitude = response.data.results[0].geometry.location.lat;
           this.longitude = response.data.results[0].geometry.location.lng;
           this.couldNotFindAddress = false;
+          this.submitForm();
+          
         })
-        .catch(() => {
+        .catch((error) => {
           this.couldNotFindAddress = true;
+          console.log(error);
         });
     },
     checkForLocation() {
@@ -211,9 +207,13 @@ export default {
         const isAddressOneSame =
           location.address1.toLowerCase().trim() ==
           this.addressOne.toLowerCase().trim();
-        const isAddressTwoSame =
-          location.address2.toLowerCase().trim() ==
-          this.addressTwo.toLowerCase().trim();
+        let isAddressTwoSame = true;
+        if (this.addressTwo != "") {
+          isAddressTwoSame =
+            location.address2.toLowerCase().trim() ==
+            this.addressTwo.toLowerCase().trim();
+        }
+
         const isCitySame =
           location.city.toLowerCase().trim() == this.city.toLowerCase().trim();
         const isStateSame =
@@ -257,6 +257,25 @@ export default {
       }
     });
     this.currentOwnerId = this.$store.state.user.id;
+    //Get play dates from API
+    mapService
+      .getPlayDates()
+      .then((response) => {
+        this.$store.commit("SET_PLAY_DATES", response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    //Get locations from API
+    mapService
+      .getLocations()
+      .then((response) => {
+        this.$store.commit("SET_LOCATIONS", response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 </script>
