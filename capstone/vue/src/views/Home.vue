@@ -30,6 +30,6 @@ export default {
   }
 
   .home {
-    background-color: #F7F7F7;
+    background-color: #eceaea;
   }
 </style>

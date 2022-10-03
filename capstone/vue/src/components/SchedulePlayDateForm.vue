@@ -229,7 +229,7 @@ export default {
   }
 
   #submit-btn {
-    background-color: #676FA3;
+    background-color: #676fa3de;
     font-family: monospace;
     font-size: 18px;
     color: white;
@@ -244,7 +244,7 @@ export default {
   }
 
   #submit-btn:hover {
-    background-color: #CDDEFF;
+    background-color: #c1d5fc;
     color: #2C3333;
   }
 
