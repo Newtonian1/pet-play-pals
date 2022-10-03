@@ -14,4 +14,17 @@ INSERT INTO pets (pet_name,owner_id,pet_type_id,breed,gender_id,size_id,is_fixed
 ('Bob',1003,6002,'He''s a cat!',7002,8002,true,true,'Eats plants. Is a menace'),
 ('DOGGO',1005,6001,'DOG',7002,8004,true,true,'test description');
 
+-- Play Date Test Data
+INSERT INTO play_date (play_date_time,location_id,host_pet_id,status_id) VALUES
+(now(),4001,2001,5001),
+(now(),4002,2001,5002),
+(now(),4003,2002,5003);
+
+INSERT INTO play_date_pet (play_date_id, pet_id) VALUES
+(9001,2002),
+(9003,2003),
+(9002,2002);
+
+
+
 COMMIT TRANSACTION;

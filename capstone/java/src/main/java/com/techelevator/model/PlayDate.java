@@ -12,6 +12,17 @@ public class PlayDate {
     private int locationId;
     private LocalDateTime playDateTimeStamp;
 
+    public PlayDate(){}
+
+    public PlayDate(int playDateId, int hostPetId, List<Integer> attendingPetIds, String status, int locationId, LocalDateTime playDateTimeStamp) {
+        this.playDateId = playDateId;
+        this.hostPetId = hostPetId;
+        this.attendingPetIds = attendingPetIds;
+        this.status = status;
+        this.locationId = locationId;
+        this.playDateTimeStamp = playDateTimeStamp;
+    }
+
     public int getPlayDateId() {
         return playDateId;
     }
