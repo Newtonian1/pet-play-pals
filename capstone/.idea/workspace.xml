@@ -38,7 +38,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../module-2-week-2-pair-group-6/exercise" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.JdbcPlayDateDaoTest.get_all_play_dates_returns_all_play_dates">
     <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.techelevator.Application" />
       <module name="final-capstone-starter" />
@@ -52,8 +52,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="JdbcPlayDateDaoTest.get_all_play_dates_returns_all_play_dates" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="final-capstone-starter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.techelevator.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.techelevator.dao" />
+      <option name="MAIN_CLASS_NAME" value="com.techelevator.dao.JdbcPlayDateDaoTest" />
+      <option name="METHOD_NAME" value="get_all_play_dates_returns_all_play_dates" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.JdbcPlayDateDaoTest.get_all_play_dates_returns_all_play_dates" />
         <item itemvalue="Application.Application" />
       </list>
     </recent_temporary>
@@ -68,5 +85,16 @@
       <updated>1664203161280</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/java/src/test/java/com/techelevator/dao/JdbcLocationDaoTest.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
