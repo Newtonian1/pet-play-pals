@@ -36,6 +36,7 @@ export default {
       const fileReader = new FileReader();
       fileReader.addEventListener("load", () => {
         this.imageUrl = fileReader.result;
+        console.log(this.imageUrl.length);
       });
       fileReader.readAsDataURL(this.selectedFile);
     },

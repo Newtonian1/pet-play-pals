@@ -46,7 +46,5 @@ export default new Vuex.Store({
     SET_LOCATIONS(state, locations) {
       state.locations = locations;
     },
-   
-    
   }
 })
