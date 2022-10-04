@@ -8,6 +8,7 @@ import store from '../store/index'
 import RegisterPet from '../views/RegisterPet.vue'
 import CreatePlayDate from '../views/CreatePlayDate.vue'
 import Landing from '../views/Landing.vue'
+import Location from '../views/Location.vue'
 
 Vue.use(Router)
 
@@ -81,7 +82,15 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
-    }
+    },
+    {
+      path: "/location/:locationId",
+      name: "location",
+      component: Location,
+      meta: {
+        requiresAuth: false
+      }
+    },
 
 
   ]

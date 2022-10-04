@@ -99,8 +99,9 @@
         <div
           class="playdate-card"
           v-for="location in filteredLocations"
-          :key="location.id"
+          :key="location.locationId"
           :class="{ 'selected-card': selectedId === location.locationId }"
+          @click="routeToPlayDates(location.locationId)"
         >
           <div class="address">
             <h3>
@@ -236,6 +237,9 @@ export default {
     setSelectedId(id) {
       this.selectedId = id;
     },
+    routeToPlayDates(id){
+      this.$router.push({ name: 'location', params: { locationId: id}});
+    }
   },
   created() {
     //Set center of map to user's current location
