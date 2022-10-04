@@ -1,10 +1,17 @@
-import firebase from "firebase/compat";
+import { fireDb, fireStorage } from '@/firebase';
+import { ref as dbRef, set } from 'firebase/database';
+import { ref as storeRef, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 export default {
   uploadImage(petImage) {
-    return firebase.database().ref('pet_pictures').push(petImage);
+    return set(dbRef(fireDb, 'pet_pictures/'), petImage);
   },
-  storeImage(extension, petPicture) {
-    return firebase.storage().ref('pet_pictures/' + extension).put(petPicture);
+  storeImage(petPicture) {
+    let imageRef = storeRef(fireStorage, 'pet_pictures/' + petPicture.name)
+    uploadBytes(imageRef, petPicture).then(() => {
+      getDownloadURL(imageRef).then(url => {
+        return url;
+      })
+    });
   },
 }
