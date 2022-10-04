@@ -47,7 +47,7 @@ export default {
         if (snapshot.exists()) {
           store.commit('RESET_PET_PICTURES');
           snapshot.forEach(child => {
-            console.log(child.val());
+            // console.log(child.val());
             store.commit('ADD_TO_PET_PICTURES', {
               id: child.val().id,
               url: child.val().url

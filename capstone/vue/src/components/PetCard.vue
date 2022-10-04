@@ -2,8 +2,7 @@
   <div class="flip-card" id="myCard">
     <div class="flip-card-inner">
       <div class="flip-card-front">
-        <img class="front-img" src="../assets/doggo3.jpg" alt="doggo" />
-        <!-- <img class="front-img" :src="getImgUrl(pic)" v-bind:alt="pic"> -->
+        <img class="front-img" :src="petImageUrl" alt="pic" />
       </div>
       <div class="flip-card-back">
         <h4 id="pet-name">{{ pet.petName }}</h4>
@@ -29,25 +28,41 @@
 </template>
 
 <script>
-// import imageService from '../services/imageService';
 export default {
   name: "pet-card",
   data() {
     return {
       currentOwnerId: 0,
       currentPetId: 0,
-      currentPetUrl: ''
+      currentPetUrl: "",
     };
   },
   props: ["pet"],
   created() {
     this.currentOwnerId = this.$store.state.user.id;
     this.currentPetId = this.pet.petId;
-    // this.currentPetUrl = imageService.getImageUrlById(this.currentPetId)
   },
   computed: {
     flipCard() {
       return document.querySelector("#myCard").classList.toggle("flip");
+    },
+    petImageUrl() {
+      let url = this.$store.state.petPictures.find(
+        (pet) => pet.id == this.currentPetId
+      );
+      if (url !== undefined && url !== null) {
+        return url.url;
+      } else {
+        let type = "doggo";
+        if (this.pet.petType === "cat") {
+          type = "kitty";
+        }
+        url = require("../assets/" +
+          type +
+          (Math.floor(Math.random() * 3) + 1) +
+          ".jpg");
+        return url;
+      }
     },
   },
 };
@@ -111,9 +126,9 @@ export default {
 
 .front-img {
   /* Note from Kat: I found this object-fit property and used it to crop
-    the image to a square and get rid of the overlap on the pics. I had to 
-    change the height property here and in .flip-card, as well as the wrap
-    setting in pet-container. Let me know what you think! */
+  the image to a square and get rid of the overlap on the pics. I had to 
+  change the height property here and in .flip-card, as well as the wrap
+  setting in pet-container. Let me know what you think! */
   object-fit: cover;
   width: 300px;
   height: 300px;
