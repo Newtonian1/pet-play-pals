@@ -94,7 +94,7 @@
       <button id="submit-btn" type="submit" v-if="!playDateCreated">Add Play Date</button>
       <div v-if="playDateCreated">
         <h3 class="return-home">Playdate Successfully Created!</h3>
-        <button class="return-home" id="return-btn">Return to home</button>
+        <button class="return-home" id="return-btn" v-on:click="sendToHome">Return to home</button>
       </div>
     </form>
   </div>
