@@ -420,6 +420,12 @@ input[type="text"], input[type="number"] {
   border-radius: 5px;
 }
 
+.playdate-card:hover {
+  transition:  0.2s ease-in-out;
+  border: 2px solid #395B64;
+  cursor: pointer;
+}
+
 .address {
   display: flex;
   flex-direction: column;
