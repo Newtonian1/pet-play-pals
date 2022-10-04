@@ -1,11 +1,16 @@
 <template>
-  <div id="logo-img">
-      <img src="../assets/images\logos/PetPlayPalsLogo.png" alt="">
+  <div class="landing">
+    <div id="logo-img">
+        <img src="../assets/images\logos/PetPlayPalsLogo.png" alt="">
+    </div>
+    <play-date-map />
   </div>
 </template>
 
 <script>
+import PlayDateMap from '../components/PlayDateMap.vue'
 export default {
+  components: { PlayDateMap },
 
 }
 </script>

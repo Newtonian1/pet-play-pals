@@ -19,14 +19,12 @@ export default {
   data() {
     return {
       selectedFile: null,
-      imageUrl: "",
-      image: null,
+      // TODO: need to add a way to add the petId during registration
       petId: 2001,
     };
   },
   methods: {
     onFileSelected(event) {
-      console.log(event);
       this.selectedFile = event.target.files[0];
       let filename = this.selectedFile.name;
       if (filename.lastIndexOf(".") <= 0) {
@@ -41,19 +39,7 @@ export default {
     },
     onUpload() {
       if (this.selectedFile) {
-        const petImage = {
-          key: 0,
-          petId: 2001,
-          petPicture: this.selectedFile,
-        };
-        imageService.storeImage(petImage.petPicture);
-        imageService.uploadImage(petImage);
-
-        // }).then(key => {
-        //   const filename = petImage.petPicture.name;
-        //   const ext = filename.slice(filename.lastIndexOf('.'));
-        //   return imageService.storeImage(key + '.' + ext, petImage.petPicture);
-        // })
+        imageService.storeImage(this.selectedFile, this.petId);
       }
     },
   },

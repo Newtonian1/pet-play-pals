@@ -33,7 +33,7 @@
             placeholder="CA"
             @input="truncateState"
           />
-          <button @click.prevent="setSearchAddress">Search</button>
+          <button id="search-map-btn" @click.prevent="setSearchAddress">Search</button>
         </form>
       </div>
 
@@ -51,7 +51,7 @@
             id="radius-box"
             @input="truncateRadius"
           />
-          mile<span v-if="searchRadius != 1">s</span>
+          mile<span is="s-for-mile" v-if="searchRadius != 1">s</span>
         </p>
         <input
           type="range"
@@ -278,7 +278,26 @@ export default {
 <style scoped>
 * {
   font-family: "Montserrat", sans-serif;
+  color: #2C3333;
   box-sizing: border-box;
+}
+
+h1 {
+  color: #A5C9CA;
+}
+
+#radius-label > strong, #search-form-label > strong, h3 {
+  color: #395B64;
+}
+
+#search-form > label, #slide-container > p, #s-for-mile {
+  color: #395B64;
+}
+
+input[type="text"], input[type="number"] {
+  border: 2px solid #395B64;
+  height: 25px;
+  border-radius: 5px;
 }
 
 #main-container {
@@ -291,8 +310,9 @@ export default {
 
 #map-controls {
   background-color: rgb(250, 251, 253);
+  /* background-color: #a5c9cacc; */
   padding: 12px 0;
-  border: 1px solid black;
+  border: 1px solid #2C3333;
   border-radius: 5px;
   margin: 10px;
   width: 100%;
@@ -366,7 +386,7 @@ export default {
 #map {
   width: 100%;
   height: 400px;
-  border: 1px solid black;
+  border: 1px solid #2C3333;
   border-radius: 5px;
 }
 
@@ -384,7 +404,7 @@ export default {
 .playdate-card {
   height: 100%;
   padding: 0 10px;
-  border: 1px solid black;
+  border: 1px solid #2C3333;
   background-color: rgb(250, 251, 253);
   font-size: 12px;
   flex: 0 0 36%;
@@ -414,17 +434,32 @@ export default {
   background-color: rgb(248, 248, 188);
 }
 
+#search-map-btn {
+  background-color: #395B64;
+  font-family: monospace, sans-serif;
+  color: white;
+  /* width: 100%; */
+  border: none;
+  border-radius: 5px;
+  letter-spacing: 2px;
+  height: 25px;
+  transition: all .3s ease;
+  
+}
+
+#search-map-btn:hover {
+  background-color: #A5C9CA;
+  color: #2C3333;
+}
+
 @media only screen and (min-width: 768px) {
   #map {
     height: 500px;
-    /* border-radius: 5px 5px 5px 0; */
   }
 
   .playdate-card {
     flex: 0 0 22%;
     margin-left: 0;
-    /* border-top: none;
-    border-radius: 0 0 5px 5px; */
   }
 
   #slide-container {
@@ -478,8 +513,6 @@ export default {
 
   .playdate-card {
     margin-left: 10px;
-    /* border-top: 1px solid black;
-    border-radius: 5px; */
   }
 }
 </style>

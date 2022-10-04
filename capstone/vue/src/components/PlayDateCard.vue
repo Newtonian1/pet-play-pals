@@ -79,7 +79,13 @@ export default {
 </script>
 
 <style>
+.party-card {
+  
+  min-width: 250px;
+}
+
 div.party-card-container > div {
+  min-width: 250px;
   border: 2px #2c3333 solid;
   border-radius: 10px;
   text-align: center;
