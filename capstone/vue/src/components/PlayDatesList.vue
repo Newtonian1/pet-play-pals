@@ -86,11 +86,29 @@ export default {
   grid-auto-columns: 40%;
   grid-template-rows: minmax(150px, 1fr);
   padding: 0;
+  width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
 }
+
+
 #pending,
 #upcoming {
   text-align: center;
-  width: 95vmax;
+  width: 95vw;
+}
+
+@media (max-width: 840px) {
+  .scrollable {
+    max-width: 95vw;
+  }
+}
+
+@media(max-width: 683px) {
+  .scrollable {
+    display: flex;
+    
+  }
+  
 }
 </style>
