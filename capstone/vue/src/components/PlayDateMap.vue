@@ -377,6 +377,8 @@ export default {
   display: flex;
   overflow-x: auto;
   overflow-y: hidden;
+  padding: 5px 0;
+  
 }
 
 .playdate-card {
@@ -390,8 +392,11 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   margin: 10px;
-  margin-right: 0;
+  margin-right: 5px;
   margin-top: 0;
+  
+  margin-left: 0;
+
   border-radius: 5px;
 }
 
@@ -412,11 +417,14 @@ export default {
 @media only screen and (min-width: 768px) {
   #map {
     height: 500px;
+    /* border-radius: 5px 5px 5px 0; */
   }
 
   .playdate-card {
     flex: 0 0 22%;
     margin-left: 0;
+    /* border-top: none;
+    border-radius: 0 0 5px 5px; */
   }
 
   #slide-container {
@@ -440,6 +448,7 @@ export default {
   #map {
     flex: 2 1 80%;
     height: 600px;
+    border-radius: 5px;
   }
 
   #playdate-list {
@@ -449,6 +458,7 @@ export default {
     flex: 1 1 20%;
     overflow-y: auto;
     overflow-x: hidden;
+    padding: 0;
   }
 
   #search-form {
@@ -468,6 +478,8 @@ export default {
 
   .playdate-card {
     margin-left: 10px;
+    /* border-top: 1px solid black;
+    border-radius: 5px; */
   }
 }
 </style>
