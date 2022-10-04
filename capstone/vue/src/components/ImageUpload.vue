@@ -19,8 +19,9 @@ export default {
   data() {
     return {
       selectedFile: null,
+      imageUrl: '',
       // TODO: need to add a way to add the petId during registration
-      petId: 2001,
+      petId: 2003,
     };
   },
   methods: {

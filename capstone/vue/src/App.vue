@@ -39,8 +39,12 @@
 
 <script>
 import AppHeader from './components/AppHeader.vue';
+import imageService from './services/imageService';
 export default {
-  components: { AppHeader },};
+  components: { AppHeader },
+  created() {
+    imageService.getImageUrls();
+  }};
 </script>
 <style>
   #links-in-nav > .router-link-exact-active {
