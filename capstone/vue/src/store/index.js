@@ -22,6 +22,7 @@ export default new Vuex.Store({
     user: currentUser || {},
     playDates: [],
     locations: [],
+    petPictures: [],
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -46,7 +47,5 @@ export default new Vuex.Store({
     SET_LOCATIONS(state, locations) {
       state.locations = locations;
     },
-   
-    
   }
 })
