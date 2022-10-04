@@ -32,6 +32,11 @@
       <p class="attending" v-if="!attendingPets.length">
         No guests have joined this pet play date yet!
       </p>
+      <!-- v-if - they don't have any pets -->
+      <button id="join-edit-playdate" v-show="$store.state.token != ''">Join</button>
+      <!-- v-else -->
+      <button id="join-edit-playdate" v-show="$store.state.token != ''">Edit</button>
+
     </div>
   </div>
 </template>
@@ -80,7 +85,6 @@ export default {
 
 <style>
 .party-card {
-  
   min-width: 250px;
 }
 
@@ -101,5 +105,28 @@ div > .heading {
 }
 .accepted {
   background-color: rgba(177, 215, 180, 0.3);
+}
+
+p.attending {
+  margin-bottom: 0;
+}
+
+#join-edit-playdate {
+  background-color: #395b645b;
+  font-family: monospace, sans-serif;
+  color: white;
+  /* width: 100%; */
+  border: 2px solid #395B64;
+  border-radius: 5px;
+  letter-spacing: 2px;
+  height: 25px;
+  margin: 10px;
+  transition: all .3s ease;
+}
+
+#join-edit-playdate:hover {
+  background-color: #A5C9CA;
+  border: none;
+  color: #2C3333;
 }
 </style>
