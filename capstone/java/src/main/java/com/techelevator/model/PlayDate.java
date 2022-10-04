@@ -3,6 +3,7 @@ package com.techelevator.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 public class PlayDate {
     private int playDateId;
@@ -70,4 +71,23 @@ public class PlayDate {
     public void setPlayDateTimeStamp(LocalDateTime playDateTimeStamp) {
         this.playDateTimeStamp = playDateTimeStamp;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlayDate playDate = (PlayDate) o;
+        return playDateId == playDate.playDateId &&
+                hostPetId == playDate.hostPetId &&
+                locationId == playDate.locationId &&
+                Objects.equals(attendingPetIds, playDate.attendingPetIds) &&
+                Objects.equals(status, playDate.status) &&
+                Objects.equals(playDateTimeStamp, playDate.playDateTimeStamp);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(playDateId, hostPetId, attendingPetIds, status, locationId, playDateTimeStamp);
+    }
 }
+
