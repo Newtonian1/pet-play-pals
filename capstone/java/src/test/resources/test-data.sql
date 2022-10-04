@@ -54,12 +54,12 @@ INSERT INTO pets (pet_name,owner_id,pet_type_id,breed,gender_id,size_id,is_fixed
 -- Play Date Test Data
 INSERT INTO play_date (play_date_time,location_id,host_pet_id,status_id) VALUES
 (TO_TIMESTAMP(
-     '2022-10-31 9:30:20',
-     'YYYY-MM-DD HH:MI:SS'
- )
+    '2022-10-31 9:30:20',
+    'YYYY-MM-DD HH:MI:SS'
+)
 ,4001,2001,5001),
-((TO_TIMESTAMP ('2022-10-31 09:30:20', 'YYYY-MM-DD HH:MI:SS'),4002,2001,5002),
-((TO_TIMESTAMP ('2022-10-31 09:30:20', 'YYYY-MM-DD HH:MI:SS'),4003,2002,5003);
+(TO_TIMESTAMP ('2022-10-31 09:30:20', 'YYYY-MM-DD HH:MI:SS'),4002,2001,5002),
+(TO_TIMESTAMP ('2022-10-31 09:30:20', 'YYYY-MM-DD HH:MI:SS'),4003,2002,5003);
 
 INSERT INTO play_date_pet (play_date_id, pet_id) VALUES
 (9001,2003),

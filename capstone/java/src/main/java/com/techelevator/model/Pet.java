@@ -1,6 +1,7 @@
 package com.techelevator.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Pet {
     private int petId;
@@ -118,5 +119,28 @@ public class Pet {
 
     public void setUpToDateWithVaccinations(boolean isUpToDateWithVaccinations) {
         this.isUpToDateWithVaccinations = isUpToDateWithVaccinations;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pet pet = (Pet) o;
+        return petId == pet.petId &&
+                ownerId == pet.ownerId &&
+                isUpToDateWithVaccinations == pet.isUpToDateWithVaccinations &&
+                isFixed == pet.isFixed &&
+                Objects.equals(petType, pet.petType) &&
+                Objects.equals(petName, pet.petName) &&
+                Objects.equals(breed, pet.breed) &&
+                Objects.equals(gender, pet.gender) &&
+                Objects.equals(size, pet.size) &&
+                Objects.equals(personalityTypes, pet.personalityTypes) &&
+                Objects.equals(description, pet.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(petId, ownerId, petType, petName, breed, gender, size, personalityTypes, description, isUpToDateWithVaccinations, isFixed);
     }
 }

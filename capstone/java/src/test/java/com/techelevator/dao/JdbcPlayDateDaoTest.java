@@ -13,10 +13,12 @@ import java.util.List;
 public class JdbcPlayDateDaoTest extends BaseDaoTests{
 
     private static List<Integer> testPetIds = new ArrayList<>();
+    private static List<Integer> testPetIds1 = new ArrayList<>();
+    private static List<Integer> testPetIds2 = new ArrayList<>();
 
     protected static final PlayDate PLAY_DATE_1 = new PlayDate(9001, 2001, testPetIds,"approved",4001,LocalDateTime.parse("2022-10-31T09:30:20"));
-    protected static final PlayDate PLAY_DATE_2 = new PlayDate(9002, 2001, testPetIds,"rejected",4002,LocalDateTime.parse("2022-10-31T09:30:20"));
-    protected static final PlayDate PLAY_DATE_3 = new PlayDate(9003,2002,testPetIds,"pending",4003,LocalDateTime.parse("2022-10-31T09:30:20"));
+    protected static final PlayDate PLAY_DATE_2 = new PlayDate(9002, 2001, testPetIds1,"rejected",4002,LocalDateTime.parse("2022-10-31T09:30:20"));
+    protected static final PlayDate PLAY_DATE_3 = new PlayDate(9003,2002,testPetIds2,"pending",4003,LocalDateTime.parse("2022-10-31T09:30:20"));
 
 private JdbcPlayDateDao sut;
 
@@ -29,13 +31,15 @@ private JdbcPlayDateDao sut;
 @Test
     public void get_all_play_dates_returns_all_play_dates(){
     testPetIds.add(0,2003);
+    testPetIds.remove(2);
+    testPetIds.remove(1);
     List<PlayDate> playDates = sut.getAllPlayDates();
     Assert.assertNotNull(playDates);
     Assert.assertEquals(3,playDates.size());
-//    this.assertPlayDates(PLAY_DATE_1,playDates.get(0));
-    testPetIds.remove(0);
-    testPetIds.add(0,2002);
+    this.assertPlayDates(PLAY_DATE_1,playDates.get(0));
+    testPetIds1.add(0,2002);
     this.assertPlayDates(PLAY_DATE_2,playDates.get(1));
+    testPetIds2.add(0,2003);
     this.assertPlayDates(PLAY_DATE_3,playDates.get(2));
 
 
@@ -59,7 +63,7 @@ public void create_play_date_creates_and_returns_play_date(){
 
 }
 
-//update
+
     @Test
     public void update_play_date_has_expected_values(){
     PlayDate updatedPlayDate = sut.getPlayDateById(9003);

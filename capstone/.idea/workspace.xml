@@ -38,7 +38,55 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../aaron-weisenauer-student-code/14_Unit_Testing/lecture-final" />
   </component>
-  <component name="RunManager" selected="JUnit.JdbcPlayDateDaoTest.update_play_date_has_expected_values">
+  <component name="RunManager" selected="JUnit.JdbcPlayDateDaoTest">
+    <configuration name="JdbcPetDaoTest.get_pet_by_id_returns_correct_pet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="final-capstone-starter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.techelevator.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.techelevator.dao" />
+      <option name="MAIN_CLASS_NAME" value="com.techelevator.dao.JdbcPetDaoTest" />
+      <option name="METHOD_NAME" value="get_pet_by_id_returns_correct_pet" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JdbcPetDaoTest.register_pet_creates_pet_and_returns_pet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="final-capstone-starter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.techelevator.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.techelevator.dao" />
+      <option name="MAIN_CLASS_NAME" value="com.techelevator.dao.JdbcPetDaoTest" />
+      <option name="METHOD_NAME" value="register_pet_creates_pet_and_returns_pet" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JdbcPetDaoTest.update_pet_has_expected_values" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="final-capstone-starter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.techelevator.dao.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.techelevator.dao" />
+      <option name="MAIN_CLASS_NAME" value="com.techelevator.dao.JdbcPetDaoTest" />
+      <option name="METHOD_NAME" value="update_pet_has_expected_values" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="JdbcPlayDateDaoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="final-capstone-starter" />
       <extension name="coverage">
@@ -50,22 +98,6 @@
       <option name="PACKAGE_NAME" value="com.techelevator.dao" />
       <option name="MAIN_CLASS_NAME" value="com.techelevator.dao.JdbcPlayDateDaoTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="JdbcPlayDateDaoTest.create_play_date_creates_and_returns_play_date" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="final-capstone-starter" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.techelevator.dao.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.techelevator.dao" />
-      <option name="MAIN_CLASS_NAME" value="com.techelevator.dao.JdbcPlayDateDaoTest" />
-      <option name="METHOD_NAME" value="create_play_date_creates_and_returns_play_date" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -86,45 +118,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="JdbcPlayDateDaoTest.get_play_date_by_play_date_id_returns_expected_play_date" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="final-capstone-starter" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.techelevator.dao.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.techelevator.dao" />
-      <option name="MAIN_CLASS_NAME" value="com.techelevator.dao.JdbcPlayDateDaoTest" />
-      <option name="METHOD_NAME" value="get_play_date_by_play_date_id_returns_expected_play_date" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="JdbcPlayDateDaoTest.update_play_date_has_expected_values" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="final-capstone-starter" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.techelevator.dao.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.techelevator.dao" />
-      <option name="MAIN_CLASS_NAME" value="com.techelevator.dao.JdbcPlayDateDaoTest" />
-      <option name="METHOD_NAME" value="update_play_date_has_expected_values" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.JdbcPlayDateDaoTest.update_play_date_has_expected_values" />
-        <item itemvalue="JUnit.JdbcPlayDateDaoTest.get_play_date_by_play_date_id_returns_expected_play_date" />
-        <item itemvalue="JUnit.JdbcPlayDateDaoTest.get_all_play_dates_returns_all_play_dates" />
         <item itemvalue="JUnit.JdbcPlayDateDaoTest" />
-        <item itemvalue="JUnit.JdbcPlayDateDaoTest.create_play_date_creates_and_returns_play_date" />
+        <item itemvalue="JUnit.JdbcPlayDateDaoTest.get_all_play_dates_returns_all_play_dates" />
+        <item itemvalue="JUnit.JdbcPetDaoTest.update_pet_has_expected_values" />
+        <item itemvalue="JUnit.JdbcPetDaoTest.register_pet_creates_pet_and_returns_pet" />
+        <item itemvalue="JUnit.JdbcPetDaoTest.get_pet_by_id_returns_correct_pet" />
       </list>
     </recent_temporary>
   </component>
