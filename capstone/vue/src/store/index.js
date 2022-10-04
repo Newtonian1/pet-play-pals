@@ -22,6 +22,7 @@ export default new Vuex.Store({
     user: currentUser || {},
     playDates: [],
     locations: [],
+    petPictures: [],
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {

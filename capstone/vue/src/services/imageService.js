@@ -1,7 +1,10 @@
-import axios from "axios";
+import firebase from "firebase/compat";
 
 export default {
   uploadImage(petImage) {
-    return axios.post('/images/upload', petImage);
-  }
+    return firebase.database().ref('pet_pictures').push(petImage);
+  },
+  storeImage(extension, petPicture) {
+    return firebase.storage().ref('pet_pictures/' + extension).put(petPicture);
+  },
 }
