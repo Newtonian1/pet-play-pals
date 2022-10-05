@@ -208,7 +208,7 @@
       <div id="image-upload">
         <label for="choose-file">Add a picture</label>
         <input
-          id="choose-file"
+          id="choose-file" class="add-pet-picture"
           style="display: none"
           type="file"
           @change="onFileSelected"
@@ -372,6 +372,31 @@ select {
 #create-pet-btn:hover {
   background-color: #a5c9ca;
   color: #2c3333;
+}
+#choose-file-btn {
+  background-color: #395b645b;
+  font-family: monospace, sans-serif;
+  color: white;
+  /* width: 100%; */
+  border: 2px solid #395b64;
+  border-radius: 5px;
+  letter-spacing: 2px;
+  height: 25px;
+  margin: 10px;
+  transition: all 0.3s ease;
+}
+
+#choose-file-btn:hover {
+  background-color: #a5c9ca;
+  color: #2c3333;
+  border: none;
+  /* color: #2c3333; */
+}
+
+#image-upload {
+  font-size: 18px;
+  margin: 15px;
+  margin-left: 0;
 }
 
 /* CHANGES */
