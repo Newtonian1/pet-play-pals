@@ -47,12 +47,24 @@ export default {
       );
     },
     pendingPlayDates() {
-      return this.filteredPlayDates.filter((playDate) => playDate.status === "pending");
+      return this.filteredPlayDates.filter(
+        (playDate) => playDate.status === "pending"
+      );
     },
     filteredPlayDates() {
-      return this.playDates.filter((playDate) =>
-        this.userPetIdList.includes(playDate.hostPetId)
-      );
+      return this.playDates.filter((playDate) => {
+        let attendingPetCounter = 0;
+        playDate.attendingPetIds.forEach((id) => {
+          if (this.userPetIdList.includes(id)) {
+            attendingPetCounter++;
+            console.log(playDate.playDateId)
+          }
+        });
+        return (
+          this.userPetIdList.includes(playDate.hostPetId) ||
+          attendingPetCounter > 0
+        );
+      });
     },
   },
   methods: {
@@ -79,9 +91,7 @@ export default {
         this.userPetIdList = this.userPetList.map((pet) => pet.petId);
         playDateService.getPlayDates().then((res) => {
           if (res.status === 200) {
-            this.playDates = res.data.filter((playDate) =>
-              this.userPetIdList.includes(playDate.hostPetId)
-            );
+            this.playDates = res.data;
           }
         });
       }
