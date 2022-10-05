@@ -246,8 +246,7 @@ export default {
       },
       selectedFile: null,
       imageUrl: '',
-      // TODO: need to add a way to add the petId during registration
-      petId: 2003,
+      petId: 0,
     };
   },
   methods: {
