@@ -1,5 +1,8 @@
 <template>
-  <div class="play-date-card-container-container">
+  <div
+    class="play-date-card-container-container"
+    @playDateUpdated="handlePlayDateUpdated"
+  >
     <div id="pending" v-show="pendingPlayDates.length">
       <h2>Pending Play Dates:</h2>
       <div class="full scrollable">
@@ -44,9 +47,25 @@ export default {
       );
     },
     pendingPlayDates() {
-      return this.playDates.filter(
-        (playdate) => playdate.status === "pending"
-      );
+      return this.playDates.filter((playDate) => playDate.status === "pending");
+    },
+  },
+  methods: {
+    handlePlayDateUpdated() {
+      console.log("It works!");
+      petService.getAllPetsByOwnerId(this.currentUserId).then((res) => {
+        if (res.status === 200) {
+          this.userPetList = res.data;
+          this.userPetIdList = this.userPetList.map((pet) => pet.petId);
+          playDateService.getPlayDates().then((res) => {
+            if (res.status === 200) {
+              this.playDates = res.data.filter((playDate) =>
+                this.userPetIdList.includes(playDate.hostPetId)
+              );
+            }
+          });
+        }
+      });
     },
   },
   created() {
@@ -91,7 +110,6 @@ export default {
   overflow-y: hidden;
 }
 
-
 #pending,
 #upcoming {
   text-align: center;
@@ -104,11 +122,9 @@ export default {
   }
 }
 
-@media(max-width: 683px) {
+@media (max-width: 683px) {
   .scrollable {
     display: flex;
-    
   }
-  
 }
 </style>

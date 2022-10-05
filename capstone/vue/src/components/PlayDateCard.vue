@@ -33,10 +33,29 @@
         No guests have joined this pet play date yet!
       </p>
       <!-- v-if - they don't have any pets -->
-      <button id="join-edit-playdate" v-show="$store.state.token != ''">Join</button>
-      <!-- v-else -->
-      <button id="join-edit-playdate" v-show="$store.state.token != ''">Edit</button>
-
+      <button
+        id="join-edit-playdate"
+        v-show="$store.state.token != ''"
+        @click="joinFormOpen"
+      >
+        {{ userPetsAttending.length == 0 ? "Join" : "Edit" }}
+      </button>
+    </div>
+    <div v-if="showJoinForm" id="screen-blocker">
+      <div id="join-form">
+        <h3>Join this Pet Play Date</h3>
+        <div v-for="pet in filterPets" :key="pet.petId">
+          <label :for="pet.petName">{{ pet.petName }}</label>
+          <input
+            :value="pet.petId"
+            v-model="petsToUpdate"
+            type="checkbox"
+            :name="pet.petName"
+            :id="pet.petName"
+          />
+        </div>
+        <input type="button" value="Done" @click="editPlayDate" />
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +64,7 @@
 import locationService from "../services/locationService";
 import petService from "../services/petService";
 import moment from "moment";
+import playDateService from '../services/PlayDateService';
 export default {
   props: ["playDate"],
   data() {
@@ -52,6 +72,10 @@ export default {
       location: null,
       hostingPet: null,
       attendingPets: [],
+      currentOwnerId: 0,
+      pets: [],
+      showJoinForm: false,
+      petsToUpdate: [],
     };
   },
   computed: {
@@ -59,6 +83,13 @@ export default {
       return moment(this.playDate.playDateTimeStamp).format(
         "dddd, MMM. Do [at] h:mm a"
       );
+    },
+    filterPets() {
+      return this.pets.filter((pet) => pet.ownerId == this.currentOwnerId);
+    },
+    userPetsAttending() {
+      let petIds = this.filterPets.map((pet) => pet.petId);
+      return this.playDate.attendingPetIds.filter((id) => petIds.includes(id));
     },
   },
   created() {
@@ -79,6 +110,39 @@ export default {
         );
       }
     });
+    petService.getAllPets().then((res) => {
+      if (res.status === 200) {
+        this.pets = res.data;
+      }
+    });
+    this.currentOwnerId = this.$store.state.user.id;
+  },
+  methods: {
+    editPlayDate() {
+      this.showJoinForm = !this.showJoinForm;
+      let petIdsToAdd = [];
+      this.petsToUpdate.forEach(petId => {
+        if (!this.playDate.attendingPetIds.includes(petId)) {
+          petIdsToAdd.push(petId);
+        }
+      });
+      petIdsToAdd = this.playDate.attendingPetIds.concat(petIdsToAdd)
+      let updatedPlayDate = {
+        hostPetId: this.playDate.hostPetId,
+        attendingPetIds: petIdsToAdd,
+        locationId: this.playDate.locationId,
+        playDateId: this.playDate.playDateId,
+        playDateTimeStamp: this.playDate.playDateTimeStamp,
+        status: petIdsToAdd.length != 0 ? "approved" : "pending",
+      };
+      playDateService.updatePlayDate(updatedPlayDate, this.playDate.playDateId);
+      this.$store.commit('UPDATE_PLAY_DATE', updatedPlayDate);
+      this.$parent.$emit('playDateUpdated')
+    },
+    joinFormOpen() {
+      this.showJoinForm = !this.showJoinForm;
+      this.petsToUpdate = this.attendingPets.map(pet => pet.petId);
+    }
   },
 };
 </script>
@@ -116,17 +180,42 @@ p.attending {
   font-family: monospace, sans-serif;
   color: white;
   /* width: 100%; */
-  border: 2px solid #395B64;
+  border: 2px solid #395b64;
   border-radius: 5px;
   letter-spacing: 2px;
   height: 25px;
   margin: 10px;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 
 #join-edit-playdate:hover {
-  background-color: #A5C9CA;
+  background-color: #a5c9ca;
   border: none;
-  color: #2C3333;
+  color: #2c3333;
+}
+
+#screen-blocker {
+  position: fixed;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 0;
+}
+
+#join-form {
+  position: fixed;
+  z-index: 101;
+  max-width: 75vw;
+  max-height: 75vh;
+  top: 50%;
+  right: 50%;
+  background-color: chartreuse;
+  border: 2px solid red;
+  border-radius: 15px;
+  padding: 20px;
 }
 </style>
