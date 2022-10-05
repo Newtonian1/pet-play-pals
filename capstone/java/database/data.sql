@@ -74,43 +74,42 @@ INSERT INTO locations (location_name,address_1,address_2,city,state_abbreviation
 
 -- Pet & personality Test Data
 INSERT INTO pets (pet_name,owner_id,pet_type_id,breed,gender_id,size_id,is_fixed,is_up_to_date_with_vaccinations,pet_description) VALUES
-('Minnie',1003,6001,'Who knows',7001,8003,true,true,'Chaos incarnate'),
-('Bob',1003,6002,'He''s a cat!',7002,8002,true,true,'Eats plants. Is a menace'),
-('DOGGO',1005,6001,'DOG',7002,8004,true,true,'test description');
+('Minnie',1003,6001,'Shiba/Aussie Mix',7001,8003,true,true,'I get anxious when people blow raspberries at me. I defend my humans from all who dare to walk on our sidewalk!'),
+('Bob',1003,6002,'Cat!',7002,8002,true,true,'Eats plants. Is a menace'),
+('Henry',1003,6002,'Fuzzball',7001,8002,true,true,'I get angry at my tail sometimes.');
 
 INSERT INTO pet_personality (pet_id,personality_id) VALUES
 (2001,3001),
 (2001,3002),
 (2002,3003),
 (2002,3005),
-(2003,3007),
-(2003,3008);
+(2003,3004),
+(2003,3006);
 
 -- Play Date Test Data
 INSERT INTO play_date (play_date_time,location_id,host_pet_id,status_id) VALUES
-(now(),4001,2001,5001),
-(now(),4002,2001,5002),
-(now(),4003,2002,5003),
-(now()+'3 days',4004,2001,5001),
+(now(),4001,2001,5001), --approved
+(now(),4002,2001,5001), --approved
+(now(),4003,2002,5001), --approved
+(now()+'3 days',4004,2001,5003),
 (now()+'10 days',4005,2001,5002),
 (now()+'20 days',4006,2002,5003),
-(now()+'30 days',4007,2003,5001),
+(now()+'30 days',4007,2003,5003),
 (now()+'31 days',4008,2003,5002),
 (now()+'32 days',4009,2002,5003),
-
-(now()+'33 days',4010,2001,5001),
-(now()+'40 days',4011,2001,5002),
-(now()+'50 days',4012,2002,5003),
-(now()+'2 days',4013,2001,5001),
-(now()+'1 days',4014,2001,5002),
-(now()+'3 days',4015,2002,5003),
-(now()+'2 days',4016,2001,5001),
+(now()+'33 days',4010,2001,5001), --approved
+(now()+'40 days',4011,2001,5001), --approved
+(now()+'50 days',4012,2002,5001), --approved
+(now()+'2 days',4013,2001,5001), --approved
+(now()+'1 days',4014,2001,5001), --approved
+(now()+'3 days',4015,2002,5001), --approved
+(now()+'2 days',4016,2001,5003),
 (now()+'1 days',4017,2001,5002),
 (now()+'3 days',4018,2002,5003),
-(now()+'2 days',4019,2001,5001),
+(now()+'2 days',4019,2001,5003),
 (now()+'1 days',4020,2003,5002),
 (now()+'3 days',4021,2002,5003),
-(now()+'2 days',4022,2001,5001),
+(now()+'2 days',4022,2001,5003),
 (now()+'1 days',4001,2001,5002),
 (now()+'3 days',4002,2002,5003),
 (now()+'3 days',4003,2002,5003);
