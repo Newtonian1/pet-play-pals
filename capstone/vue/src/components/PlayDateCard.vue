@@ -122,11 +122,10 @@ export default {
   methods: {
     editPlayDate() {
       this.showJoinForm = !this.showJoinForm;
-      let petIdArray = this.playDate.attendingPetIds.filter(id => {
-        return !this.filterPets.map(pet => pet.petId).includes(id);
-      })
-      let petIdsToAdd = [...petIdArray, ...this.petsToUpdate];
-      console.log(petIdsToAdd)
+      // let petIdArray = this.playDate.attendingPetIds.filter(id => {
+      //   return !this.filterPets.map(pet => pet.petId).includes(id);
+      // })
+      let petIdsToAdd = [...this.petsToUpdate];
       // this.petsToUpdate.forEach(petId => {
       //   if (!this.playDate.attendingPetIds.includes(petId)) {
       //     petIdsToAdd.push(petId);
@@ -164,6 +163,7 @@ div.party-card-container > div {
   border: 2px #2c3333 solid;
   border-radius: 10px;
   text-align: center;
+  padding: 0 10px;
 }
 div.loading-card {
   font-weight: bold;
