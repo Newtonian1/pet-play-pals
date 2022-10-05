@@ -1,6 +1,6 @@
 <template>
   <div class="reg-pet">
-    <form id="pet-reg-form" @submit.prevent="savePet">
+    <form id="pet-reg-form" @submit.prevent>
       <!-- CHANGES -->
       <div id="fields-img-flex-div">
         <div id="split-form">
@@ -206,6 +206,7 @@
       </div>
       <!-- image upload section begins -->
       <div id="image-upload">
+        <label for="choose-file">Add a picture</label>
         <input
           id="choose-file"
           style="display: none"
@@ -214,13 +215,12 @@
           ref="fileInput"
           accept="image/*"
         />
-        <label for="choose-file-btn">Add a picture</label>
-        <button id="choose-file-btn" @click="$refs.fileInput.click()">Choose File</button>
+        <button id="choose-file-btn" @click.prevent="$refs.fileInput.click()">Choose File</button>
         <!-- <button @click="onUpload">Upload</button> -->
         <img id="preview-image" v-show="imageUrl" :src="imageUrl" height="150px" />
       </div>
       <!-- image upload section ends -->
-      <button type="submit" id="create-pet-btn">Add Pet</button>
+      <button @click="savePet" id="create-pet-btn">Add Pet</button>
     </form>
   </div>
 </template>
