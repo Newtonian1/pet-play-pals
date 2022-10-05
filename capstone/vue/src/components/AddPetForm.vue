@@ -374,6 +374,31 @@ select {
   color: #2c3333;
 }
 
+#choose-file-btn {
+  background-color: #395b645b;
+  font-family: monospace, sans-serif;
+  color: white;
+  /* width: 100%; */
+  border: 2px solid #395b64;
+  border-radius: 5px;
+  letter-spacing: 2px;
+  height: 25px;
+  margin: 10px;
+  transition: all 0.3s ease;
+}
+
+#choose-file-btn:hover {
+  background-color: #395b64;
+  border: none;
+  /* color: #2c3333; */
+}
+
+#image-upload {
+  margin: 10px;
+  margin-left: 0;
+  font-size: 18px;
+}
+
 /* CHANGES */
 #reg-logo-div {
   display: none;
