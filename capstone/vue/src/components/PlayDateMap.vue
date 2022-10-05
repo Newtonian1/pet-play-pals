@@ -51,7 +51,7 @@
             id="radius-box"
             @input="truncateRadius"
           />
-          mile<span is="s-for-mile" v-if="searchRadius != 1">s</span>
+          mile<span id="s-for-mile" v-if="searchRadius != 1">s</span>
         </p>
         <input
           type="range"
@@ -99,8 +99,9 @@
         <div
           class="playdate-card"
           v-for="location in filteredLocations"
-          :key="location.id"
+          :key="location.locationId"
           :class="{ 'selected-card': selectedId === location.locationId }"
+          @click="routeToPlayDates(location.locationId)"
         >
           <div class="address">
             <h3>
@@ -143,8 +144,12 @@ export default {
       const filteredPlayDates = this.playDates.filter(playDate => {
         return Date.now() < Date.parse(playDate.playDateTimeStamp);
       });
+      //filter out rejected playdates
+      const nonRejectedPlayDates = filteredPlayDates.filter(playDate => {
+        return playDate.status != "rejected";
+      });
       //create list of location ids for future playdates
-      const playDateLocationIds = filteredPlayDates.map(playDate => {
+      const playDateLocationIds = nonRejectedPlayDates.map(playDate => {
         return playDate.locationId;
       });
       //create list of locations that correspond with a future playdate
@@ -236,6 +241,9 @@ export default {
     setSelectedId(id) {
       this.selectedId = id;
     },
+    routeToPlayDates(id){
+      this.$router.push({ name: 'location', params: { locationId: id}});
+    }
   },
   created() {
     //Set center of map to user's current location
@@ -420,6 +428,12 @@ input[type="text"], input[type="number"] {
   border-radius: 5px;
 }
 
+.playdate-card:hover {
+  transition:  0.2s ease-in-out;
+  border: 2px solid #395B64;
+  cursor: pointer;
+}
+
 .address {
   display: flex;
   flex-direction: column;
@@ -513,6 +527,7 @@ input[type="text"], input[type="number"] {
 
   .playdate-card {
     margin-left: 10px;
+    margin-right: 0px;
   }
 }
 </style>
