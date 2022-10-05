@@ -47,5 +47,16 @@ export default new Vuex.Store({
     SET_LOCATIONS(state, locations) {
       state.locations = locations;
     },
+    ADD_TO_PET_PICTURES(state, petPicture) {
+      state.petPictures.push(petPicture);
+    },
+    RESET_PET_PICTURES(state) {
+      state.petPictures = [];
+    }
+  },
+  actions: {
+    loadPetPictures(context, petImage) {
+      context.commit('ADD_TO_PET_PICTURES', petImage);
+    }
   }
 })

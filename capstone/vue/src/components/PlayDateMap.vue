@@ -51,7 +51,7 @@
             id="radius-box"
             @input="truncateRadius"
           />
-          mile<span is="s-for-mile" v-if="searchRadius != 1">s</span>
+          mile<span id="s-for-mile" v-if="searchRadius != 1">s</span>
         </p>
         <input
           type="range"
@@ -523,6 +523,7 @@ input[type="text"], input[type="number"] {
 
   .playdate-card {
     margin-left: 10px;
+    margin-right: 0px;
   }
 }
 </style>
