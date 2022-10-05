@@ -144,8 +144,12 @@ export default {
       const filteredPlayDates = this.playDates.filter(playDate => {
         return Date.now() < Date.parse(playDate.playDateTimeStamp);
       });
+      //filter out rejected playdates
+      const nonRejectedPlayDates = filteredPlayDates.filter(playDate => {
+        return playDate.status != "rejected";
+      });
       //create list of location ids for future playdates
-      const playDateLocationIds = filteredPlayDates.map(playDate => {
+      const playDateLocationIds = nonRejectedPlayDates.map(playDate => {
         return playDate.locationId;
       });
       //create list of locations that correspond with a future playdate
