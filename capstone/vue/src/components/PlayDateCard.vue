@@ -34,7 +34,7 @@
       </p>
       <!-- v-if - they don't have any pets -->
       <button
-        id="join-edit-playdate"
+        class="join-edit-playdate"
         v-show="$store.state.token != ''"
         @click="joinFormOpen"
       >
@@ -44,17 +44,19 @@
     <div v-if="showJoinForm" id="screen-blocker">
       <div id="join-form">
         <h3>Join this Pet Play Date</h3>
-        <div v-for="pet in filterPets" :key="pet.petId">
-          <label :for="pet.petName">{{ pet.petName }}</label>
-          <input
-            :value="pet.petId"
-            v-model="petsToUpdate"
-            type="checkbox"
-            :name="pet.petName"
-            :id="pet.petName"
-          />
+        <div id="filtered-pets-flex">
+          <div id="name-checkbox" v-for="pet in filterPets" :key="pet.petId">
+            <label :for="pet.petName">{{ pet.petName }}</label>
+            <input
+              :value="pet.petId"
+              v-model="petsToUpdate"
+              type="checkbox"
+              :name="pet.petName"
+              :id="pet.petName"
+            />
+          </div>
         </div>
-        <input type="button" value="Done" @click="editPlayDate" />
+        <input class="done-playdate-btn" type="button" value="Done" @click="editPlayDate" />
       </div>
     </div>
   </div>
@@ -180,7 +182,7 @@ p.attending {
   margin-bottom: 0;
 }
 
-#join-edit-playdate {
+.join-edit-playdate, .done-playdate-btn {
   background-color: #395b645b;
   font-family: monospace, sans-serif;
   color: white;
@@ -193,10 +195,16 @@ p.attending {
   transition: all 0.3s ease;
 }
 
-#join-edit-playdate:hover {
+.join-edit-playdate:hover {
   background-color: #a5c9ca;
   border: none;
   color: #2c3333;
+}
+
+.done-playdate-btn:hover {
+  background-color: #395b64;
+  border: none;
+  /* color: #2c3333; */
 }
 
 #screen-blocker {
@@ -216,11 +224,28 @@ p.attending {
   z-index: 101;
   max-width: 75vw;
   max-height: 75vh;
-  top: 50%;
-  right: 50%;
-  background-color: chartreuse;
-  border: 2px solid red;
+  top: 30%;
+  right: 40%;
+  background-color: #a5c9ca;
+  width: 15em;
+  border: 2px solid #395b64;
   border-radius: 15px;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+}
+
+#name-checkbox {
+  display: flex;
+  justify-content: space-between;
+}
+
+#filtered-pets-flex {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  margin: auto;
+  margin-bottom: 15px;
 }
 </style>
