@@ -1,66 +1,67 @@
 <template>
   <div class="play-date">
     <form id="play-date-form" class="form" @submit.prevent="getAddressCoords">
-      <div class="form-element">
-        <label for="location-name">Location Name </label>
-        <input
-          id="location-name"
-          type="text"
-          required
-          v-model="locationName"
-          placeholder="Location Name"
-        />
-      </div>
-      <div class="form-element">
-        <label for="add-1">Address </label>
-        <input
-          id="add-1"
-          type="text"
-          required
-          v-model="addressOne"
-          placeholder="Address 1"
-        />
-      </div>
-      <div class="form-element">
-        <label for="add-2">Address </label>
-        <input
-          id="add-2"
-          type="text"
-          v-model="addressTwo"
-          placeholder="Address 2"
-        />
-      </div>
-      <div class="form-element">
-        <label for="city">City </label>
-        <input
-          id="city"
-          type="text"
-          required
-          v-model="city"
-          placeholder="City"
-        />
-      </div>
-      <div class="form-element">
-        <label for="search-state">State </label>
-        <input
-          type="text"
-          id="search-state"
-          required
-          v-model="state"
-          placeholder="State"
-        />
-      </div>
-      <div class="form-element">
-        <label for="zip-code">Zip Code </label>
-        <input
-          id="zip-code"
-          type="text"
-          required
-          v-model="zip"
-          placeholder="Zip"
-        />
-      </div>
-      <div class="form-element">
+      
+        <div class="form-element justify-input">
+          <label for="location-name">Location Name </label>
+          <input
+            id="location-name"
+            type="text"
+            required
+            v-model="locationName"
+            placeholder="Location Name"
+          />
+        </div>
+        <div class="form-element justify-input">
+          <label for="add-1">Address </label>
+          <input
+            id="add-1"
+            type="text"
+            required
+            v-model="addressOne"
+            placeholder="Address 1"
+          />
+        </div>
+        <div class="form-element justify-input">
+          <label for="add-2">Address </label>
+          <input
+            id="add-2"
+            type="text"
+            v-model="addressTwo"
+            placeholder="Address 2"
+          />
+        </div>
+        <div class="form-element justify-input">
+          <label for="city">City </label>
+          <input
+            id="city"
+            type="text"
+            required
+            v-model="city"
+            placeholder="City"
+          />
+        </div>
+        <div class="form-element justify-input">
+          <label for="search-state">State </label>
+          <input
+            type="text"
+            id="search-state"
+            required
+            v-model="state"
+            placeholder="State"
+          />
+        </div>
+        <div class="form-element justify-input">
+          <label for="zip-code">Zip Code </label>
+          <input
+            id="zip-code"
+            type="text"
+            required
+            v-model="zip"
+            placeholder="Zip"
+          />
+        </div>
+      <div class="form-element justify-input">
         <label for="pets">Hosting Pet </label>
         <select
           id="pets"
@@ -74,7 +75,7 @@
           </option>
         </select>
       </div>
-      <div class="form-element">
+      <div class="form-element justify-input">
         <label for="time">Time </label>
         <input
           type="time"
@@ -86,7 +87,7 @@
           required
         />
       </div>
-      <div class="form-element">
+      <div class="form-element justify-input">
         <label for="date">Date </label>
         <input type="date" required v-model="date" />
       </div>
@@ -319,12 +320,14 @@ export default {
 
 #play-date-form {
   font-size: 15px;
+  max-width: 368px;
 }
 
 .form-element {
   margin: 15px 0;
   font-size: 1.3em;
 }
+
 
 label {
   display: block;
@@ -364,6 +367,15 @@ select {
 @media (min-width: 670px) {
   label {
     display: inline;
+  }
+
+  .justify-input {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .justify-input > input {
+    margin-left: 5px;
   }
 }
 

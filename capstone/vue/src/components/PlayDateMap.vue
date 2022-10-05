@@ -388,6 +388,7 @@ input[type="text"], input[type="number"] {
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 95vw;
   margin-bottom: 16px;
 }
 
@@ -488,10 +489,12 @@ input[type="text"], input[type="number"] {
 @media only screen and (min-width: 992px) {
   #map-controls {
     justify-content: space-evenly;
+    max-width: 95vw;
   }
 
   #map-container {
     flex-direction: row;
+    max-width: 95vw;
   }
 
   #map {
