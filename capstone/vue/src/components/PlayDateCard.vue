@@ -120,13 +120,17 @@ export default {
   methods: {
     editPlayDate() {
       this.showJoinForm = !this.showJoinForm;
-      let petIdsToAdd = [];
-      this.petsToUpdate.forEach(petId => {
-        if (!this.playDate.attendingPetIds.includes(petId)) {
-          petIdsToAdd.push(petId);
-        }
-      });
-      petIdsToAdd = this.playDate.attendingPetIds.concat(petIdsToAdd)
+      let petIdArray = this.playDate.attendingPetIds.filter(id => {
+        return !this.filterPets.map(pet => pet.petId).includes(id);
+      })
+      let petIdsToAdd = [...petIdArray, ...this.petsToUpdate];
+      console.log(petIdsToAdd)
+      // this.petsToUpdate.forEach(petId => {
+      //   if (!this.playDate.attendingPetIds.includes(petId)) {
+      //     petIdsToAdd.push(petId);
+      //   }
+      // });
+      // petIdsToAdd = this.playDate.attendingPetIds.concat(petIdsToAdd)
       let updatedPlayDate = {
         hostPetId: this.playDate.hostPetId,
         attendingPetIds: petIdsToAdd,
@@ -137,7 +141,8 @@ export default {
       };
       playDateService.updatePlayDate(updatedPlayDate, this.playDate.playDateId);
       this.$store.commit('UPDATE_PLAY_DATE', updatedPlayDate);
-      this.$parent.$emit('playDateUpdated')
+      this.$parent.$emit('playDateUpdated');
+      window.location.reload();
     },
     joinFormOpen() {
       this.showJoinForm = !this.showJoinForm;

@@ -44,8 +44,11 @@ export default new Vuex.Store({
     SET_PLAY_DATES(state, playDates) {
       state.playDates = playDates;
     },
-    UPDATE_PLAY_DATE(state, playDate) {
-      state.playDates.playDate = playDate;
+    UPDATE_PLAY_DATE(state, updatedPlayDate) {
+      state.playDates = [
+        ...state.playDates.filter(playDate => playDate.playDateId !== updatedPlayDate.playDateId),
+        updatedPlayDate
+      ]
     },
     SET_LOCATIONS(state, locations) {
       state.locations = locations;

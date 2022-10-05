@@ -42,12 +42,17 @@ export default {
   },
   computed: {
     acceptedPlayDates() {
-      return this.playDates.filter(
+      return this.filteredPlayDates.filter(
         (playDate) => playDate.status === "approved"
       );
     },
     pendingPlayDates() {
-      return this.playDates.filter((playDate) => playDate.status === "pending");
+      return this.filteredPlayDates.filter((playDate) => playDate.status === "pending");
+    },
+    filteredPlayDates() {
+      return this.playDates.filter((playDate) =>
+        this.userPetIdList.includes(playDate.hostPetId)
+      );
     },
   },
   methods: {
@@ -59,9 +64,7 @@ export default {
           this.userPetIdList = this.userPetList.map((pet) => pet.petId);
           playDateService.getPlayDates().then((res) => {
             if (res.status === 200) {
-              this.playDates = res.data.filter((playDate) =>
-                this.userPetIdList.includes(playDate.hostPetId)
-              );
+              this.playDates = res.data;
             }
           });
         }
