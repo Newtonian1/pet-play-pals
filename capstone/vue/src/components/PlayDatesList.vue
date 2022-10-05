@@ -57,7 +57,6 @@ export default {
         playDate.attendingPetIds.forEach((id) => {
           if (this.userPetIdList.includes(id)) {
             attendingPetCounter++;
-            console.log(playDate.playDateId)
           }
         });
         return (
@@ -69,7 +68,6 @@ export default {
   },
   methods: {
     handlePlayDateUpdated() {
-      console.log("It works!");
       petService.getAllPetsByOwnerId(this.currentUserId).then((res) => {
         if (res.status === 200) {
           this.userPetList = res.data;
