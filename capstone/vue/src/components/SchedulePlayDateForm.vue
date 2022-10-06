@@ -69,8 +69,8 @@
           v-model="chosenPetId"
         >
           <option value="" disabled>---</option>
-          <option :value="n.petId" v-for="n in filterPets" :key="n">
-            {{ n.petName }}
+          <option :value="pet.petId" v-for="pet in filterPets" :key="pet.petId">
+            {{ pet.petName }}
           </option>
         </select>
       </div>
