@@ -51,8 +51,11 @@ export default {
         (playDate) => playDate.status === "pending"
       );
     },
+    playDatesFromStore() {
+      return this.$store.state.playDates
+    },
     filteredPlayDates() {
-      return this.playDates.filter((playDate) => {
+      return this.playDatesFromStore.filter((playDate) => {
         let attendingPetCounter = 0;
         playDate.attendingPetIds.forEach((id) => {
           if (this.userPetIdList.includes(id)) {
@@ -68,6 +71,7 @@ export default {
   },
   methods: {
     handlePlayDateUpdated() {
+      console.log('update');
       petService.getAllPetsByOwnerId(this.currentUserId).then((res) => {
         if (res.status === 200) {
           this.userPetList = res.data;

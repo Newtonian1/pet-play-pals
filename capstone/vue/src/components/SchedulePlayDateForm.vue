@@ -218,9 +218,8 @@ export default {
           this.couldNotFindAddress = false;
           this.submitForm();
         })
-        .catch((error) => {
+        .catch(() => {
           this.couldNotFindAddress = true;
-          console.log(error);
         });
     },
     checkForLocation() {
@@ -288,8 +287,8 @@ export default {
       .then((response) => {
         this.$store.commit("SET_PLAY_DATES", response.data);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        // console.log(error);
       });
 
     //Get locations from API
@@ -299,8 +298,8 @@ export default {
         this.$store.commit("SET_LOCATIONS", response.data);
         this.locations = response.data;
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        // console.log(error);
       });
   },
 };

@@ -140,10 +140,15 @@ export default {
         playDateTimeStamp: this.playDate.playDateTimeStamp,
         status: petIdsToAdd.length != 0 ? "approved" : "pending",
       };
-      playDateService.updatePlayDate(updatedPlayDate, this.playDate.playDateId);
-      this.$store.commit('UPDATE_PLAY_DATE', updatedPlayDate);
-      this.$parent.$emit('playDateUpdated');
-      window.location.reload();
+      playDateService.updatePlayDate(updatedPlayDate, this.playDate.playDateId).then(res => {
+        if (res.status === 200) {
+          console.log('success');
+          this.$store.commit('UPDATE_PLAY_DATE', updatedPlayDate);
+          // this.$root.$forceUpdate();
+          // $emit('playDateUpdated');
+        }
+      });
+      // window.location.reload();
     },
     joinFormOpen() {
       this.showJoinForm = !this.showJoinForm;
