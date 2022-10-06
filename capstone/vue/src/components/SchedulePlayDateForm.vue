@@ -1,66 +1,76 @@
 <template>
   <div class="play-date">
     <form id="play-date-form" class="form" @submit.prevent="getAddressCoords">
-      
-        <div class="form-element justify-input">
-          <label for="location-name">Location Name </label>
-          <input
-            id="location-name"
-            type="text"
-            required
-            v-model="locationName"
-            placeholder="Location Name"
-          />
-        </div>
-        <div class="form-element justify-input">
-          <label for="add-1">Address </label>
-          <input
-            id="add-1"
-            type="text"
-            required
-            v-model="addressOne"
-            placeholder="Address 1"
-          />
-        </div>
-        <div class="form-element justify-input">
-          <label for="add-2">Address </label>
-          <input
-            id="add-2"
-            type="text"
-            v-model="addressTwo"
-            placeholder="Address 2"
-          />
-        </div>
-        <div class="form-element justify-input">
-          <label for="city">City </label>
-          <input
-            id="city"
-            type="text"
-            required
-            v-model="city"
-            placeholder="City"
-          />
-        </div>
-        <div class="form-element justify-input">
-          <label for="search-state">State </label>
-          <input
-            type="text"
-            id="search-state"
-            required
-            v-model="state"
-            placeholder="State"
-          />
-        </div>
-        <div class="form-element justify-input">
-          <label for="zip-code">Zip Code </label>
-          <input
-            id="zip-code"
-            type="text"
-            required
-            v-model="zip"
-            placeholder="Zip"
-          />
-        </div>
+      <label class="form-element" for="locations">Select a location or enter details below</label>
+      <select name="locations" id="locations" v-model="currentLocation">
+        <option value="">---</option>
+        <option
+          v-for="location in locations"
+          :key="location.locationId"
+          :value="location"
+        >
+          {{ location.locationName }}
+        </option>
+      </select>
+      <div class="form-element justify-input">
+        <label for="location-name">Location Name </label>
+        <input
+          id="location-name"
+          type="text"
+          required
+          v-model="currentLocation.locationName"
+          placeholder="Location Name"
+        />
+      </div>
+      <div class="form-element justify-input">
+        <label for="add-1">Address </label>
+        <input
+          id="add-1"
+          type="text"
+          required
+          v-model="currentLocation.address1"
+          placeholder="Address 1"
+        />
+      </div>
+      <div class="form-element justify-input">
+        <label for="add-2">Address </label>
+        <input
+          id="add-2"
+          type="text"
+          v-model="currentLocation.address2"
+          placeholder="Address 2"
+        />
+      </div>
+      <div class="form-element justify-input">
+        <label for="city">City </label>
+        <input
+          id="city"
+          type="text"
+          required
+          v-model="currentLocation.city"
+          placeholder="City"
+        />
+      </div>
+      <div class="form-element justify-input">
+        <label for="search-stateAbbreviation">State </label>
+        <input
+          type="text"
+          id="search-stateAbbreviation"
+          required
+          v-model="currentLocation.stateAbbreviation"
+          placeholder="State"
+        />
+      </div>
+      <div class="form-element justify-input">
+        <label for="zipCode-code">Zip Code </label>
+        <input
+          id="zipCode-code"
+          type="text"
+          required
+          v-model="currentLocation.zipCode"
+          placeholder="Zip"
+        />
+      </div>
       <div class="form-element justify-input">
         <label for="pets">Hosting Pet </label>
         <select
@@ -92,10 +102,14 @@
         <input type="date" required v-model="date" />
       </div>
 
-      <button id="submit-btn" type="submit" v-if="!playDateCreated">Add Play Date</button>
+      <button id="submit-btn" type="submit" v-if="!playDateCreated">
+        Add Play Date
+      </button>
       <div v-if="playDateCreated">
         <h3 class="return-home">Playdate Successfully Created!</h3>
-        <button class="return-home" id="return-btn" v-on:click="sendToHome">Return to home</button>
+        <button class="return-home" id="return-btn" v-on:click="sendToHome">
+          Return to home
+        </button>
       </div>
     </form>
   </div>
@@ -111,14 +125,16 @@ export default {
   data() {
     return {
       //formInfo
-      locationName: "",
-      addressOne: "",
-      addressTwo: "",
-      city: "",
-      state: "",
-      zip: "",
-      latitude: "",
-      longitude: "",
+      currentLocation: {
+        locationName: "",
+        address1: "",
+        address2: "",
+        city: "",
+        stateAbbreviation: "",
+        zipCode: "",
+        latitude: "",
+        longitude: "",
+      },
       chosenPetId: "",
       time: "",
       date: "",
@@ -128,6 +144,7 @@ export default {
       couldNotFindAddress: false,
       currentOwnerId: 0,
       pets: [],
+      locations: [],
     };
   },
   methods: {
@@ -135,24 +152,22 @@ export default {
       this.formInfo = {};
     },
     sendToHome() {
-      
       this.$router.push("/home");
     },
-
     submitForm() {
       let locationId = this.checkForLocation();
       if (locationId == -1) {
         //create new location in database
         let location = {
           locationId: 0,
-          locationName: this.locationName,
-          address1: this.addressOne,
-          address2: this.addressTwo,
-          city: this.city,
-          stateAbbreviation: this.state,
-          zipCode: this.zip,
-          latitude: parseFloat(this.latitude),
-          longitude: parseFloat(this.longitude),
+          locationName: this.currentLocation.locationName,
+          address1: this.currentLocation.address1,
+          address2: this.currentLocation.address2,
+          city: this.currentLocation.city,
+          stateAbbreviation: this.currentLocation.stateAbbreviation,
+          zipCode: this.currentLocation.zipCode,
+          latitude: parseFloat(this.currentLocation.latitude),
+          longitude: parseFloat(this.currentLocation.longitude),
         };
         mapService
           .createLocation(location)
@@ -187,20 +202,21 @@ export default {
 
     getAddressCoords() {
       let searchAddress =
-        this.addressOne.trim() +
+        this.currentLocation.address1.trim() +
         ", " +
-        this.city.trim() +
+        this.currentLocation.city.trim() +
         ", " +
-        this.state.trim();
+        this.currentLocation.stateAbbreviation.trim();
       searchAddress = searchAddress.replaceAll(" ", "+");
       geocodeService
         .getCoords(searchAddress)
         .then((response) => {
-          this.latitude = response.data.results[0].geometry.location.lat;
-          this.longitude = response.data.results[0].geometry.location.lng;
+          this.currentLocation.latitude =
+            response.data.results[0].geometry.location.lat;
+          this.currentLocation.longitude =
+            response.data.results[0].geometry.location.lng;
           this.couldNotFindAddress = false;
           this.submitForm();
-          
         })
         .catch((error) => {
           this.couldNotFindAddress = true;
@@ -212,22 +228,23 @@ export default {
       const locationResults = locations.filter((location) => {
         const isAddressOneSame =
           location.address1.toLowerCase().trim() ==
-          this.addressOne.toLowerCase().trim();
+          this.currentLocation.address1.toLowerCase().trim();
         let isAddressTwoSame = true;
-        if (this.addressTwo != "") {
+        if (this.currentLocation.address2 != "") {
           isAddressTwoSame =
             location.address2.toLowerCase().trim() ==
-            this.addressTwo.toLowerCase().trim();
+            this.currentLocation.address2.toLowerCase().trim();
         }
 
         const isCitySame =
-          location.city.toLowerCase().trim() == this.city.toLowerCase().trim();
+          location.city.toLowerCase().trim() ==
+          this.currentLocation.city.toLowerCase().trim();
         const isStateSame =
           location.stateAbbreviation.toLowerCase().trim() ==
-          this.state.toLowerCase().trim();
+          this.currentLocation.stateAbbreviation.toLowerCase().trim();
         const isZipSame =
           location.zipCode.toLowerCase().trim() ==
-          this.zip.toLowerCase().trim();
+          this.currentLocation.zipCode.toLowerCase().trim();
 
         return (
           isAddressOneSame &&
@@ -244,9 +261,11 @@ export default {
       }
     },
     truncateState() {
-      if (document.getElementById("search-state").value.length > 2) {
-        document.getElementById("search-state").value = document
-          .getElementById("search-state")
+      if (
+        document.getElementById("search-stateAbbreviation").value.length > 2
+      ) {
+        document.getElementById("search-stateAbbreviation").value = document
+          .getElementById("search-stateAbbreviation")
           .value.slice(0, 2);
       }
     },
@@ -278,6 +297,7 @@ export default {
       .getLocations()
       .then((response) => {
         this.$store.commit("SET_LOCATIONS", response.data);
+        this.locations = response.data;
       })
       .catch((error) => {
         console.log(error);
@@ -287,6 +307,10 @@ export default {
 </script>
 
 <style scoped>
+div:has(.return-home) {
+  text-align: center;
+  
+}
 .return-home {
   display: inline;
   margin-top: 10px;
@@ -294,21 +318,21 @@ export default {
 }
 
 #return-btn {
-  margin-left: 10px;
-  background-color: #395B64;
+  margin: 10px;
+  background-color: #395b64;
   font-family: monospace;
   color: white;
   border: none;
   border-radius: 5px;
   height: 25px;
   letter-spacing: 2px;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 
 #return-btn:hover {
-  border: 2px solid #395B64;
-  background-color: #FFF;
-  color: #2C3333;
+  border: 2px solid #395b64;
+  background-color: #fff;
+  color: #2c3333;
 }
 
 .play-date {
@@ -328,7 +352,6 @@ export default {
   font-size: 1.3em;
 }
 
-
 label {
   display: block;
 }
@@ -344,8 +367,12 @@ select {
   font-size: 20px;
 }
 
+#locations {
+  width: 100%;
+}
+
 #submit-btn {
-  background-color: #395B64;
+  background-color: #395b64;
   font-family: monospace;
   font-size: 18px;
   color: white;
@@ -360,7 +387,7 @@ select {
 }
 
 #submit-btn:hover {
-  background-color: #A5C9CA;
+  background-color: #a5c9ca;
   color: #2c3333;
 }
 
