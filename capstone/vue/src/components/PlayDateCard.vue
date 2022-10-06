@@ -248,4 +248,22 @@ p.attending {
   margin: auto;
   margin-bottom: 15px;
 }
+
+@media(max-width: 695px) {
+  #join-form {
+    right: 30%;
+  }
+}
+
+@media(max-width: 450px) {
+  #join-form {
+    right: 20%;
+  }
+}
+
+@media(max-width: 370px) {
+  #join-form {
+    right: 5%;
+  }
+}
 </style>

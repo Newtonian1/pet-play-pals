@@ -415,6 +415,7 @@ select {
 #choose-file-btn:hover {
   background-color: #395b64;
   border: none;
+  color: white;
   /* color: #2c3333; */
 }
 
