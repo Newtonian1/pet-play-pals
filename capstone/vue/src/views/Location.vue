@@ -14,6 +14,11 @@
         :playDate="playDate"
       />
     </div>
+    <div>
+      <button class="return-home" id="return-btn" v-on:click="sendToHome">
+        Return to home
+      </button>
+    </div>
   </div>
 </template>
 
@@ -54,8 +59,8 @@ export default {
       .then((response) => {
         this.$store.commit("SET_PLAY_DATES", response.data);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        // console.log(error);
       });
 
     //Get locations from API
@@ -64,9 +69,14 @@ export default {
       .then((response) => {
         this.$store.commit("SET_LOCATIONS", response.data);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        // console.log(error);
       });
+  },
+  methods: {
+    sendToHome() {
+      this.$router.push("/home");
+    },
   },
 };
 </script>
@@ -90,5 +100,32 @@ h3 {
 
 .card-container > * {
   margin: 10px;
+}
+
+div:has(.return-home) {
+  text-align: center;
+}
+.return-home {
+  display: inline;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#return-btn {
+  margin: 10px;
+  background-color: #395b64;
+  font-family: monospace;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  height: 25px;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+}
+
+#return-btn:hover {
+  border: 2px solid #395b64;
+  background-color: #fff;
+  color: #2c3333;
 }
 </style>
