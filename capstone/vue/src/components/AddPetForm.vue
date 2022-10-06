@@ -254,7 +254,7 @@ export default {
       this.selectedFile = event.target.files[0];
       let filename = this.selectedFile.name;
       if (filename.lastIndexOf(".") <= 0) {
-        console.log("invalid file");
+        // console.log("invalid file");
         return;
       }
       const fileReader = new FileReader();

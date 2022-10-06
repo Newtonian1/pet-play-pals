@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     handlePlayDateUpdated() {
-      console.log('update');
+      // console.log('update');
       petService.getAllPetsByOwnerId(this.currentUserId).then((res) => {
         if (res.status === 200) {
           this.userPetList = res.data;

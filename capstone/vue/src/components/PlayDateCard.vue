@@ -73,7 +73,7 @@ export default {
     return {
       location: null,
       hostingPet: null,
-      attendingPets: [],
+      // attendingPets: [],
       currentOwnerId: 0,
       pets: [],
       showJoinForm: false,
@@ -93,6 +93,11 @@ export default {
       let petIds = this.filterPets.map((pet) => pet.petId);
       return this.playDate.attendingPetIds.filter((id) => petIds.includes(id));
     },
+    attendingPets() {
+      return this.pets.filter((pet) =>
+          this.playDate.attendingPetIds.includes(pet.petId)
+        );
+    }
   },
   created() {
     locationService.getLocationById(this.playDate.locationId).then((res) => {
@@ -105,13 +110,13 @@ export default {
         this.hostingPet = res.data;
       }
     });
-    petService.getAllPets().then((res) => {
-      if (res.status === 200) {
-        this.attendingPets = res.data.filter((pet) =>
-          this.playDate.attendingPetIds.includes(pet.petId)
-        );
-      }
-    });
+    // petService.getAllPets().then((res) => {
+    //   if (res.status === 200) {
+    //     this.attendingPets = res.data.filter((pet) =>
+    //       this.playDate.attendingPetIds.includes(pet.petId)
+    //     );
+    //   }
+    // });
     petService.getAllPets().then((res) => {
       if (res.status === 200) {
         this.pets = res.data;
@@ -142,10 +147,11 @@ export default {
       };
       playDateService.updatePlayDate(updatedPlayDate, this.playDate.playDateId).then(res => {
         if (res.status === 200) {
-          console.log('success');
+          // console.log('success');
           this.$store.commit('UPDATE_PLAY_DATE', updatedPlayDate);
-          // this.$root.$forceUpdate();
-          // $emit('playDateUpdated');
+          this.$parent.$mount();
+          // this.$parent.$forceUpdate();
+          // this.$emit('playDateUpdated');
         }
       });
       // window.location.reload();
